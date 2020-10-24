@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.forpleuvoir.suika.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+    "client.player.ClientPlayerEntityMixin",
+    "network.play.server.SCommandListPacketMixin",
+    "item.ItemMixin",
+    "client.gui.hud.InGameHudMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

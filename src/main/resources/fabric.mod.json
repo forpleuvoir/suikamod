@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "suika",
+  "version": "${version}",
+  "name": "Suika",
+  "description": "我也不知道有什么功能",
+  "authors": [
+    "forpleuvoir"
+  ],
+  "contact": {
+    "homepage": "https://suika.forpleuvoir.com"
+  },
+  "license": "MIT",
+  "icon": "assets/suika/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.forpleuvoir.suika.client.SuikaClient"
+    ],
+    "main": [
+      "com.forpleuvoir.suika.Suika"
+    ]
+  },
+  "mixins": [
+    "suika.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.10.0+build.208",
+    "fabric": "*",
+    "minecraft": "1.16.3"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "www",
+    "www",
+    "www"
+  ],
+  "key": {
+    "w": {
+      "item": "minecraft:melon"
+    }
+  },
+  "result": {
+    "item": "suika:ibuki_gourd",
+    "count": 1
+  }
+}
