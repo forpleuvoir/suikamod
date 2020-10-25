@@ -8,7 +8,8 @@
     "forpleuvoir"
   ],
   "contact": {
-    "homepage": "https://suika.forpleuvoir.com"
+    "homepage": "https://suika.forpleuvoir.com",
+    "issues": "https://github.com/forpleuvoir/suikamod/issues"
   },
   "license": "MIT",
   "icon": "assets/suika/icon.png",

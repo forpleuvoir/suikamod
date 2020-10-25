@@ -1,6 +1,7 @@
 package com.forpleuvoir.suika.client.commands;
 
 import com.forpleuvoir.suika.config.ConfigManager;
+import com.forpleuvoir.suika.config.SuikaConfig;
 import com.forpleuvoir.suika.util.CommandUtil;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
@@ -9,6 +10,8 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.Formatting;
+
+import static com.forpleuvoir.suika.client.interop.ClientInterop.BASE_COMMAND;
 
 /**
  * 乱七八糟的指令
@@ -20,26 +23,25 @@ import net.minecraft.util.Formatting;
  * @createTime 2020/10/22 12:08
  */
 public class SuikaCommand {
-
-    public static final String COMMAND = "suika";
-    public static final String HITT = "hitt";
-    public static final String AUTO_REBIRTH="auto_rebirth";
+    public static final String COMMAND = BASE_COMMAND;
+    public static final String SHOW_ENCHANTMENT = BASE_COMMAND + "show_enchantment";
+    public static final String AUTO_REBIRTH = BASE_COMMAND + "auto_rebirth";
 
     public static void register(CommandDispatcher<CommandSource> dispatcher) {
-        LiteralArgumentBuilder command = CommandManager.literal(COMMAND)
-                .then(hit())
-                .then(autoRebirth());
+        LiteralArgumentBuilder command = showEnchantment();
+        LiteralArgumentBuilder autoRebirth = autoRebirth();
         dispatcher.register(command);
+        dispatcher.register(autoRebirth);
     }
 
-    private static LiteralArgumentBuilder<ServerCommandSource> hit() {
-        return CommandManager.literal(HITT)
+    private static LiteralArgumentBuilder<ServerCommandSource> showEnchantment() {
+        return CommandManager.literal(SHOW_ENCHANTMENT)
                 .then(CommandManager.argument("isEnabled", BoolArgumentType.bool()).executes(context -> {
                     // TODO: 2020/10/19 实现注入开启、关闭
                     boolean isEnable = BoolArgumentType.getBool(context, "isEnabled");
-                    ConfigManager.hit =isEnable;
-                    Formatting formatting = ConfigManager.hit ? Formatting.GREEN : Formatting.RED;
-                    result("HeldItemTooltip 启用 = " + ConfigManager.hit, formatting);
+                    ConfigManager.setConfig(SuikaConfig.SHOW_ENCHANTMENT, isEnable);
+                    Formatting formatting = ConfigManager.getConfig(SuikaConfig.SHOW_ENCHANTMENT, Boolean.class) ? Formatting.GREEN : Formatting.RED;
+                    result("HeldItemTooltip 启用 = " + ConfigManager.getConfig(SuikaConfig.SHOW_ENCHANTMENT, Boolean.class), formatting);
                     return 1;
                 }));
     }
@@ -49,9 +51,9 @@ public class SuikaCommand {
                 .then(CommandManager.argument("isEnabled", BoolArgumentType.bool()).executes(context -> {
                     // TODO: 2020/10/19 实现注入开启、关闭
                     boolean isEnable = BoolArgumentType.getBool(context, "isEnabled");
-                    ConfigManager.autoRebirth =isEnable;
-                    Formatting formatting = ConfigManager.autoRebirth ? Formatting.GREEN : Formatting.RED;
-                    result("AutoRebirth = " + ConfigManager.autoRebirth, formatting);
+                    ConfigManager.setConfig(SuikaConfig.AUTO_REBIRTH, isEnable);
+                    Formatting formatting = ConfigManager.getConfig(SuikaConfig.AUTO_REBIRTH, Boolean.class) ? Formatting.GREEN : Formatting.RED;
+                    result("AutoRebirth = " + ConfigManager.getConfig(SuikaConfig.AUTO_REBIRTH, Boolean.class), formatting);
                     return 1;
                 }));
     }

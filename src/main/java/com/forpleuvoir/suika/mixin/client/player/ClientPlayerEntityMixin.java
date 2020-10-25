@@ -3,6 +3,7 @@ package com.forpleuvoir.suika.mixin.client.player;
 
 import com.forpleuvoir.suika.client.interop.ClientInterop;
 import com.forpleuvoir.suika.config.ConfigManager;
+import com.forpleuvoir.suika.config.SuikaConfig;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -44,10 +45,9 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
         }
         String msg = message;
         if (!message.startsWith(ClientInterop.COMMAND_PREFIX)) {
-            if (ConfigManager.cmConfig.isEnabled()) {
-                String prefix = ConfigManager.cmConfig.getPrefix();
-                String append = ConfigManager.cmConfig.getAppend();
-                msg = prefix + message + append;
+            if (ConfigManager.getConfig(SuikaConfig.CHAT_MESSAGE,Boolean.class)) {
+                String[] cm = ConfigManager.getChatMessage();
+                msg = cm[0] + message + cm[1];
             }
         }
         this.networkHandler.sendPacket(new ChatMessageC2SPacket(msg));
@@ -56,7 +56,7 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 
     @Inject(method = "showsDeathScreen", at = @At("HEAD"), cancellable = true)
     public void showsDeathScreen(CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue(!ConfigManager.autoRebirth);
+        cir.setReturnValue(!ConfigManager.getConfig(SuikaConfig.AUTO_REBIRTH,Boolean.class));
     }
 
 }

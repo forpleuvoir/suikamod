@@ -11,6 +11,7 @@ package com.forpleuvoir.suika.mixin.client.gui.hud;
  */
 
 import com.forpleuvoir.suika.config.ConfigManager;
+import com.forpleuvoir.suika.config.SuikaConfig;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -57,7 +58,7 @@ public class InGameHudMixin {
             }
             LinkedList<MutableText> list = new LinkedList<>();
             list.addFirst(mutableText);
-            if(ConfigManager.hit) {
+            if(ConfigManager.getConfig(SuikaConfig.SHOW_ENCHANTMENT,Boolean.class)) {
                 addTooltip(currentStack, list);
                 if (!currentStack.getEnchantments().isEmpty()) {
                     for (int i = 0; i < currentStack.getEnchantments().size(); i++) {

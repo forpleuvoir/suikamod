@@ -2,6 +2,7 @@ package com.forpleuvoir.suika.client.commands;
 
 import com.forpleuvoir.suika.client.commands.arguments.FormattingArgumentType;
 import com.forpleuvoir.suika.config.ConfigManager;
+import com.forpleuvoir.suika.config.SuikaConfig;
 import com.forpleuvoir.suika.util.CommandUtil;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
@@ -21,7 +22,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
-import static com.forpleuvoir.suika.config.ConfigManager.ttConfig;
+import static com.forpleuvoir.suika.client.interop.ClientInterop.BASE_COMMAND;
 import static com.forpleuvoir.suika.util.TooltipUtil.getKey;
 
 /**
@@ -35,7 +36,7 @@ import static com.forpleuvoir.suika.util.TooltipUtil.getKey;
 @SuppressWarnings("AlibabaUndefineMagicConstant")
 public class TooltipCommand {
     public static final SimpleCommandExceptionType AIR = new SimpleCommandExceptionType(new TranslatableText("command.suika.tooltip.air"));
-    public static final String COMMAND = "tt";
+    public static final String COMMAND = BASE_COMMAND + "tooltip";
     private static final String ADD = "add";
     private static final String ENABLED = "enabled";
     private static final String REMOVE = "remove";
@@ -60,21 +61,19 @@ public class TooltipCommand {
                                     ItemStack stack = itemStackArgument.createStack(1, false);
                                     Formatting formatting = FormattingArgumentType.getFormatting(context, "formatting");
                                     Item item = itemStackArgument.getItem();
-                                    String name = item.getName(stack).getString();
                                     String text = StringArgumentType.getString(context, "text");
                                     if (item.equals(Items.AIR)) {
                                         ClientPlayerEntity player = (ClientPlayerEntity) context.getSource().getEntity();
                                         assert player != null;
                                         stack = player.getMainHandStack();
                                         item = stack.getItem();
-                                        name = item.getName(player.getMainHandStack()).getString();
                                         if (item.equals(Items.AIR)) {
                                             throw AIR.create();
                                         }
                                     }
                                     String key = getKey(stack);
-                                    ttConfig.addData(key, formatting.toString() + text, true);
-                                    result(stack.getName().getString() + " ,tip:" + text, Formatting.AQUA);
+                                    ConfigManager.getTooltip().addData(key, formatting.toString() + text, true);
+                                    result("", stack, " ,tip:" + text, Formatting.AQUA);
                                     return 1;
                                 }))
                         )
@@ -89,7 +88,7 @@ public class TooltipCommand {
                             ItemStackArgument itemStackArgument = ItemStackArgumentType.getItemStackArgument(context, ITEM);
                             ItemStack stack = itemStackArgument.createStack(1, false);
                             Item item = itemStackArgument.getItem();
-                            int index = IntegerArgumentType.getInteger(context, INDEX)-1;
+                            int index = IntegerArgumentType.getInteger(context, INDEX) - 1;
                             if (item.equals(Items.AIR)) {
                                 ClientPlayerEntity player = (ClientPlayerEntity) context.getSource().getEntity();
                                 assert player != null;
@@ -100,8 +99,8 @@ public class TooltipCommand {
                                 }
                             }
                             String key = getKey(stack);
-                            ttConfig.remove(key, index);
-                            result(stack.getName().getString() + " ,remove:" + index+1, Formatting.AQUA);
+                            ConfigManager.getTooltip().remove(key, index);
+                            result("", stack, " ,remove:" + ++index, Formatting.AQUA);
                             return 1;
                         }))
                 );
@@ -112,7 +111,7 @@ public class TooltipCommand {
                 .then(CommandManager.argument(ENABLED, BoolArgumentType.bool())
                         .executes(context -> {
                             boolean isEnabled = BoolArgumentType.getBool(context, ENABLED);
-                            ConfigManager.ttConfig.setEnabled(isEnabled);
+                            ConfigManager.setConfig(SuikaConfig.CHAT_MESSAGE, isEnabled);
                             Formatting formatting = isEnabled ? Formatting.GREEN : Formatting.RED;
                             result("注入:" + isEnabled, formatting);
                             return 0;
@@ -124,20 +123,18 @@ public class TooltipCommand {
                                     ItemStackArgument itemStackArgument = ItemStackArgumentType.getItemStackArgument(context, ITEM);
                                     ItemStack stack = itemStackArgument.createStack(1, false);
                                     Item item = itemStackArgument.getItem();
-                                    String name = item.getName(stack).getString();
                                     if (item.equals(Items.AIR)) {
                                         ClientPlayerEntity player = (ClientPlayerEntity) context.getSource().getEntity();
                                         assert player != null;
                                         stack = player.getMainHandStack();
                                         item = stack.getItem();
-                                        name = item.getName(player.getMainHandStack()).getString();
                                         if (item.equals(Items.AIR)) {
                                             throw AIR.create();
                                         }
                                     }
                                     String key = getKey(stack);
-                                    ttConfig.setEnable(key, isEnabled);
-                                    result("注入:" + stack.getName().getString() + ":" + isEnabled, formatting);
+                                    ConfigManager.getTooltip().setEnable(key, isEnabled);
+                                    result("注入:", stack, ":isEnabled:" + isEnabled, formatting);
                                     return 1;
                                 })
                         )
@@ -145,8 +142,11 @@ public class TooltipCommand {
     }
 
 
-
     private static void result(String result, Formatting formatting) {
         CommandUtil.returnFormattingString("Tooltip:" + result, formatting);
+    }
+
+    private static void result(String result, ItemStack stack, String append, Formatting formatting) {
+        CommandUtil.returnFormattingString("Tooltip:" + result, stack, formatting, append);
     }
 }

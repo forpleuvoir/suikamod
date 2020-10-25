@@ -22,11 +22,10 @@ import net.minecraft.util.Formatting;
  */
 public class ClientInterop {
     public static final String COMMAND_PREFIX = "/";
+    public static final String BASE_COMMAND = "suika:";
 
     public static boolean interceptChatMessage(String message) {
-        if (message.startsWith(COMMAND_PREFIX + ChatMessageCommand.COMMAND)
-                || message.startsWith(COMMAND_PREFIX + TooltipCommand.COMMAND)
-                || message.startsWith(COMMAND_PREFIX + SuikaCommand.COMMAND)) {
+        if (message.startsWith(COMMAND_PREFIX + BASE_COMMAND)) {
             ClientPlayNetworkHandler connection = MinecraftClient.getInstance().getNetworkHandler();
             if (connection != null) {
                 CommandDispatcher<CommandSource> commandDispatcher = connection.getCommandDispatcher();
