@@ -1,7 +1,5 @@
 package com.forpleuvoir.suika.config;
 
-import com.google.gson.JsonObject;
-
 
 /**
  * @author forpleuvoir
@@ -13,18 +11,14 @@ import com.google.gson.JsonObject;
  */
 public class ChatMessageConfig {
     public transient static final String KEY = "chat_message";
-    private String prefix = "";
-    private String append = "";
+    private String prefix = "&d";
+    private String append = "❀";
+    public static transient String defPrefix = "&d";
+    public static transient String defAppend = "❀";
 
-    /**
-     * 加载配置
-     *
-     * @param data 数据
-     */
-    public void loadConfig(JsonObject data) {
-        JsonObject jsonObject = data.get(KEY).getAsJsonObject();
-        this.prefix = jsonObject.get("prefix").getAsString();
-        this.append = jsonObject.get("append").getAsString();
+
+    public ChatMessageConfig() {
+        this.setDefault();
     }
 
     public void setPrefix(String prefix) {
@@ -53,8 +47,8 @@ public class ChatMessageConfig {
     }
 
     public void setDefault() {
-        this.prefix = "&d";
-        this.append = "❀";
+        this.prefix = defPrefix;
+        this.append = defAppend;
     }
 
     @Override

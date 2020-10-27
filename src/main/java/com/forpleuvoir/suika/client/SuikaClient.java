@@ -1,5 +1,6 @@
 package com.forpleuvoir.suika.client;
 
+import com.forpleuvoir.suika.config.ConfigManager;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -16,6 +17,6 @@ import net.fabricmc.api.Environment;
 public class SuikaClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-
+        ConfigManager.init();
     }
 }

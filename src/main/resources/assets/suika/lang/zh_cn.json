@@ -1,8 +1,17 @@
 {
-
   "itemGroup.suika.group": "suika mod",
   "item.suika.ibuki_gourd": "伊吹瓢",
   "suika.ibuki_gourd.tooltip": "§e里面的酒喝不完的样子...",
   "argument.suika.formatting.error": "格式参数错误",
-  "command.suika.tooltip.air": "空气不能被添加Tooltip"
+  "command.suika.tooltip.air": "空气不能被添加Tooltip",
+  "gui.suika.auto_rebirth": "自动复活",
+  "gui.suika.chat_message": "聊天注入",
+  "gui.suika.tooltip": "工具提示注入",
+  "gui.suika.show_enchantment": "切换物品时显示附魔",
+  "gui.suika.chat_bubbles": "聊天泡泡",
+  "title.suika.config": "suika mod 设置",
+  "category.suika.switch": "开关",
+  "category.suika.chat_message": "聊天注入设置",
+  "entry.suika.chat_message.prefix": "聊天注入前缀",
+  "entry.suika.chat_message.append": "聊天注入后缀"
 }

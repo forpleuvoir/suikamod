@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class IbukiGourd extends Item {
 
-    private static final Integer SEC=20;
+    private static final Integer SEC = 20;
 
     public IbukiGourd(Settings settings) {
         super(settings);
@@ -49,11 +49,11 @@ public class IbukiGourd extends Item {
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         if (user instanceof PlayerEntity && !world.isClient) {
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS,60*SEC));
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA,60*SEC));
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS,60*SEC,2));
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.MINING_FATIGUE,60*SEC,2));
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH,600*SEC,5));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 60 * SEC));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 60 * SEC));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 60 * SEC, 2));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.MINING_FATIGUE, 60 * SEC, 2));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 600 * SEC, 5));
         }
         return stack;
     }

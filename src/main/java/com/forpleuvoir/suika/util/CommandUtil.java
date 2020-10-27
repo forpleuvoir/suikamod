@@ -1,8 +1,11 @@
 package com.forpleuvoir.suika.util;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.*;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
+import net.minecraft.text.Texts;
 import net.minecraft.util.Formatting;
 
 /**
@@ -29,5 +32,9 @@ public class CommandUtil {
         }
         Text result = Texts.bracketed(new LiteralText(prefix+key)).append(stack.toHoverableText()).append(append);
         MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(result);
+    }
+
+    public static void openScreen(Screen screen){
+        MinecraftClient.getInstance().openScreen(screen);
     }
 }

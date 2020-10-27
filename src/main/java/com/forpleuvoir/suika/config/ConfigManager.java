@@ -133,7 +133,6 @@ public class ConfigManager {
         ChatMessageConfig chatMessageConfig = (ChatMessageConfig) DATA.get(ChatMessageConfig.KEY);
         if (chatMessageConfig == null) {
             chatMessageConfig = new ChatMessageConfig();
-            chatMessageConfig.setDefault();
             DATA.put(ChatMessageConfig.KEY, chatMessageConfig);
             saveData();
         }
@@ -146,6 +145,22 @@ public class ConfigManager {
             chatMessageConfig = new ChatMessageConfig();
         }
         chatMessageConfig.set(prefix, append);
+        saveData();
+    }
+    public static void setChatMessagePrefix(String prefix) {
+        ChatMessageConfig chatMessageConfig = (ChatMessageConfig) DATA.get(ChatMessageConfig.KEY);
+        if (chatMessageConfig == null) {
+            chatMessageConfig = new ChatMessageConfig();
+        }
+        chatMessageConfig.setPrefix(prefix);
+        saveData();
+    }
+    public static void setChatMessageAppend(String append) {
+        ChatMessageConfig chatMessageConfig = (ChatMessageConfig) DATA.get(ChatMessageConfig.KEY);
+        if (chatMessageConfig == null) {
+            chatMessageConfig = new ChatMessageConfig();
+        }
+        chatMessageConfig.setAppend(append);
         saveData();
     }
 

@@ -4,12 +4,15 @@
   "package": "com.forpleuvoir.suika.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+
   ],
   "client": [
+    "client.gui.ClientChatListenerMixin",
+    "client.gui.hud.InGameHudMixin",
     "client.player.ClientPlayerEntityMixin",
-    "network.play.server.SCommandListPacketMixin",
     "item.ItemMixin",
-    "client.gui.hud.InGameHudMixin"
+    "network.play.server.SCommandListPacketMixin",
+    "client.gui.screen.OptionsScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

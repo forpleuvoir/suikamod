@@ -15,7 +15,9 @@ public enum SuikaConfig {
     CHAT_MESSAGE("chat_message", true),
     TOOLTIP("tooltip", true),
     AUTO_REBIRTH("auto_rebirth", false),
-    SHOW_ENCHANTMENT("show_enchantment", true);
+    SHOW_ENCHANTMENT("show_enchantment", true),
+    CHAT_BUBBLES("chat_bubbles",true)
+    ;
 
     private final String key;
     private final Object value;

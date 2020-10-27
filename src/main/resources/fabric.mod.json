@@ -16,10 +16,14 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "com.forpleuvoir.suika.client.SuikaClient"
+      "com.forpleuvoir.suika.client.SuikaClient",
+      "com.forpleuvoir.chatbubbles.FabricModChatBubbles"
     ],
     "main": [
       "com.forpleuvoir.suika.Suika"
+    ],
+    "modmenu": [
+      "com.forpleuvoir.suika.compat.modmenu.ModMenuImpl"
     ]
   },
   "mixins": [

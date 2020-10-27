@@ -10,6 +10,7 @@ import net.minecraft.util.registry.Registry;
 
 import static com.forpleuvoir.suika.Suika.MOD_ID;
 /**
+ * item注册器
  * @BelongsProject suikamod
  * @BelongsPackage com.forpleuvoir.suika.item
  * @ClassName ItemRegistry

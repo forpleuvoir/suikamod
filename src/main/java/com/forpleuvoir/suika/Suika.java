@@ -1,6 +1,5 @@
 package com.forpleuvoir.suika;
 
-import com.forpleuvoir.suika.config.ConfigManager;
 import com.forpleuvoir.suika.item.ItemRegistry;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
@@ -8,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * @BelongsProject suikamod
- * @BelonsPackge com.forpleuvoir.suika
+ * @BelongsPackage kge com.forpleuvoir.suika
  * @ClassName Suika
  * @author forpleuvoir
  * @CreateTime 2020/10/19 11:43
@@ -21,7 +20,6 @@ public class Suika implements ModInitializer {
     @Override
     public void onInitialize() {
         LOGGER.info("suika mod initialize...");
-        ConfigManager.init();
         ItemRegistry.register();
     }
 }

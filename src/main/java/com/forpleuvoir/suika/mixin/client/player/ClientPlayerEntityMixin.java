@@ -4,13 +4,9 @@ package com.forpleuvoir.suika.mixin.client.player;
 import com.forpleuvoir.suika.client.interop.ClientInterop;
 import com.forpleuvoir.suika.config.ConfigManager;
 import com.forpleuvoir.suika.config.SuikaConfig;
-import com.mojang.authlib.GameProfile;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -18,6 +14,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import static com.forpleuvoir.suika.client.interop.ClientInterop.COMMAND_PREFIX;
 
 /**
  * @author forpleuvoir
@@ -28,14 +26,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * @Description 客户端玩家注入
  */
 @Mixin(ClientPlayerEntity.class)
-public abstract class ClientPlayerEntityMixin extends PlayerEntity {
+public abstract class ClientPlayerEntityMixin {
     @Final
     @Shadow
     public ClientPlayNetworkHandler networkHandler;
-
-    public ClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
-        super(world, pos, yaw, profile);
-    }
 
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     public void sendChatMessage(String message, CallbackInfo ci) {
@@ -43,20 +37,23 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
             ci.cancel();
             return;
         }
-        String msg = message;
-        if (!message.startsWith(ClientInterop.COMMAND_PREFIX)) {
-            if (ConfigManager.getConfig(SuikaConfig.CHAT_MESSAGE,Boolean.class)) {
+        if (!message.startsWith(COMMAND_PREFIX)) {
+            if (ConfigManager.getConfig(SuikaConfig.CHAT_MESSAGE, Boolean.class)) {
+                String msg;
                 String[] cm = ConfigManager.getChatMessage();
                 msg = cm[0] + message + cm[1];
+                this.networkHandler.sendPacket(new ChatMessageC2SPacket(msg));
+                ci.cancel();
+                return;
             }
         }
-        this.networkHandler.sendPacket(new ChatMessageC2SPacket(msg));
-        ci.cancel();
+
+
     }
 
     @Inject(method = "showsDeathScreen", at = @At("HEAD"), cancellable = true)
     public void showsDeathScreen(CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue(!ConfigManager.getConfig(SuikaConfig.AUTO_REBIRTH,Boolean.class));
+        cir.setReturnValue(!ConfigManager.getConfig(SuikaConfig.AUTO_REBIRTH, Boolean.class));
     }
 
 }

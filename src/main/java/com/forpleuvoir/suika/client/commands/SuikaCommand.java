@@ -23,15 +23,17 @@ import static com.forpleuvoir.suika.client.interop.ClientInterop.BASE_COMMAND;
  * @createTime 2020/10/22 12:08
  */
 public class SuikaCommand {
-    public static final String COMMAND = BASE_COMMAND;
     public static final String SHOW_ENCHANTMENT = BASE_COMMAND + "show_enchantment";
     public static final String AUTO_REBIRTH = BASE_COMMAND + "auto_rebirth";
+    public static final String CHAT_BUBBLES = BASE_COMMAND + "chat_bubbles";
 
     public static void register(CommandDispatcher<CommandSource> dispatcher) {
-        LiteralArgumentBuilder command = showEnchantment();
+        LiteralArgumentBuilder showEnchantment = showEnchantment();
         LiteralArgumentBuilder autoRebirth = autoRebirth();
-        dispatcher.register(command);
+        LiteralArgumentBuilder chatBubbles = chatBubbles();
+        dispatcher.register(showEnchantment);
         dispatcher.register(autoRebirth);
+        dispatcher.register(chatBubbles);
     }
 
     private static LiteralArgumentBuilder<ServerCommandSource> showEnchantment() {
@@ -54,6 +56,17 @@ public class SuikaCommand {
                     ConfigManager.setConfig(SuikaConfig.AUTO_REBIRTH, isEnable);
                     Formatting formatting = ConfigManager.getConfig(SuikaConfig.AUTO_REBIRTH, Boolean.class) ? Formatting.GREEN : Formatting.RED;
                     result("AutoRebirth = " + ConfigManager.getConfig(SuikaConfig.AUTO_REBIRTH, Boolean.class), formatting);
+                    return 1;
+                }));
+    }
+
+    private static LiteralArgumentBuilder<ServerCommandSource> chatBubbles() {
+        return CommandManager.literal(CHAT_BUBBLES)
+                .then(CommandManager.argument("isEnabled", BoolArgumentType.bool()).executes(context -> {
+                    boolean isEnable = BoolArgumentType.getBool(context, "isEnabled");
+                    ConfigManager.setConfig(SuikaConfig.CHAT_BUBBLES, isEnable);
+                    Formatting formatting = ConfigManager.getConfig(SuikaConfig.CHAT_BUBBLES, Boolean.class) ? Formatting.GREEN : Formatting.RED;
+                    result("ChatBubbles = " + ConfigManager.getConfig(SuikaConfig.CHAT_BUBBLES, Boolean.class), formatting);
                     return 1;
                 }));
     }
