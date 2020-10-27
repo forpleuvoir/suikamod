@@ -25,30 +25,38 @@ public class TooltipConfig {
     private transient final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private transient final Callback callback;
     private final transient static String DEFAULT_DATA = "{\n" +
-            "    \"item.minecraft.melon_slice\": {\n" +
-            "      \"enable\": true,\n" +
-            "      \"tips\": [\n" +
-            "        \"§d这个西瓜片看起来很奇怪的样子...能吃吗...\"\n" +
-            "      ]\n" +
-            "    },\n" +
-            "    \"block.minecraft.player_head:YuyukoSAMA\": {\n" +
-            "      \"enable\": true,\n" +
-            "      \"tips\": [\n" +
-            "        \"§d超可爱的幽幽子\"\n" +
-            "      ]\n" +
-            "    },\n" +
-            "    \"block.minecraft.player_head:forpleuvoir\": {\n" +
-            "      \"enable\": true,\n" +
-            "      \"tips\": [\n" +
-            "        \"§6孤独传说\"\n" +
-            "      ]\n" +
-            "    },\n" +
-            "    \"block.minecraft.player_head:dhwuia\": {\n" +
-            "      \"enable\": true,\n" +
-            "      \"tips\": [\n" +
-            "        \"§bdhwuia的头,看起来就很憨批,却意外的可爱...\",\n" +
-            "        \"§b是个很讨人喜欢的家伙呢,但是却消失很久了...\"\n" +
-            "      ]\n" +
+            "      \"item.minecraft.melon_slice\": {\n" +
+            "        \"enable\": true,\n" +
+            "        \"tips\": [\n" +
+            "          \"§d这个西瓜片看起来很奇怪的样子...能吃吗...\",\n" +
+            "          \"§6好怪的西瓜\"\n" +
+            "        ]\n" +
+            "      },\n" +
+            "      \"block.minecraft.player_head:YuyukoSAMA\": {\n" +
+            "        \"enable\": true,\n" +
+            "        \"tips\": [\n" +
+            "          \"§d超可爱的幽幽子\"\n" +
+            "        ]\n" +
+            "      },\n" +
+            "      \"block.minecraft.player_head:forpleuvoir\": {\n" +
+            "        \"enable\": true,\n" +
+            "        \"tips\": [\n" +
+            "          \"§6孤独传说\"\n" +
+            "        ]\n" +
+            "      },\n" +
+            "      \"block.minecraft.player_head:dhwuia\": {\n" +
+            "        \"enable\": true,\n" +
+            "        \"tips\": [\n" +
+            "          \"§bdhwuia的头,看起来就很憨批,却意外的可爱...\",\n" +
+            "          \"§b是个很讨人喜欢的家伙呢,但是却消失很久了...\"\n" +
+            "        ]\n" +
+            "      },\n" +
+            "      \"item.suika.ibuki_gourd\": {\n" +
+            "        \"enable\": true,\n" +
+            "        \"tips\": [\n" +
+            "          \"§e里面的酒喝不完的样子...\"\n" +
+            "        ]\n" +
+            "      }\n" +
             "    }\n" +
             "  }";
 

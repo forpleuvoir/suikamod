@@ -1,6 +1,5 @@
 package com.forpleuvoir.suika.item;
 
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -8,16 +7,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 
 /**
  * @author forpleuvoir
@@ -29,11 +24,6 @@ public class IbukiGourd extends Item {
 
     public IbukiGourd(Settings settings) {
         super(settings);
-    }
-
-    @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(new TranslatableText("suika.ibuki_gourd.tooltip"));
     }
 
     @Override
