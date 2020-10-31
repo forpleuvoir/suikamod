@@ -58,7 +58,7 @@ public class InGameHudMixin {
             }
             LinkedList<MutableText> list = new LinkedList<>();
             list.addFirst(mutableText);
-            if(ConfigManager.getConfig(SuikaConfig.SHOW_ENCHANTMENT,Boolean.class)) {
+            if (ConfigManager.getConfig(SuikaConfig.SHOW_ENCHANTMENT, Boolean.class)) {
                 addTooltip(currentStack, list);
                 if (!currentStack.getEnchantments().isEmpty()) {
                     for (int i = 0; i < currentStack.getEnchantments().size(); i++) {
@@ -67,7 +67,7 @@ public class InGameHudMixin {
                         String str = compoundTag.getString("id");
                         String key = "enchantment." + str.split(":")[0] + "." + str.split(":")[1];
                         MutableText e = new TranslatableText(key).append(" ");
-                        if(lvl!=1) {
+                        if (lvl != 1) {
                             e.append(new TranslatableText("enchantment.level." + lvl));
                         }
                         e.formatted(Formatting.DARK_AQUA);
@@ -103,7 +103,7 @@ public class InGameHudMixin {
                 for (MutableText e : list) {
                     int a = this.getFontRenderer().getWidth((StringVisitable) e);
                     int b = (this.scaledWidth - a) / 2;
-                    this.getFontRenderer().drawWithShadow(matrices, (Text) e, (float) b, (float) newK + (count*padding), 16777215 + (l << 24));
+                    this.getFontRenderer().drawWithShadow(matrices, (Text) e, (float) b, (float) newK + (count * padding), 16777215 + (l << 24));
                     count++;
                 }
                 RenderSystem.disableBlend();
@@ -114,6 +114,7 @@ public class InGameHudMixin {
         ci.cancel();
         return;
     }
+
 
     public TextRenderer getFontRenderer() {
         return this.client.textRenderer;

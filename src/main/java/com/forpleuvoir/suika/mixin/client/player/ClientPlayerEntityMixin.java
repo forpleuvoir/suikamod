@@ -4,6 +4,7 @@ package com.forpleuvoir.suika.mixin.client.player;
 import com.forpleuvoir.suika.client.interop.ClientInterop;
 import com.forpleuvoir.suika.config.ConfigManager;
 import com.forpleuvoir.suika.config.SuikaConfig;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
@@ -26,10 +27,13 @@ import static com.forpleuvoir.suika.client.interop.ClientInterop.COMMAND_PREFIX;
  * @Description 客户端玩家注入
  */
 @Mixin(ClientPlayerEntity.class)
-public abstract class ClientPlayerEntityMixin {
+public class ClientPlayerEntityMixin {
     @Final
     @Shadow
     public ClientPlayNetworkHandler networkHandler;
+    @Shadow
+    @Final
+    protected MinecraftClient client;
 
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     public void sendChatMessage(String message, CallbackInfo ci) {
@@ -47,8 +51,6 @@ public abstract class ClientPlayerEntityMixin {
                 return;
             }
         }
-
-
     }
 
     @Inject(method = "showsDeathScreen", at = @At("HEAD"), cancellable = true)

@@ -18,6 +18,6 @@ public class ModMenuImpl implements ModMenuApi {
 
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return (screen -> SuikaConfigScreen.initScreen(screen));
+        return SuikaConfigScreen::initScreen;
     }
 }
