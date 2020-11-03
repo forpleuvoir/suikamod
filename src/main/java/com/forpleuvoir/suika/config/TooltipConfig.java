@@ -124,13 +124,6 @@ public class TooltipConfig {
         callback.callback();
     }
 
-    public interface Callback {
-        /**
-         * 回调方法
-         */
-        void callback();
-    }
-
     /**
      * 数据类
      */

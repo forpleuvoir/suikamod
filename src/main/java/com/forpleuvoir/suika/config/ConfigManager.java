@@ -46,14 +46,17 @@ public class ConfigManager {
         DATA_FILE = new File(FILE_DIR, DATA_FILE_NAME);
     }
 
+
+
     public static void loadConfig() {
         try {
             String config = FileUtil.readFile(CONFIG_FILE);
-            Map<String, Object> map=GSON.fromJson(new JsonParser().parse(config).getAsJsonObject(),new TypeToken<Map<String, Object>>(){}.getType());
-            map.forEach((k,v)->{
-                ConfigManager.CONFIG.put(k,v);
+            Map<String, Object> map = GSON.fromJson(new JsonParser().parse(config).getAsJsonObject(), new TypeToken<Map<String, Object>>() {
+            }.getType());
+            map.forEach((k, v) -> {
+                ConfigManager.CONFIG.put(k, v);
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             Suika.LOGGER.error("suika mod 配置加载失败");
             Suika.LOGGER.error(e.getMessage());
             e.printStackTrace();
@@ -65,7 +68,7 @@ public class ConfigManager {
             String data = FileUtil.readFile(DATA_FILE);
             ConfigManager.DATA.put(TooltipConfig.KEY, GSON.fromJson(new JsonParser().parse(data).getAsJsonObject().get(TooltipConfig.KEY), TooltipConfig.class));
             ConfigManager.DATA.put(ChatMessageConfig.KEY, GSON.fromJson(new JsonParser().parse(data).getAsJsonObject().get(ChatMessageConfig.KEY), ChatMessageConfig.class));
-        }catch (Exception e){
+        } catch (Exception e) {
             Suika.LOGGER.error("suika mod 数据加载失败");
             Suika.LOGGER.error(e.getMessage());
             e.printStackTrace();
@@ -128,6 +131,27 @@ public class ConfigManager {
         return tooltipConfig;
     }
 
+    public static String getString(SuikaConfig config) {
+        StringConfig stringConfig = (StringConfig) DATA.get(StringConfig.KEY);
+        if (stringConfig == null) {
+            stringConfig = new StringConfig();
+            stringConfig.put(config.getKey(), (String) config.getValue());
+            DATA.put(StringConfig.KEY, stringConfig);
+            saveData();
+        }
+        return stringConfig.get(config.getKey());
+    }
+
+    public static void setString(SuikaConfig config, String value) {
+        StringConfig stringConfig = (StringConfig) DATA.get(StringConfig.KEY);
+        if (stringConfig == null) {
+            stringConfig = new StringConfig();
+            stringConfig.put(config.getKey(), value);
+            DATA.put(StringConfig.KEY, stringConfig);
+            saveData();
+        }
+        stringConfig.put(config.getKey(), value);
+    }
 
     public static String[] getChatMessage() {
         ChatMessageConfig chatMessageConfig = (ChatMessageConfig) DATA.get(ChatMessageConfig.KEY);
@@ -147,6 +171,7 @@ public class ConfigManager {
         chatMessageConfig.set(prefix, append);
         saveData();
     }
+
     public static void setChatMessagePrefix(String prefix) {
         ChatMessageConfig chatMessageConfig = (ChatMessageConfig) DATA.get(ChatMessageConfig.KEY);
         if (chatMessageConfig == null) {
@@ -155,6 +180,7 @@ public class ConfigManager {
         chatMessageConfig.setPrefix(prefix);
         saveData();
     }
+
     public static void setChatMessageAppend(String append) {
         ChatMessageConfig chatMessageConfig = (ChatMessageConfig) DATA.get(ChatMessageConfig.KEY);
         if (chatMessageConfig == null) {

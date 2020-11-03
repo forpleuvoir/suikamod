@@ -39,7 +39,6 @@ public class SuikaCommand {
     private static LiteralArgumentBuilder<ServerCommandSource> showEnchantment() {
         return CommandManager.literal(SHOW_ENCHANTMENT)
                 .then(CommandManager.argument("isEnabled", BoolArgumentType.bool()).executes(context -> {
-                    // TODO: 2020/10/19 实现注入开启、关闭
                     boolean isEnable = BoolArgumentType.getBool(context, "isEnabled");
                     ConfigManager.setConfig(SuikaConfig.SHOW_ENCHANTMENT, isEnable);
                     Formatting formatting = ConfigManager.getConfig(SuikaConfig.SHOW_ENCHANTMENT, Boolean.class) ? Formatting.GREEN : Formatting.RED;
@@ -51,7 +50,6 @@ public class SuikaCommand {
     private static LiteralArgumentBuilder<ServerCommandSource> autoRebirth() {
         return CommandManager.literal(AUTO_REBIRTH)
                 .then(CommandManager.argument("isEnabled", BoolArgumentType.bool()).executes(context -> {
-                    // TODO: 2020/10/19 实现注入开启、关闭
                     boolean isEnable = BoolArgumentType.getBool(context, "isEnabled");
                     ConfigManager.setConfig(SuikaConfig.AUTO_REBIRTH, isEnable);
                     Formatting formatting = ConfigManager.getConfig(SuikaConfig.AUTO_REBIRTH, Boolean.class) ? Formatting.GREEN : Formatting.RED;

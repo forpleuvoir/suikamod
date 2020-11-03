@@ -1,7 +1,7 @@
 package com.forpleuvoir.chatbubbles;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.event.client.ClientTickCallback;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.text.Text;
@@ -13,7 +13,7 @@ import net.minecraft.text.Text;
  * @className FabricModChatBubbles
  * @createTime 2020/10/25 11:41
  */
-public class FabricModChatBubbles implements ClientModInitializer, ClientTickCallback {
+public class FabricModChatBubbles implements ClientModInitializer {
     static FabricModChatBubbles instance;
     MinecraftClient minecraft;
     ChatBubbles chatBubbles;
@@ -21,7 +21,7 @@ public class FabricModChatBubbles implements ClientModInitializer, ClientTickCal
 
     @Override
     public void onInitializeClient() {
-        ClientTickCallback.EVENT.register(this);
+        ClientTickEvents.END_CLIENT_TICK.register(this::tick);
         instance = this;
     }
 
@@ -30,7 +30,6 @@ public class FabricModChatBubbles implements ClientModInitializer, ClientTickCal
         this.chatBubbles = new ChatBubbles();
     }
 
-    @Override
     public void tick(MinecraftClient client) {
         if (!this.initialized) {
             if (client != null && client.getOverlay () == null) {

@@ -16,15 +16,17 @@ public enum SuikaConfig {
     TOOLTIP("tooltip", true),
     AUTO_REBIRTH("auto_rebirth", false),
     SHOW_ENCHANTMENT("show_enchantment", true),
-    CHAT_BUBBLES("chat_bubbles",true)
-    ;
+    CHAT_BUBBLES("chat_bubbles", true),
+    CUSTOM_CHAT_MESSAGE_VALUE("custom_chat_message_value", "/back"),
+    CUSTOM_CHAT_MESSAGE_ENABLE("custom_chat_message", false);
 
     private final String key;
     private final Object value;
 
     /**
      * 配置枚举
-     * @param key 键值
+     *
+     * @param key   键值
      * @param value 默认值
      */
     SuikaConfig(String key, Object value) {
