@@ -39,7 +39,6 @@ public class ClientPlayerEntityMixin {
     public void sendChatMessage(String message, CallbackInfo ci) {
         if (ClientInterop.interceptChatMessage(message)) {
             ci.cancel();
-            return;
         }
         if (!message.startsWith(COMMAND_PREFIX)) {
             if (ConfigManager.getConfig(SuikaConfig.CHAT_MESSAGE, Boolean.class)) {
@@ -48,7 +47,6 @@ public class ClientPlayerEntityMixin {
                 msg = cm[0] + message + cm[1];
                 this.networkHandler.sendPacket(new ChatMessageC2SPacket(msg));
                 ci.cancel();
-                return;
             }
         }
     }

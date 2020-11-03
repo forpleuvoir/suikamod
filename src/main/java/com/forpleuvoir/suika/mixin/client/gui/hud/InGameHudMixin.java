@@ -1,15 +1,5 @@
 package com.forpleuvoir.suika.mixin.client.gui.hud;
 
-/**
- * 后面再说
- *
- * @author forpleuvoir
- * @belongsProject suikamod
- * @belongsPackage com.forpleuvoir.suika.mixin.client.gui.hud
- * @className InGameHudMixin
- * @createTime 2020/10/22 9:49
- */
-
 import com.forpleuvoir.suika.config.ConfigManager;
 import com.forpleuvoir.suika.config.SuikaConfig;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -32,6 +22,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.LinkedList;
 
 import static com.forpleuvoir.suika.util.TooltipUtil.addTooltip;
+
+/**
+ * 后面再说
+ *
+ * @author forpleuvoir
+ * @belongsProject suikamod
+ * @belongsPackage com.forpleuvoir.suika.mixin.client.gui.hud
+ * @className InGameHudMixin
+ * @createTime 2020/10/22 9:49
+ */
 
 @Mixin(InGameHud.class)
 public class InGameHudMixin {
@@ -75,9 +75,10 @@ public class InGameHudMixin {
                     }
                 }
             }
-            int i = this.getFontRenderer().getWidth((StringVisitable) mutableText);
+            int i = this.getFontRenderer().getWidth( mutableText);
             int j = (this.scaledWidth - i) / 2;
             int k = this.scaledHeight - 59;
+            assert this.client.interactionManager != null;
             if (!this.client.interactionManager.hasStatusBars()) {
                 k += 14;
             }
@@ -101,9 +102,9 @@ public class InGameHudMixin {
                 int size = list.size();
                 int newK = k - ((size - 1) * padding);
                 for (MutableText e : list) {
-                    int a = this.getFontRenderer().getWidth((StringVisitable) e);
+                    int a = this.getFontRenderer().getWidth( e);
                     int b = (this.scaledWidth - a) / 2;
-                    this.getFontRenderer().drawWithShadow(matrices, (Text) e, (float) b, (float) newK + (count * padding), 16777215 + (l << 24));
+                    this.getFontRenderer().drawWithShadow(matrices,  e, (float) b, (float) newK + (count * padding), 16777215 + (l << 24));
                     count++;
                 }
                 RenderSystem.disableBlend();
@@ -112,7 +113,6 @@ public class InGameHudMixin {
         }
         this.client.getProfiler().pop();
         ci.cancel();
-        return;
     }
 
 
