@@ -27,6 +27,7 @@ public class SuikaConfigScreen {
         ConfigBuilder builder = ConfigBuilder.create().setTitle(new TranslatableText("title.suika.config"));
         if (parent != null)
             builder.setParentScreen(parent);
+        builder.setTransparentBackground(true);
         addBooleanConfig(builder);
         addStringConfig(builder);
         chatMessage(builder);

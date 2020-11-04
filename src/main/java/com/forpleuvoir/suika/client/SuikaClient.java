@@ -1,5 +1,6 @@
 package com.forpleuvoir.suika.client;
 
+import com.forpleuvoir.suika.Suika;
 import com.forpleuvoir.suika.config.ConfigManager;
 import com.forpleuvoir.suika.config.HotKeys;
 import com.forpleuvoir.suika.config.SuikaConfig;
@@ -26,6 +27,7 @@ public class SuikaClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        Suika.LOGGER.info("suika mod initializeClient...");
         HotKeys.register();
         ClientTickEvents.END_CLIENT_TICK.register(this::tick);
         ConfigManager.init();

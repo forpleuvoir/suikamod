@@ -42,6 +42,7 @@ public class ConfigManager {
 
 
     public static void loadFiles() {
+        Suika.LOGGER.info("suika mod load file...");
         CONFIG_FILE = new File(FILE_DIR, CONFIG_FILE_NAME);
         DATA_FILE = new File(FILE_DIR, DATA_FILE_NAME);
     }
@@ -50,6 +51,7 @@ public class ConfigManager {
 
     public static void loadConfig() {
         try {
+            Suika.LOGGER.info("suika mod load config...");
             String config = FileUtil.readFile(CONFIG_FILE);
             Map<String, Object> map = GSON.fromJson(new JsonParser().parse(config).getAsJsonObject(), new TypeToken<Map<String, Object>>() {
             }.getType());
@@ -65,6 +67,7 @@ public class ConfigManager {
 
     public static void loadData() {
         try {
+            Suika.LOGGER.info("suika mod load data...");
             String data = FileUtil.readFile(DATA_FILE);
             ConfigManager.DATA.put(TooltipConfig.KEY, GSON.fromJson(new JsonParser().parse(data).getAsJsonObject().get(TooltipConfig.KEY), TooltipConfig.class));
             ConfigManager.DATA.put(ChatMessageConfig.KEY, GSON.fromJson(new JsonParser().parse(data).getAsJsonObject().get(ChatMessageConfig.KEY), ChatMessageConfig.class));
