@@ -177,7 +177,7 @@ public class RenderPlayerChatBubbles extends PlayerEntityRenderer {
         this.img("images/chatbubble.png");
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder vertexBuffer = tessellator.getBuffer();
-        VertexFormat.class_5596 model=VertexFormat.class_5596.field_27377;
+        VertexFormat.class_5596 model=VertexFormat.class_5596.field_27381;
         vertexBuffer.begin(model, VertexFormats.POSITION_TEXTURE_COLOR);
         vertexBuffer. vertex((double) left, (double) top, 0.0D).texture (0.0625F, 0.125F).color (r, g, b, a).next ();
         vertexBuffer. vertex((double) left, (double) bottom, 0.0D).texture (0.0625F, 0.875F).color (r, g, b, a).next ();

@@ -51,6 +51,33 @@ public class ReflectionUtils {
         return null;
     }
 
+    public static void setPrivateFieldValueByName(Object o, String fieldName,Object value){
+        Field[] fields = o.getClass().getDeclaredFields();
+        for(int i = 0; i < fields.length; ++i) {
+            if (fieldName.equals(fields[i].getName())) {
+                try {
+                    fields[i].setAccessible(true);
+                    fields[i].set(o,value);
+                } catch (IllegalAccessException var5) {
+                }
+            }
+        }
+    }
+
+    public static Object getPrivateFieldValueByName(Object o, String fieldName){
+        Field[] fields = o.getClass().getDeclaredFields();
+        for(int i = 0; i < fields.length; ++i) {
+            if (fieldName.equals(fields[i].getName())) {
+                try {
+                    fields[i].setAccessible(true);
+                    return fields[i].get(o);
+                } catch (IllegalAccessException var5) {
+                }
+            }
+        }
+        return null;
+    }
+
     public static Object getFieldValueByName(Object o, String fieldName) {
         Field[] fields = o.getClass().getFields();
 
