@@ -1,6 +1,7 @@
 package com.forpleuvoir.chatbubbles;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.class_5617;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -8,7 +9,6 @@ import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.util.math.AffineTransformation;
 import net.minecraft.client.util.math.MatrixStack;
@@ -35,11 +35,11 @@ public class RenderPlayerChatBubbles extends PlayerEntityRenderer {
     float b;
     int lineWidth;
 
-    public RenderPlayerChatBubbles(EntityRenderDispatcher renderManager) {
+    public RenderPlayerChatBubbles(class_5617.class_5618 renderManager) {
         this(renderManager, false);
     }
 
-    public RenderPlayerChatBubbles(EntityRenderDispatcher renderManager, boolean smallArms) {
+    public RenderPlayerChatBubbles(class_5617.class_5618 renderManager, boolean smallArms) {
         super(renderManager, smallArms);
         this.r = 0.0F;
         this.g = 0.0F;
@@ -52,7 +52,7 @@ public class RenderPlayerChatBubbles extends PlayerEntityRenderer {
     @Override
     public void renderLabelIfPresent(AbstractClientPlayerEntity par1EntityLivingBase, Text label, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int color) {
         super.renderLabelIfPresent(par1EntityLivingBase, label, matrixStack, vertexConsumerProvider, color);
-        if (par1EntityLivingBase != this.getRenderManager().camera.getFocusedEntity()) {
+        if (par1EntityLivingBase != this.dispatcher.camera.getFocusedEntity()) {
             GLShim.glPushMatrix();
             GLShim.glRotatef(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getPitch(), 1.0F, 0.0F, 0.0F);
             GLShim.glRotatef(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getYaw() - 180.0F, 0.0F, 1.0F, 0.0F);
