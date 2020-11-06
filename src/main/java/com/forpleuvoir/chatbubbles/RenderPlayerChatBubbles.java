@@ -34,13 +34,16 @@ public class RenderPlayerChatBubbles extends PlayerEntityRenderer {
     float g;
     float b;
     int lineWidth;
+    private TextRenderer textRenderer;
 
     public RenderPlayerChatBubbles(class_5617.class_5618 renderManager) {
         this(renderManager, false);
+        this.textRenderer=renderManager.method_32171();
     }
 
     public RenderPlayerChatBubbles(class_5617.class_5618 renderManager, boolean smallArms) {
         super(renderManager, smallArms);
+        this.textRenderer=renderManager.method_32171();
         this.r = 0.0F;
         this.g = 0.0F;
         this.b = 0.0F;
@@ -102,7 +105,7 @@ public class RenderPlayerChatBubbles extends PlayerEntityRenderer {
         int brightDiv = brightness / 65536;
         RenderSystem.glMultiTexCoord2f(33985, (float) brightMod / 1.0F, (float) brightDiv / 1.0F);
         if (var10 <= (double) (var12 * var12)) {
-            TextRenderer fontRenderer = this.dispatcher.getTextRenderer();
+            TextRenderer fontRenderer = this.textRenderer;
             float var13 = 1.6F;
             float var14 = 0.016666668F * var13;
             GLShim.glPushMatrix();
