@@ -1,8 +1,12 @@
 package com.forpleuvoir.chatbubbles;
 
+import net.minecraft.class_5599;
+import net.minecraft.class_5617;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.network.ServerInfo;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.item.ItemRenderer;
 
 import java.io.*;
 import java.util.*;
@@ -141,6 +145,11 @@ public class ChatBubbles {
     private void loadRenderManager() {
         System.out.println("getting renderer");
         EntityRenderDispatcher renderManager = MinecraftClient.getInstance().getEntityRenderDispatcher ();
+        class_5617.class_5618 lv = new class_5617.class_5618(renderManager,
+                (ItemRenderer)ReflectionUtils.getPrivateFieldValueByType(renderManager, EntityRenderDispatcher.class,ItemRenderer.class,1),
+                MinecraftClient.getInstance().getResourceManager(),
+                (class_5599)ReflectionUtils.getFieldValueByName(renderManager,"field_27760"),
+                (TextRenderer)ReflectionUtils.getFieldValueByName(renderManager,"textRenderer"));
         if (renderManager == null) {
             System.out.println("failed to get render manager - chatbubbles");
         } else {
@@ -148,8 +157,8 @@ public class ChatBubbles {
             if (skinMapObject == null) {
                 System.out.println("could not get entityRenderMap chatbubbles");
             } else {
-                this.renderPlayerChatBubbles = new  RenderPlayerChatBubbles(renderManager);
-                this.renderPlayerChatBubblesSlim = new  RenderPlayerChatBubbles(renderManager, true);
+                this.renderPlayerChatBubbles = new  RenderPlayerChatBubbles(lv);
+                this.renderPlayerChatBubblesSlim = new  RenderPlayerChatBubbles(lv, true);
                 ((HashMap)skinMapObject).put("default", this.renderPlayerChatBubbles);
                 ((HashMap)skinMapObject).put("slim", this.renderPlayerChatBubblesSlim);
                 this.haveRenderManager = true;
