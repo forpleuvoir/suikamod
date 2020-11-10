@@ -4,6 +4,7 @@
   "package": "com.forpleuvoir.suika.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "client.MinecraftClientMixin"
   ],
   "client": [
     "client.gui.ClientChatListenerMixin",
