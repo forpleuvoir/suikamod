@@ -1,8 +1,6 @@
 package com.forpleuvoir.suika.mixin.client.gui;
 
 import com.forpleuvoir.chatbubbles.FabricModChatBubbles;
-import com.forpleuvoir.suika.config.ConfigManager;
-import com.forpleuvoir.suika.config.SuikaConfig;
 import net.minecraft.client.gui.hud.ChatHudListener;
 import net.minecraft.network.MessageType;
 import net.minecraft.text.Text;
@@ -12,6 +10,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.UUID;
+
+import static com.forpleuvoir.suika.config.ModConfigApp.modConfig;
 
 /**
  * 聊天气泡
@@ -30,7 +30,7 @@ public class ClientChatListenerMixin {
             cancellable = true
     )
     public void postSay(MessageType type, Text text, UUID senderUuid, CallbackInfo ci) {
-        if(ConfigManager.getConfig(SuikaConfig.CHAT_BUBBLES,Boolean.class)) {
+        if(modConfig.getChatBubbles()) {
             FabricModChatBubbles.say(text);
         }
     }

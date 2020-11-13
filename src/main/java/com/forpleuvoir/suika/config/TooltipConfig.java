@@ -1,5 +1,6 @@
 package com.forpleuvoir.suika.config;
 
+import com.forpleuvoir.suika.util.Callback;
 import com.forpleuvoir.suika.Suika;
 
 import java.util.*;

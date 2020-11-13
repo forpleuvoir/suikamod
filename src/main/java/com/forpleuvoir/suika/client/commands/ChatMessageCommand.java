@@ -1,7 +1,5 @@
 package com.forpleuvoir.suika.client.commands;
 
-import com.forpleuvoir.suika.config.SuikaConfig;
-import com.forpleuvoir.suika.config.ConfigManager;
 import com.forpleuvoir.suika.util.CommandUtil;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
@@ -13,6 +11,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.Formatting;
 
 import static com.forpleuvoir.suika.client.interop.ClientInterop.BASE_COMMAND;
+import static com.forpleuvoir.suika.config.ModConfigApp.modConfig;
 
 /**
  * @author forpleuvoir
@@ -40,9 +39,9 @@ public class ChatMessageCommand {
                 .then(CommandManager.argument("isEnabled", BoolArgumentType.bool()).executes(context -> {
                     // TODO: 2020/10/19 实现注入开启、关闭
                     boolean isEnable = BoolArgumentType.getBool(context, "isEnabled");
-                    ConfigManager.setConfig(SuikaConfig.CHAT_MESSAGE, isEnable);
-                    Formatting formatting = ConfigManager.getConfig(SuikaConfig.CHAT_MESSAGE, Boolean.class) ? Formatting.GREEN : Formatting.RED;
-                    result("启用 = " + ConfigManager.getConfig(SuikaConfig.CHAT_MESSAGE, Boolean.class), formatting);
+                    modConfig.setChatMessage(isEnable);
+                    Formatting formatting = modConfig.getChatMessage() ? Formatting.GREEN : Formatting.RED;
+                    result("启用 = " + modConfig.getChatMessage(), formatting);
                     return 1;
                 }));
     }
@@ -55,7 +54,8 @@ public class ChatMessageCommand {
                                     //// TODO: 2020/10/19 实现后缀注入
                                     String prefix = StringArgumentType.getString(context, "prefix");
                                     String append = StringArgumentType.getString(context, "append");
-                                    ConfigManager.setChatMessage(prefix, append);
+                                    modConfig.setChatMessagePrefix(prefix);
+                                    modConfig.setChatMessageAppend(append);
                                     result("注入前缀:\"" + prefix + "\" ,成功", Formatting.GREEN);
                                     result("注入后缀:\"" + append + "\" ,成功", Formatting.GREEN);
                                     return 1;

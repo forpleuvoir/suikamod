@@ -16,7 +16,7 @@
   "category.suika.chat_message": "聊天注入设置",
   "category.suika.string": "字符串设置",
   "category.suika.key_code": "快捷键设置",
-  "entry.suika.chat_message.prefix": "聊天注入前缀",
-  "entry.suika.chat_message.append": "聊天注入后缀",
+  "string.suika.chat_message_prefix": "聊天注入前缀",
+  "string.suika.chat_message_append": "聊天注入后缀",
   "key.suika.custom_chat_message": "发送快捷聊天信息"
 }
