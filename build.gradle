@@ -29,7 +29,8 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
+    implementation "com.github.forpleuvoir:suikalib:${project.suikalib_version}"
+    include "com.github.forpleuvoir:suikalib:${project.suikalib_version}"
     modApi("me.shedaniel.cloth:config-2:${project.cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
