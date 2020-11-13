@@ -26,7 +26,7 @@ public class MinecraftClientMixin {
     @Final
     private TutorialManager tutorialManager;
 
-    @Inject(method = "<init>", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "<init>", at = @At("RETURN"))
     public void init(CallbackInfo ci) {
         tutorialManager.setStep(TutorialStep.NONE);
     }

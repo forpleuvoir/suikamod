@@ -1,5 +1,7 @@
 package com.forpleuvoir.suika.config;
 
+import com.forpleuvoir.suika.util.Callback;
+
 import java.util.HashMap;
 import java.util.Map;
 

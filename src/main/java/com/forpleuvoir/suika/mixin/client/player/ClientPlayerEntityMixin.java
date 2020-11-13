@@ -2,8 +2,6 @@ package com.forpleuvoir.suika.mixin.client.player;
 
 
 import com.forpleuvoir.suika.client.interop.ClientInterop;
-import com.forpleuvoir.suika.config.ConfigManager;
-import com.forpleuvoir.suika.config.SuikaConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -17,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static com.forpleuvoir.suika.client.interop.ClientInterop.COMMAND_PREFIX;
+import static com.forpleuvoir.suika.config.ModConfigApp.modConfig;
 
 /**
  * @author forpleuvoir
@@ -41,10 +40,9 @@ public class ClientPlayerEntityMixin {
             ci.cancel();
         }
         if (!message.startsWith(COMMAND_PREFIX)) {
-            if (ConfigManager.getConfig(SuikaConfig.CHAT_MESSAGE, Boolean.class)) {
+            if (modConfig.getChatMessage()) {
                 String msg;
-                String[] cm = ConfigManager.getChatMessage();
-                msg = cm[0] + message + cm[1];
+                msg = modConfig.getChatMessagePrefix() + message + modConfig.getChatMessageAppend();
                 this.networkHandler.sendPacket(new ChatMessageC2SPacket(msg));
                 ci.cancel();
             }
@@ -53,7 +51,7 @@ public class ClientPlayerEntityMixin {
 
     @Inject(method = "showsDeathScreen", at = @At("HEAD"), cancellable = true)
     public void showsDeathScreen(CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue(!ConfigManager.getConfig(SuikaConfig.AUTO_REBIRTH, Boolean.class));
+        cir.setReturnValue(!modConfig.getAutoRebirth());
     }
 
 }

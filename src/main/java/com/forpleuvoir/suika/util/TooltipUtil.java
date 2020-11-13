@@ -1,7 +1,6 @@
 package com.forpleuvoir.suika.util;
 
 import com.forpleuvoir.suika.config.ConfigManager;
-import com.forpleuvoir.suika.config.SuikaConfig;
 import com.forpleuvoir.suika.config.TooltipConfig;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.forpleuvoir.suika.client.commands.TooltipCommand.OWNER;
+import static com.forpleuvoir.suika.config.ModConfigApp.modConfig;
 
 /**
  * tooltip工具类
@@ -25,7 +25,7 @@ import static com.forpleuvoir.suika.client.commands.TooltipCommand.OWNER;
  */
 public class TooltipUtil {
     public static void addTooltip(ItemStack stack, List list) {
-        if (ConfigManager.getConfig(SuikaConfig.TOOLTIP,Boolean.class)) {
+        if (modConfig.getTooltip()) {
             String key = getKey(stack);
             Map<String, TooltipConfig.Data> map = ConfigManager.getTooltip().getDatas();
             if (map.containsKey(key)) {

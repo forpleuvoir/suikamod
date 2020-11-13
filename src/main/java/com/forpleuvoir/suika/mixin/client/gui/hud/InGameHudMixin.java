@@ -1,7 +1,5 @@
 package com.forpleuvoir.suika.mixin.client.gui.hud;
 
-import com.forpleuvoir.suika.config.ConfigManager;
-import com.forpleuvoir.suika.config.SuikaConfig;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -10,7 +8,9 @@ import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.text.*;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.LinkedList;
 
+import static com.forpleuvoir.suika.config.ModConfigApp.modConfig;
 import static com.forpleuvoir.suika.util.TooltipUtil.addTooltip;
 
 /**
@@ -58,7 +59,7 @@ public class InGameHudMixin {
             }
             LinkedList<MutableText> list = new LinkedList<>();
             list.addFirst(mutableText);
-            if (ConfigManager.getConfig(SuikaConfig.SHOW_ENCHANTMENT, Boolean.class)) {
+            if (modConfig.getShowEnchantment()) {
                 addTooltip(currentStack, list);
                 if (!currentStack.getEnchantments().isEmpty()) {
                     for (int i = 0; i < currentStack.getEnchantments().size(); i++) {

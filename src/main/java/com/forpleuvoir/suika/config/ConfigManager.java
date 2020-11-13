@@ -25,7 +25,7 @@ import java.util.Map;
 public class ConfigManager {
     private static final URL TEST_DIR = ConfigManager.class.getResource("/");
     private static final File MAIN_DIR = MinecraftClient.getInstance().runDirectory;
-    private static final String FILE_DIR = MAIN_DIR + "/config/suika";
+    public static final String FILE_DIR = MAIN_DIR + "/config/suika";
     private static final String CONFIG_FILE_NAME = "suika_config.json";
     private static final String DATA_FILE_NAME = "suika_data.json";
     private static File CONFIG_FILE;
@@ -48,16 +48,13 @@ public class ConfigManager {
     }
 
 
-
     public static void loadConfig() {
         try {
             Suika.LOGGER.info("suika mod load config...");
             String config = FileUtil.readFile(CONFIG_FILE);
             Map<String, Object> map = GSON.fromJson(new JsonParser().parse(config).getAsJsonObject(), new TypeToken<Map<String, Object>>() {
             }.getType());
-            map.forEach((k, v) -> {
-                ConfigManager.CONFIG.put(k, v);
-            });
+            map.forEach(ConfigManager.CONFIG::put);
         } catch (Exception e) {
             Suika.LOGGER.error("suika mod 配置加载失败");
             Suika.LOGGER.error(e.getMessage());
