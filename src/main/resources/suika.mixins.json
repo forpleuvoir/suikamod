@@ -4,9 +4,12 @@
   "package": "com.forpleuvoir.suika.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "client.MinecraftClientMixin"
+    "block.SignBlockEntityMixin",
+    "server.MinecraftServerMixin",
+    "server.ServerPlayerEntityMixin"
   ],
   "client": [
+    "client.MinecraftClientMixin",
     "client.gui.ClientChatListenerMixin",
     "client.gui.hud.InGameHudMixin",
     "client.gui.screen.OptionsScreenMixin",

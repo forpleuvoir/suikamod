@@ -18,5 +18,9 @@
   "category.suika.key_code": "快捷键设置",
   "string.suika.chat_message_prefix": "聊天注入前缀",
   "string.suika.chat_message_append": "聊天注入后缀",
-  "key.suika.custom_chat_message": "发送快捷聊天信息"
+  "key.suika.custom_chat_message": "发送快捷聊天信息",
+  "command.suika.exception.home": "你还没有设置家",
+  "command.suika.exception.warp": "传送点不存在",
+  "command.suika.warps": "世界传送点 : ",
+  "command.suika.warp" : "将玩家 %s 传送到 %s"
 }

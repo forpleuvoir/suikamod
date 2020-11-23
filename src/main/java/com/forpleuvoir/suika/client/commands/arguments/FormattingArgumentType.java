@@ -3,7 +3,6 @@ package com.forpleuvoir.suika.client.commands.arguments;
 import com.google.common.collect.Lists;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
@@ -28,8 +27,8 @@ import java.util.concurrent.CompletableFuture;
 public class FormattingArgumentType implements ArgumentType<String> {
     public static final SimpleCommandExceptionType FORMATTING_ERROR = new SimpleCommandExceptionType(new TranslatableText("argument.suika.formatting.error"));
     private static final String NONE = "none";
-    private Set<String> set;
-    private Collection<String> examples;
+    private final Set<String> set;
+    private final Collection<String> examples;
 
     public FormattingArgumentType(){
         Set<String> set=new HashSet<>();
