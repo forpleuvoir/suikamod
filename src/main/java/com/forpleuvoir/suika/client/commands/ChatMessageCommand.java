@@ -36,14 +36,14 @@ public class ChatMessageCommand {
 
     private static LiteralArgumentBuilder<ServerCommandSource> enable() {
         return CommandManager.literal(ENABLED)
-                .then(CommandManager.argument("isEnabled", BoolArgumentType.bool()).executes(context -> {
-                    // TODO: 2020/10/19 实现注入开启、关闭
-                    boolean isEnable = BoolArgumentType.getBool(context, "isEnabled");
-                    modConfig.setChatMessage(isEnable);
-                    Formatting formatting = modConfig.getChatMessage() ? Formatting.GREEN : Formatting.RED;
-                    result("启用 = " + modConfig.getChatMessage(), formatting);
-                    return 1;
-                }));
+                .then(CommandManager.argument("isEnabled", BoolArgumentType.bool())
+                        .executes(context -> {
+                            boolean isEnable = BoolArgumentType.getBool(context, "isEnabled");
+                            modConfig.setChatMessage(isEnable);
+                            Formatting formatting = modConfig.getChatMessage() ? Formatting.GREEN : Formatting.RED;
+                            result("启用 = " + modConfig.getChatMessage(), formatting);
+                            return 1;
+                        }));
     }
 
     private static LiteralArgumentBuilder<ServerCommandSource> set() {
@@ -51,7 +51,6 @@ public class ChatMessageCommand {
                 then(CommandManager.argument("prefix", StringArgumentType.string())
                         .then(CommandManager.argument("append", StringArgumentType.string())
                                 .executes(context -> {
-                                    //// TODO: 2020/10/19 实现后缀注入
                                     String prefix = StringArgumentType.getString(context, "prefix");
                                     String append = StringArgumentType.getString(context, "append");
                                     modConfig.setChatMessagePrefix(prefix);

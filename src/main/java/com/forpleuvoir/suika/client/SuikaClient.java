@@ -25,7 +25,7 @@ import static com.forpleuvoir.suika.config.ModConfigApp.modConfig;
  * @Description 客户端初始化类
  */
 @Environment(EnvType.CLIENT)
-public class SuikaClient implements ClientModInitializer {
+public class SuikaClient implements ClientModInitializer{
 
     @Override
     public void onInitializeClient() {

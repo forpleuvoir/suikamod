@@ -1,7 +1,9 @@
 package com.forpleuvoir.suika;
 
 import com.forpleuvoir.suika.item.ItemRegistry;
+import com.forpleuvoir.suika.server.command.ServerCommand;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,5 +23,8 @@ public class Suika implements ModInitializer {
     public void onInitialize() {
         LOGGER.info("suika mod initialize...");
         ItemRegistry.register();
+        CommandRegistrationCallback.EVENT.register((dispatcher,dedicated)->{
+            ServerCommand.commandRegister(dispatcher);
+        });
     }
 }
