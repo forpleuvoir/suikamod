@@ -26,7 +26,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Objects;
 
@@ -46,7 +45,7 @@ public class WarpPoint {
     private static File filePath;
 
     public static void initialize(LevelStorage.Session session) {
-        Constructor<WorldSavePath> constructor = null;
+        Constructor<WorldSavePath> constructor;
         try {
             constructor = WorldSavePath.class.getDeclaredConstructor(String.class);
             constructor.setAccessible(true);
@@ -272,12 +271,6 @@ public class WarpPoint {
             player.refreshPositionAndAngles(x, y, z, yaw, pitch);
             player.setWorld(targetWorld);
             targetWorld.onPlayerTeleport(player);
-            try {
-                Method worldChanged = player.getClass().getMethod("worldChanged", ServerWorld.class);
-                worldChanged.invoke(player, serverWorld);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 //            player.worldChanged(serverWorld);
             player.networkHandler.requestTeleport(x, y, z, yaw, pitch);
             player.interactionManager.setWorld(targetWorld);
