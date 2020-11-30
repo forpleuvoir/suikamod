@@ -1,5 +1,6 @@
 package com.forpleuvoir.suika.server.data;
 
+import com.forpleuvoir.chatbubbles.ReflectionUtils;
 import com.forpleuvoir.suika.Suika;
 import com.forpleuvoir.suikalib.util.FileUtil;
 import com.forpleuvoir.suikalib.util.JsonUtil;
@@ -117,15 +118,15 @@ public class WarpPoint {
         return dimension;
     }
 
-    private static Dimension getDimension(ServerPlayerEntity player) {
+    public static Dimension getDimension(ServerPlayerEntity player) {
         DimensionType type = player.getServerWorld().getDimension();
         WarpPoint.Dimension dimension = WarpPoint.Dimension.OVERWORLD;
         try {
-            Field THE_NETHER = DimensionType.class.getDeclaredField("THE_NETHER");
-            Field THE_END = DimensionType.class.getDeclaredField("THE_END");
-            if (type.equals(THE_NETHER.get(DimensionType.class))) {
+            DimensionType THE_NETHER = (DimensionType) ReflectionUtils.getPrivateFieldValueByType(null, DimensionType.class, DimensionType.class, 1);
+            DimensionType THE_END = (DimensionType) ReflectionUtils.getPrivateFieldValueByType(null, DimensionType.class, DimensionType.class, 2);
+            if (type.equals(THE_NETHER)) {
                 dimension = WarpPoint.Dimension.NETHER;
-            } else if (type.equals(THE_END.get(DimensionType.class))) {
+            } else if (type.equals(THE_END)) {
                 dimension = WarpPoint.Dimension.END;
             }
         } catch (Exception e) {
@@ -254,7 +255,7 @@ public class WarpPoint {
         OVERWORLD, END, NETHER
     }
 
-    private static void teleport(ServerPlayerEntity player, ServerWorld targetWorld, double x, double y, double z, float yaw, float pitch) {
+    public static void teleport(ServerPlayerEntity player, ServerWorld targetWorld, double x, double y, double z, float yaw, float pitch) {
         player.setCameraEntity(player);
         player.stopRiding();
         setBack(player);

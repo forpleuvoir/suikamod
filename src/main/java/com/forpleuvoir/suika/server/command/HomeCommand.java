@@ -19,7 +19,7 @@ import net.minecraft.text.TranslatableText;
  */
 
 public class HomeCommand {
-    private static final SimpleCommandExceptionType homeException=new SimpleCommandExceptionType(new TranslatableText("command.suika.exception.home"));
+    private static final SimpleCommandExceptionType homeException=new SimpleCommandExceptionType(new TranslatableText("你还没有设置家"));
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(CommandManager.literal("home").executes(HomeCommand::home));
@@ -30,6 +30,8 @@ public class HomeCommand {
         ServerPlayerEntity player = context.getSource().getPlayer();
         if(!WarpPoint.home(player)){
            throw homeException.create();
+        }else {
+            player.sendSystemMessage(new TranslatableText("欢迎回家"),player.getUuid());
         }
         return 1;
     }
@@ -37,6 +39,7 @@ public class HomeCommand {
     public static int setHome(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         ServerPlayerEntity player = context.getSource().getPlayer();
         WarpPoint.sethome(player);
+        player.sendSystemMessage(new TranslatableText("已设置家"),player.getUuid());
         return 1;
     }
 
