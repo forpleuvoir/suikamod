@@ -27,7 +27,7 @@ public class WarpCommand {
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(CommandManager.literal("warp")
-                .then(CommandManager.argument("warp", new WarpPointArgumentType(WarpPoint.warpPoints))
+                .then(CommandManager.argument("warp", new WarpPointArgumentType(WarpPoint.warpPoints.keySet()))
                         .executes(WarpCommand::warp))
         );
         dispatcher.register(CommandManager.literal("warps").executes(WarpCommand::warps));
@@ -35,7 +35,7 @@ public class WarpCommand {
                 .then(CommandManager.argument("warp", StringArgumentType.string())
                         .executes(WarpCommand::setWarp)).requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)));
         dispatcher.register(CommandManager.literal("removewarp")
-                .then(CommandManager.argument("warp", new WarpPointArgumentType(WarpPoint.warpPoints))
+                .then(CommandManager.argument("warp", new WarpPointArgumentType(WarpPoint.warpPoints.keySet()))
                         .executes(WarpCommand::removeWarp)).requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)));
     }
 
