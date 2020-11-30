@@ -17,5 +17,6 @@ public class ServerCommand {
         HomeCommand.register(dispatcher);
         WarpCommand.register(dispatcher);
         BackCommand.register(dispatcher);
+        TpaCommand.register(dispatcher);
     }
 }

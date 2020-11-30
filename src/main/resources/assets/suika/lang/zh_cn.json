@@ -19,8 +19,12 @@
   "string.suika.chat_message_prefix": "聊天注入前缀",
   "string.suika.chat_message_append": "聊天注入后缀",
   "key.suika.custom_chat_message": "发送快捷聊天信息",
-  "command.suika.exception.home": "你还没有设置家",
-  "command.suika.exception.warp": "传送点不存在",
-  "command.suika.warps": "世界传送点 : ",
-  "command.suika.warp" : "将玩家 %s 传送到 %s"
+  "你还没有设置家": "你还没有设置家",
+  "传送点不存在": "传送点不存在",
+  "世界传送点 : ": "世界传送点 : ",
+  "将玩家": "将玩家",
+  "传送到": "传送到",
+  "如蜜传如蜜啊": "如蜜传如蜜啊",
+  "欢迎回家": "欢迎回家",
+  "已设置家": "已设置家"
 }

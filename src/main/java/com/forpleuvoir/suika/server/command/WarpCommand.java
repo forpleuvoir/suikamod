@@ -11,6 +11,7 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.BaseText;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 
 /**
@@ -22,16 +23,16 @@ import net.minecraft.text.TranslatableText;
  */
 
 public class WarpCommand {
-    private static final SimpleCommandExceptionType warpException = new SimpleCommandExceptionType(new TranslatableText("command.suika.exception.warp"));
+    private static final SimpleCommandExceptionType warpException = new SimpleCommandExceptionType(new TranslatableText("传送点不存在"));
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(CommandManager.literal("warp")
-                .then(CommandManager.argument("warp", new WarpPointArgumentType())
+                .then(CommandManager.argument("warp", new WarpPointArgumentType(WarpPoint.warpPoints))
                         .executes(WarpCommand::warp))
         );
         dispatcher.register(CommandManager.literal("warps").executes(WarpCommand::warps));
-        dispatcher.register(CommandManager.literal("setwarp").then(CommandManager.argument("warp", StringArgumentType.string()).executes(WarpCommand::setWarp)).requires(serverCommandSource-> serverCommandSource.hasPermissionLevel(2)));
-        dispatcher.register(CommandManager.literal("removewarp").then(CommandManager.argument("warp",  new WarpPointArgumentType()).executes(WarpCommand::removeWarp)).requires(serverCommandSource-> serverCommandSource.hasPermissionLevel(2)));
+        dispatcher.register(CommandManager.literal("setwarp").then(CommandManager.argument("warp", StringArgumentType.string()).executes(WarpCommand::setWarp)).requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)));
+        dispatcher.register(CommandManager.literal("removewarp").then(CommandManager.argument("warp", new WarpPointArgumentType(WarpPoint.warpPoints)).executes(WarpCommand::removeWarp)).requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)));
     }
 
 
@@ -40,7 +41,10 @@ public class WarpCommand {
         ServerPlayerEntity player = source.getPlayer();
         String arg = WarpPointArgumentType.getWarp(context, "warp");
         if (WarpPoint.warp(player, arg))
-            source.sendFeedback(new TranslatableText("command.suika.warp", new Object[]{player.getDisplayName(), arg}), true);
+            source.sendFeedback(new TranslatableText("将玩家")
+                    .append(new LiteralText(" §b" + player.getEntityName()))
+                    .append(new TranslatableText("传送到"))
+                    .append(new LiteralText(" §b" + arg)), false);
         else {
             throw warpException.create();
         }
@@ -62,7 +66,7 @@ public class WarpCommand {
 
     private static int warps(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         ServerCommandSource source = context.getSource();
-        BaseText text = new TranslatableText("command.suika.warps");
+        BaseText text = new TranslatableText("世界传送点 : ");
         WarpPoint.warpPoints.keySet().forEach(e -> text.append(e).append(","));
         source.sendFeedback(text, false);
         return 1;
