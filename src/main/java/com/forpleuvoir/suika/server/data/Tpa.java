@@ -19,9 +19,12 @@ import java.util.Objects;
 
 public class Tpa {
     //String是目标玩家的uuid
-    public static Map<String, Tpa> tpas = Maps.newHashMap();
+    public static Map<String, Tpa> tpas = null;
     private static final Long time = 20 * 120L;
 
+    public static void initialize() {
+        tpas = Maps.newHashMap();
+    }
 
     private final ServerPlayerEntity player;
     private final Vec3d target;
@@ -37,7 +40,7 @@ public class Tpa {
 
 
     public boolean tpa(long nowTime) {
-        if(canTp(nowTime)) {
+        if (canTp(nowTime)) {
             ServerWorld serverWorld;
             switch (targetDimension) {
                 case END:
@@ -50,9 +53,9 @@ public class Tpa {
                 default:
                     serverWorld = Objects.requireNonNull(this.player.getServer()).getWorld(World.OVERWORLD);
             }
-            teleport(this.player, serverWorld,target);
+            teleport(this.player, serverWorld, target);
             return true;
-        }else{
+        } else {
             return false;
         }
     }

@@ -31,10 +31,13 @@ public class WarpCommand {
                         .executes(WarpCommand::warp))
         );
         dispatcher.register(CommandManager.literal("warps").executes(WarpCommand::warps));
-        dispatcher.register(CommandManager.literal("setwarp").then(CommandManager.argument("warp", StringArgumentType.string()).executes(WarpCommand::setWarp)).requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)));
-        dispatcher.register(CommandManager.literal("removewarp").then(CommandManager.argument("warp", new WarpPointArgumentType(WarpPoint.warpPoints)).executes(WarpCommand::removeWarp)).requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)));
+        dispatcher.register(CommandManager.literal("setwarp")
+                .then(CommandManager.argument("warp", StringArgumentType.string())
+                        .executes(WarpCommand::setWarp)).requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)));
+        dispatcher.register(CommandManager.literal("removewarp")
+                .then(CommandManager.argument("warp", new WarpPointArgumentType(WarpPoint.warpPoints))
+                        .executes(WarpCommand::removeWarp)).requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)));
     }
-
 
     private static int warp(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         ServerCommandSource source = context.getSource();
@@ -51,7 +54,7 @@ public class WarpCommand {
         return 1;
     }
 
-    private static int removeWarp(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+    private static int removeWarp(CommandContext<ServerCommandSource> context) {
         String arg = WarpPointArgumentType.getWarp(context, "warp");
         WarpPoint.remove(arg);
         return 1;
@@ -64,7 +67,7 @@ public class WarpCommand {
         return 1;
     }
 
-    private static int warps(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+    private static int warps(CommandContext<ServerCommandSource> context) {
         ServerCommandSource source = context.getSource();
         BaseText text = new TranslatableText("世界传送点 : ");
         WarpPoint.warpPoints.keySet().forEach(e -> text.append(e).append(","));

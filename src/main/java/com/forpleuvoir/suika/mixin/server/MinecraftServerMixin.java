@@ -2,6 +2,7 @@ package com.forpleuvoir.suika.mixin.server;
 
 import com.forpleuvoir.chatbubbles.ReflectionUtils;
 import com.forpleuvoir.suika.Suika;
+import com.forpleuvoir.suika.server.data.Tpa;
 import com.forpleuvoir.suika.server.data.WarpPoint;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.storage.LevelStorage;
@@ -29,6 +30,7 @@ public class MinecraftServerMixin {
         try {
             LevelStorage.Session session = (LevelStorage.Session) ReflectionUtils.getPrivateFieldValueByType(returnable.getReturnValue(), MinecraftServer.class, LevelStorage.Session.class, 0);
             WarpPoint.initialize(session);
+            Tpa.initialize();
         } catch (Exception e) {
             e.printStackTrace();
         }

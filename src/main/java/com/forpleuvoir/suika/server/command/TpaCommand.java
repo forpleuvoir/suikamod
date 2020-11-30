@@ -46,6 +46,7 @@ public class TpaCommand {
                         .append(new LiteralText(" 请将你传送到ta的位置。"))
                 , sender.getUuid());
         target.sendSystemMessage(new LiteralText("在120秒内输入§c /tpaccept §f接受请求"), sender.getUuid());
+        source.sendFeedback(new TranslatableText("请求已发送"),false);
         return 1;
     }
 
@@ -63,6 +64,7 @@ public class TpaCommand {
                         .append(new LiteralText(" 请求传送到你的位置。"))
                 , sender.getUuid());
         target.sendSystemMessage(new LiteralText("在120秒内输入§c /tpaccept §f接受请求"), sender.getUuid());
+        source.sendFeedback(new TranslatableText("请求已发送"),false);
         return 1;
     }
 
