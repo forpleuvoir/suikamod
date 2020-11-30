@@ -1,6 +1,8 @@
 package com.forpleuvoir.suika.server.command;
 
+import com.forpleuvoir.suika.server.command.arguments.WarpPointArgumentType;
 import com.mojang.brigadier.CommandDispatcher;
+import net.minecraft.command.argument.ArgumentTypes;
 import net.minecraft.server.command.ServerCommandSource;
 
 /**
@@ -18,5 +20,9 @@ public class ServerCommand {
         WarpCommand.register(dispatcher);
         BackCommand.register(dispatcher);
         TpaCommand.register(dispatcher);
+    }
+
+    public static void  ArgumentTypeRegister(){
+        ArgumentTypes.register("warps", WarpPointArgumentType.class,new WarpPointArgumentType.Serializer());
     }
 }

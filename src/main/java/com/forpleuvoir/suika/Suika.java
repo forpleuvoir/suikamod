@@ -8,10 +8,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
+ * @author forpleuvoir
  * @BelongsProject suikamod
  * @BelongsPackage kge com.forpleuvoir.suika
  * @ClassName Suika
- * @author forpleuvoir
  * @CreateTime 2020/10/19 11:43
  * @Description mod初始化类
  */
@@ -23,8 +23,10 @@ public class Suika implements ModInitializer {
     public void onInitialize() {
         LOGGER.info("suika mod initialize...");
         ItemRegistry.register();
-        CommandRegistrationCallback.EVENT.register((dispatcher,dedicated)->{
+        CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
             ServerCommand.commandRegister(dispatcher);
         });
+        ServerCommand.ArgumentTypeRegister();
+
     }
 }
