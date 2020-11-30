@@ -28,7 +28,7 @@ public class FormattingArgumentType implements ArgumentType<String> {
     public static final SimpleCommandExceptionType FORMATTING_ERROR = new SimpleCommandExceptionType(new TranslatableText("argument.suika.formatting.error"));
     private static final String NONE = "none";
     private final Set<String> set;
-    private final Collection<String> examples;
+    private final Collection<String> EXAMPLES;
 
     public FormattingArgumentType(){
         Set<String> set=new HashSet<>();
@@ -36,10 +36,10 @@ public class FormattingArgumentType implements ArgumentType<String> {
             set.add(e.getName());
         }
         this.set=set;
-        examples = Lists.newArrayList();
+        EXAMPLES = Lists.newArrayList();
         for (Formatting e : Formatting.values()) {
             if (!("reset".equals(e.getName()))) {
-                examples.add(e.getName());
+                EXAMPLES.add(e.getName());
             }
         }
     }
@@ -81,6 +81,6 @@ public class FormattingArgumentType implements ArgumentType<String> {
 
     @Override
     public Collection<String> getExamples() {
-        return examples;
+        return EXAMPLES;
     }
 }
