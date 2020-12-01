@@ -23,7 +23,7 @@ public class SignBlockEntityMixin {
 
     @Inject(method = "onActivate", at = @At("HEAD"))
     public void useOnBlock(PlayerEntity player, CallbackInfoReturnable<Boolean> callback) {
-        if (player.abilities.allowModifyWorld) {
+        if (player.canModifyBlocks()) {
             editable = true;
             SignBlockEntity sign = (SignBlockEntity) (Object) this;
             player.openEditSignScreen(sign);

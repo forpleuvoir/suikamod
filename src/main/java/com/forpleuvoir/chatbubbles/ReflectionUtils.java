@@ -3,6 +3,8 @@ package com.forpleuvoir.chatbubbles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author forpleuvoir
@@ -27,23 +29,22 @@ public class ReflectionUtils {
             objectClass = objectClasstype;
         }
 
-        while(!objectClass.equals(objectClasstype) && objectClass.getSuperclass() != null) {
+        while (!objectClass.equals(objectClasstype) && objectClass.getSuperclass() != null) {
             objectClass = objectClass.getSuperclass();
         }
 
         int counter = 0;
         Field[] fields = objectClass.getDeclaredFields();
 
-        for(int i = 0; i < fields.length; ++i) {
-            if (fieldClasstype.equals(fields[i].getType())) {
+        for (Field field : fields) {
+            if (fieldClasstype.equals(field.getType())) {
                 if (counter == index) {
                     try {
-                        fields[i].setAccessible(true);
-                        return fields[i].get(o);
+                        field.setAccessible(true);
+                        return field.get(o);
                     } catch (IllegalAccessException var9) {
                     }
                 }
-
                 ++counter;
             }
         }
@@ -51,22 +52,49 @@ public class ReflectionUtils {
         return null;
     }
 
-    public static void setPrivateFieldValueByName(Object o, String fieldName,Object value){
+    public static void setPrivateFieldValueByType(Object o, Class<?> fieldClassType, Object value, int index) {
+        int counter = 0;
+        Class<?> clazz = o.getClass();
+
+        List<Field> fieldList = new ArrayList<>();
+        Class<?> tempClass = clazz;
+        while (tempClass != null) {//当父类为null的时候说明到达了最上层的父类(Object类).
+            fieldList.addAll(Arrays.asList(tempClass.getDeclaredFields()));
+            tempClass = tempClass.getSuperclass(); //得到父类,然后赋给自己
+        }
+
+        //Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fieldList) {
+            if (field.getType().equals(fieldClassType)) {
+                if (counter == index) {
+                    try {
+                        field.setAccessible(true);
+                        field.set(o, value);
+                    } catch (Exception e) {
+                    }
+                }
+                ++counter;
+            }
+        }
+
+    }
+
+    public static void setPrivateFieldValueByName(Object o, String fieldName, Object value) {
         Field[] fields = o.getClass().getDeclaredFields();
-        for(int i = 0; i < fields.length; ++i) {
+        for (int i = 0; i < fields.length; ++i) {
             if (fieldName.equals(fields[i].getName())) {
                 try {
                     fields[i].setAccessible(true);
-                    fields[i].set(o,value);
+                    fields[i].set(o, value);
                 } catch (IllegalAccessException var5) {
                 }
             }
         }
     }
 
-    public static Object getPrivateFieldValueByName(Object o, String fieldName){
+    public static Object getPrivateFieldValueByName(Object o, String fieldName) {
         Field[] fields = o.getClass().getDeclaredFields();
-        for(int i = 0; i < fields.length; ++i) {
+        for (int i = 0; i < fields.length; ++i) {
             if (fieldName.equals(fields[i].getName())) {
                 try {
                     fields[i].setAccessible(true);
@@ -81,7 +109,7 @@ public class ReflectionUtils {
     public static Object getFieldValueByName(Object o, String fieldName) {
         Field[] fields = o.getClass().getFields();
 
-        for(int i = 0; i < fields.length; ++i) {
+        for (int i = 0; i < fields.length; ++i) {
             if (fieldName.equals(fields[i].getName())) {
                 try {
                     fields[i].setAccessible(true);
@@ -97,10 +125,10 @@ public class ReflectionUtils {
     public static ArrayList<Field> getFieldsByType(Object o, Class<?> objectClassBaseType, Class<?> fieldClasstype) {
         ArrayList<Field> matches = new ArrayList();
 
-        for(Class objectClass = o.getClass(); !objectClass.equals(objectClassBaseType) && objectClass.getSuperclass() != null; objectClass = objectClass.getSuperclass()) {
+        for (Class objectClass = o.getClass(); !objectClass.equals(objectClassBaseType) && objectClass.getSuperclass() != null; objectClass = objectClass.getSuperclass()) {
             Field[] fields = objectClass.getDeclaredFields();
 
-            for(int i = 0; i < fields.length; ++i) {
+            for (int i = 0; i < fields.length; ++i) {
                 if (fieldClasstype.isAssignableFrom(fields[i].getType())) {
                     fields[i].setAccessible(true);
                     matches.add(fields[i]);
@@ -117,13 +145,13 @@ public class ReflectionUtils {
 
     public static Field getFieldByType(Object o, Class<?> objectClasstype, Class<?> fieldClasstype, int index) {
         Class objectClass;
-        for(objectClass = o.getClass(); !objectClass.equals(objectClasstype) && objectClass.getSuperclass() != null; objectClass = objectClass.getSuperclass()) {
+        for (objectClass = o.getClass(); !objectClass.equals(objectClasstype) && objectClass.getSuperclass() != null; objectClass = objectClass.getSuperclass()) {
         }
 
         int counter = 0;
         Field[] fields = objectClass.getDeclaredFields();
 
-        for(int i = 0; i < fields.length; ++i) {
+        for (int i = 0; i < fields.length; ++i) {
             if (fieldClasstype.equals(fields[i].getType())) {
                 if (counter == index) {
                     fields[i].setAccessible(true);
@@ -145,13 +173,13 @@ public class ReflectionUtils {
         Method[] methods = objectType.getDeclaredMethods();
         int counter = 0;
 
-        for(int i = 0; i < methods.length; ++i) {
+        for (int i = 0; i < methods.length; ++i) {
             if (returnType.equals(methods[i].getReturnType())) {
                 Class<?>[] methodParameterTypes = methods[i].getParameterTypes();
                 if (parameterTypes.length == methodParameterTypes.length) {
                     boolean match = true;
 
-                    for(int t = 0; t < parameterTypes.length; ++t) {
+                    for (int t = 0; t < parameterTypes.length; ++t) {
                         if (parameterTypes[t] != methodParameterTypes[t]) {
                             match = false;
                         }

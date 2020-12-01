@@ -1,12 +1,12 @@
 package com.forpleuvoir.chatbubbles;
 
-import net.minecraft.class_5599;
-import net.minecraft.class_5617;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.network.ServerInfo;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
+import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.entity.player.PlayerEntity;
 
@@ -126,7 +126,7 @@ public class ChatBubbles {
                     String[] authorText = this.parseLine(this.pare(this.scrubCodes(newLine)));
                     if (!authorText[0].equals("")) {
                         String[] messageLines = this.formatMessage(authorText[1]);
-                         ChatBubbleMessage newMessage = new  ChatBubbleMessage(authorText[0], messageLines, this.game.inGameHud .getTicks ());
+                        ChatBubbleMessage newMessage = new ChatBubbleMessage(authorText[0], messageLines, this.game.inGameHud.getTicks());
                         this.messages.add(0, newMessage);
                     }
                 }
@@ -137,7 +137,7 @@ public class ChatBubbles {
 
         int currentTime = instance.game.inGameHud.getTicks();
 
-        while (this.messages.size() > 0 && currentTime - (( ChatBubbleMessage) this.messages.get(this.messages.size() - 1)).getUpdatedCounter() >= this.MESSAGELIFETIME) {
+        while (this.messages.size() > 0 && currentTime - ((ChatBubbleMessage) this.messages.get(this.messages.size() - 1)).getUpdatedCounter() >= this.MESSAGELIFETIME) {
             this.messages.remove(this.messages.size() - 1);
         }
 
@@ -146,25 +146,26 @@ public class ChatBubbles {
 
     private void loadRenderManager() {
         System.out.println("getting renderer");
-        EntityRenderDispatcher renderManager = MinecraftClient.getInstance().getEntityRenderDispatcher ();
-        class_5617.class_5618 lv = new class_5617.class_5618(renderManager,
-                (ItemRenderer)ReflectionUtils.getPrivateFieldValueByName(renderManager,"field_27759"),
+        EntityRenderDispatcher renderManager = MinecraftClient.getInstance().getEntityRenderDispatcher();
+        EntityRendererFactory.Context lv = new EntityRendererFactory.Context(renderManager,
+                (ItemRenderer) ReflectionUtils.getPrivateFieldValueByType(renderManager, EntityRenderDispatcher.class, ItemRenderer.class, 0),
                 MinecraftClient.getInstance().getResourceManager(),
-                (class_5599)ReflectionUtils.getPrivateFieldValueByName(renderManager,"field_27760"),
-                (TextRenderer)ReflectionUtils.getPrivateFieldValueByName(renderManager,"textRenderer"));
-        if (renderManager == null&&lv.method_32168()==null) {
+                (EntityModelLoader) ReflectionUtils.getPrivateFieldValueByType(renderManager, EntityRenderDispatcher.class, EntityModelLoader.class, 0),
+                (TextRenderer) ReflectionUtils.getPrivateFieldValueByType(renderManager, EntityRenderDispatcher.class, TextRenderer.class, 0));
+        if (renderManager == null && lv.getItemRenderer() == null) {
             System.out.println("failed to get render manager - chatbubbles");
         } else {
-            Map<String, EntityRenderer<? extends PlayerEntity>> skinMapObject =(Map<String, EntityRenderer<? extends PlayerEntity>>)ReflectionUtils.getPrivateFieldValueByName(renderManager, "modelRenderers");
+            Map<String, EntityRenderer<? extends PlayerEntity>> skinMapObject = (Map<String, EntityRenderer<? extends PlayerEntity>>)
+                    ReflectionUtils.getPrivateFieldValueByType(renderManager, EntityRenderDispatcher.class, Map.class, 1);
             if (skinMapObject == null) {
                 System.out.println("could not get entityRenderMap chatbubbles");
             } else {
-                this.renderPlayerChatBubbles = new  RenderPlayerChatBubbles(lv);
-                this.renderPlayerChatBubblesSlim = new  RenderPlayerChatBubbles(lv, true);
-                Map<String, EntityRenderer<? extends PlayerEntity>> map=new HashMap<>();
+                this.renderPlayerChatBubbles = new RenderPlayerChatBubbles(lv);
+                this.renderPlayerChatBubblesSlim = new RenderPlayerChatBubbles(lv, true);
+                Map<String, EntityRenderer<? extends PlayerEntity>> map = new HashMap<>();
                 map.put("default", this.renderPlayerChatBubbles);
                 map.put("slim", this.renderPlayerChatBubblesSlim);
-                ReflectionUtils.setPrivateFieldValueByName(renderManager,"modelRenderers",map);
+                ReflectionUtils.setPrivateFieldValueByType(renderManager, Map.class, map, 1);
                 this.haveRenderManager = true;
             }
         }
@@ -173,10 +174,10 @@ public class ChatBubbles {
 
     private void checkForChanges() {
         String serverName = "";
-        if (!this.game.isIntegratedServerRunning ()) {
-            ServerInfo serverData = this.game.getCurrentServerEntry ();
+        if (!this.game.isIntegratedServerRunning()) {
+            ServerInfo serverData = this.game.getCurrentServerEntry();
             if (serverData != null) {
-                serverName = serverData.address ;
+                serverName = serverData.address;
             }
 
             if (serverName != null) {
@@ -193,7 +194,7 @@ public class ChatBubbles {
     }
 
     private void loadCustomParseLine(String serverName) {
-        this.customChatParseLine = (ChatParseLine)this.customParseLines.get(serverName);
+        this.customChatParseLine = (ChatParseLine) this.customParseLines.get(serverName);
     }
 
     public void clientString(String var1) {
@@ -202,7 +203,7 @@ public class ChatBubbles {
         }
 
         if (!this.voxelEnabled) {
-            synchronized(this.newChatLines) {
+            synchronized (this.newChatLines) {
                 this.newChatLines.add(var1);
             }
         }
@@ -214,6 +215,7 @@ public class ChatBubbles {
         string = string.replaceAll("(..)\\1{6,}+", "$1$1$1$1$1$1");
         return string;
     }
+
     private String scrubCodes(String string) {
         string = string.replaceAll("(§.)", "");
         return string;
@@ -373,7 +375,7 @@ public class ChatBubbles {
 
                 int[] possibleAuthorRefs = this.customChatParseLine.getNameRefs();
 
-                for(int t = 0; t < possibleAuthorRefs.length; ++t) {
+                for (int t = 0; t < possibleAuthorRefs.length; ++t) {
                     String possibleAuthor = matcher.group(possibleAuthorRefs[t]);
                     if (possibleAuthor != null) {
                         authorText[0] = possibleAuthor;
@@ -403,7 +405,7 @@ public class ChatBubbles {
         StringBuilder output = new StringBuilder(message.length());
 
         String word;
-        for(int lineLen = 0; tokenizer.hasMoreTokens(); lineLen += word.length()) {
+        for (int lineLen = 0; tokenizer.hasMoreTokens(); lineLen += word.length()) {
             word = tokenizer.nextToken();
             if (lineLen + word.length() > this.maxLineLength) {
                 if (lineLen != 0) {
@@ -411,7 +413,7 @@ public class ChatBubbles {
                     lineLen = 0;
                 }
 
-                while(lineLen == 0 && word.length() > this.maxLineLength) {
+                while (lineLen == 0 && word.length() > this.maxLineLength) {
                     output.append(word.substring(0, this.maxLineLength));
                     output.append("-~break~");
                     lineLen = 0;

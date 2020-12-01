@@ -1,11 +1,11 @@
 package com.forpleuvoir.chatbubbles;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.class_5617;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.*;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.util.math.AffineTransformation;
 import net.minecraft.client.util.math.MatrixStack;
@@ -33,13 +33,13 @@ public class RenderPlayerChatBubbles extends PlayerEntityRenderer {
     int lineWidth;
     private final TextRenderer textRenderer;
 
-    public RenderPlayerChatBubbles(class_5617.class_5618 renderManager) {
+    public RenderPlayerChatBubbles(EntityRendererFactory.Context renderManager) {
         this(renderManager, false);
     }
 
-    public RenderPlayerChatBubbles(class_5617.class_5618 renderManager, boolean smallArms) {
+    public RenderPlayerChatBubbles(EntityRendererFactory.Context renderManager, boolean smallArms) {
         super(renderManager, smallArms);
-        this.textRenderer=renderManager.method_32171();
+        this.textRenderer=renderManager.getTextRenderer();
         this.r = 0.0F;
         this.g = 0.0F;
         this.b = 0.0F;
@@ -178,7 +178,7 @@ public class RenderPlayerChatBubbles extends PlayerEntityRenderer {
         this.img("images/chatbubble.png");
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder vertexBuffer = tessellator.getBuffer();
-        VertexFormat.class_5596 model=VertexFormat.class_5596.field_27381;
+        VertexFormat.DrawMode model=VertexFormat.DrawMode.TRIANGLE_FAN;
         vertexBuffer.begin(model, VertexFormats.POSITION_TEXTURE_COLOR);
         vertexBuffer. vertex( left,  top, 0.0D).texture (0.0625F, 0.125F).color (r, g, b, a).next ();
         vertexBuffer. vertex( left,  bottom, 0.0D).texture (0.0625F, 0.875F).color (r, g, b, a).next ();
