@@ -1,14 +1,8 @@
 package com.forpleuvoir.chatbubbles;
 
-import net.minecraft.class_5599;
-import net.minecraft.class_5617;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.network.ServerInfo;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.render.entity.EntityRenderer;
-import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.entity.player.PlayerEntity;
 
 import java.io.*;
 import java.util.*;
@@ -126,7 +120,7 @@ public class ChatBubbles {
                     String[] authorText = this.parseLine(this.pare(this.scrubCodes(newLine)));
                     if (!authorText[0].equals("")) {
                         String[] messageLines = this.formatMessage(authorText[1]);
-                         ChatBubbleMessage newMessage = new  ChatBubbleMessage(authorText[0], messageLines, this.game.inGameHud .getTicks ());
+                        ChatBubbleMessage newMessage = new  ChatBubbleMessage(authorText[0], messageLines, this.game.inGameHud .getTicks ());
                         this.messages.add(0, newMessage);
                     }
                 }
@@ -147,24 +141,17 @@ public class ChatBubbles {
     private void loadRenderManager() {
         System.out.println("getting renderer");
         EntityRenderDispatcher renderManager = MinecraftClient.getInstance().getEntityRenderDispatcher ();
-        class_5617.class_5618 lv = new class_5617.class_5618(renderManager,
-                (ItemRenderer)ReflectionUtils.getPrivateFieldValueByName(renderManager,"field_27759"),
-                MinecraftClient.getInstance().getResourceManager(),
-                (class_5599)ReflectionUtils.getPrivateFieldValueByName(renderManager,"field_27760"),
-                (TextRenderer)ReflectionUtils.getPrivateFieldValueByName(renderManager,"textRenderer"));
-        if (renderManager == null&&lv.method_32168()==null) {
+        if (renderManager == null) {
             System.out.println("failed to get render manager - chatbubbles");
         } else {
-            Map<String, EntityRenderer<? extends PlayerEntity>> skinMapObject =(Map<String, EntityRenderer<? extends PlayerEntity>>)ReflectionUtils.getPrivateFieldValueByName(renderManager, "modelRenderers");
+            Object skinMapObject = ReflectionUtils.getPrivateFieldValueByType(renderManager, EntityRenderDispatcher.class, Map.class, 1);
             if (skinMapObject == null) {
                 System.out.println("could not get entityRenderMap chatbubbles");
             } else {
-                this.renderPlayerChatBubbles = new  RenderPlayerChatBubbles(lv);
-                this.renderPlayerChatBubblesSlim = new  RenderPlayerChatBubbles(lv, true);
-                Map<String, EntityRenderer<? extends PlayerEntity>> map=new HashMap<>();
-                map.put("default", this.renderPlayerChatBubbles);
-                map.put("slim", this.renderPlayerChatBubblesSlim);
-                ReflectionUtils.setPrivateFieldValueByName(renderManager,"modelRenderers",map);
+                this.renderPlayerChatBubbles = new  RenderPlayerChatBubbles(renderManager);
+                this.renderPlayerChatBubblesSlim = new  RenderPlayerChatBubbles(renderManager, true);
+                ((HashMap)skinMapObject).put("default", this.renderPlayerChatBubbles);
+                ((HashMap)skinMapObject).put("slim", this.renderPlayerChatBubblesSlim);
                 this.haveRenderManager = true;
             }
         }

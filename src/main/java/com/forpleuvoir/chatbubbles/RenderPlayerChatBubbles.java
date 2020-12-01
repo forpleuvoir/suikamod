@@ -1,11 +1,14 @@
 package com.forpleuvoir.chatbubbles;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.class_5617;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.util.math.AffineTransformation;
 import net.minecraft.client.util.math.MatrixStack;
@@ -31,15 +34,13 @@ public class RenderPlayerChatBubbles extends PlayerEntityRenderer {
     float g;
     float b;
     int lineWidth;
-    private final TextRenderer textRenderer;
 
-    public RenderPlayerChatBubbles(class_5617.class_5618 renderManager) {
+    public RenderPlayerChatBubbles(EntityRenderDispatcher renderManager) {
         this(renderManager, false);
     }
 
-    public RenderPlayerChatBubbles(class_5617.class_5618 renderManager, boolean smallArms) {
+    public RenderPlayerChatBubbles(EntityRenderDispatcher renderManager, boolean smallArms) {
         super(renderManager, smallArms);
-        this.textRenderer=renderManager.method_32171();
         this.r = 0.0F;
         this.g = 0.0F;
         this.b = 0.0F;
@@ -51,7 +52,7 @@ public class RenderPlayerChatBubbles extends PlayerEntityRenderer {
     @Override
     public void renderLabelIfPresent(AbstractClientPlayerEntity par1EntityLivingBase, Text label, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int color) {
         super.renderLabelIfPresent(par1EntityLivingBase, label, matrixStack, vertexConsumerProvider, color);
-        if (par1EntityLivingBase != this.dispatcher.camera.getFocusedEntity()) {
+        if (par1EntityLivingBase != this.getRenderManager().camera.getFocusedEntity()) {
             GLShim.glPushMatrix();
             GLShim.glRotatef(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getPitch(), 1.0F, 0.0F, 0.0F);
             GLShim.glRotatef(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getYaw() - 180.0F, 0.0F, 1.0F, 0.0F);
@@ -73,7 +74,7 @@ public class RenderPlayerChatBubbles extends PlayerEntityRenderer {
                 int lines = 2;
                 String[] messageLines;
                 for (Iterator var9 = this.relevantMessages.iterator(); var9.hasNext(); lines = lines + messageLines.length + 1) {
-                     ChatBubbleMessage message = ( ChatBubbleMessage) var9.next();
+                    ChatBubbleMessage message = ( ChatBubbleMessage) var9.next();
                     messageLines = message.getMessageLines();
                     float remainingTime = (float) ( ChatBubbles.instance.MESSAGELIFETIME - (currentTime - message.getUpdatedCounter()));
                     Entity cameraEntity = MinecraftClient.getInstance().getCameraEntity();
@@ -102,7 +103,7 @@ public class RenderPlayerChatBubbles extends PlayerEntityRenderer {
         int brightDiv = brightness / 65536;
         RenderSystem.glMultiTexCoord2f(33985, (float) brightMod / 1.0F, (float) brightDiv / 1.0F);
         if (var10 <=  (var12 * var12)) {
-            TextRenderer fontRenderer = this.textRenderer;
+            TextRenderer fontRenderer = this.dispatcher.getTextRenderer();
             float var13 = 1.6F;
             float var14 = 0.016666668F * var13;
             GLShim.glPushMatrix();
@@ -178,76 +179,75 @@ public class RenderPlayerChatBubbles extends PlayerEntityRenderer {
         this.img("images/chatbubble.png");
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder vertexBuffer = tessellator.getBuffer();
-        VertexFormat.class_5596 model=VertexFormat.class_5596.field_27381;
-        vertexBuffer.begin(model, VertexFormats.POSITION_TEXTURE_COLOR);
+        vertexBuffer.begin(7, VertexFormats.POSITION_TEXTURE_COLOR);
         vertexBuffer. vertex( left,  top, 0.0D).texture (0.0625F, 0.125F).color (r, g, b, a).next ();
         vertexBuffer. vertex( left,  bottom, 0.0D).texture (0.0625F, 0.875F).color (r, g, b, a).next ();
         vertexBuffer. vertex( right,  bottom, 0.0D).texture (0.9375F, 0.875F).color (r, g, b, a).next ();
         vertexBuffer. vertex( right,  top, 0.0D).texture (0.9375F, 0.125F).color (r, g, b, a).next ();
         var15.draw ();
-        vertexBuffer.begin (model, VertexFormats.POSITION_TEXTURE_COLOR );
+        vertexBuffer.begin (7, VertexFormats.POSITION_TEXTURE_COLOR );
         vertexBuffer. vertex( (left - (float) this.lineWidth),  top, 0.0D).texture (0.0F, 0.125F).color (r, g, b, a).next ();
         vertexBuffer. vertex( (left - (float) this.lineWidth),  bottom, 0.0D).texture (0.0F, 0.875F).color (r, g, b, a).next ();
         vertexBuffer. vertex( left,  bottom, 0.0D).texture (0.0625F, 0.875F).color (r, g, b, a).next ();
         vertexBuffer. vertex( left,  top, 0.0D).texture (0.0625F, 0.125F).color (r, g, b, a).next ();
         var15.draw();
-        vertexBuffer.begin (model, VertexFormats.POSITION_TEXTURE_COLOR );
+        vertexBuffer.begin (7, VertexFormats.POSITION_TEXTURE_COLOR );
         vertexBuffer. vertex( right,  top, 0.0D).texture (0.9375F, 0.125F).color (r, g, b, a).next ();
         vertexBuffer. vertex( right,  bottom, 0.0D).texture (0.9375F, 0.875F).color (r, g, b, a).next ();
         vertexBuffer. vertex( (right + (float) this.lineWidth),  bottom, 0.0D).texture (1.0F, 0.875F).color (r, g, b, a).next ();
         vertexBuffer. vertex( (right + (float) this.lineWidth),  top, 0.0D).texture (1.0F, 0.125F).color (r, g, b, a).next ();
         var15.draw();
-        vertexBuffer.begin (model, VertexFormats.POSITION_TEXTURE_COLOR );
+        vertexBuffer.begin (7, VertexFormats.POSITION_TEXTURE_COLOR );
         vertexBuffer. vertex( left,  (top - (float) this.lineWidth), 0.0D).texture (0.0625F, 0.0F).color (r, g, b, a).next ();
         vertexBuffer. vertex( left,  top, 0.0D).texture (0.0625F, 0.125F).color (r, g, b, a).next ();
         vertexBuffer. vertex( right,  top, 0.0D).texture (0.9375F, 0.125F).color (r, g, b, a).next ();
         vertexBuffer. vertex( right,  (top - (float) this.lineWidth), 0.0D).texture (0.9375F, 0.0F).color (r, g, b, a).next ();
         var15.draw();
-        vertexBuffer.begin (model, VertexFormats.POSITION_TEXTURE_COLOR );
+        vertexBuffer.begin (7, VertexFormats.POSITION_TEXTURE_COLOR );
         vertexBuffer. vertex( left,  bottom, 0.0D).texture (0.0625F, 0.875F).color (r, g, b, a).next ();
         vertexBuffer. vertex( left,  (bottom + (float) this.lineWidth), 0.0D).texture (0.0625F, 1.0F).color (r, g, b, a).next ();
         vertexBuffer. vertex(-2.0D,  (bottom + (float) this.lineWidth), 0.0D).texture (0.5F, 1.0F).color (r, g, b, a).next ();
         vertexBuffer. vertex(-2.0D,  bottom, 0.0D).texture (0.5F, 0.875F).color (r, g, b, a).next ();
         var15.draw();
-        vertexBuffer.begin (model, VertexFormats.POSITION_TEXTURE_COLOR );
+        vertexBuffer.begin (7, VertexFormats.POSITION_TEXTURE_COLOR );
         vertexBuffer. vertex(-2.0D,  bottom, 0.0D).texture (0.5F, 0.875F).color (r, g, b, a).next ();
         vertexBuffer. vertex(-2.0D,  (bottom + (float) this.lineWidth), 0.0D).texture (0.5F, 1.0F).color (r, g, b, a).next ();
         vertexBuffer. vertex(6.0D,  (bottom + (float) this.lineWidth), 0.0D).texture (0.625F, 1.0F).color (r, g, b, a).next ();
         vertexBuffer. vertex(6.0D,  bottom, 0.0D).texture (0.625F, 0.875F).color (r, g, b, a).next ();
         var15.draw();
-        vertexBuffer.begin (model, VertexFormats.POSITION_TEXTURE_COLOR );
+        vertexBuffer.begin (7, VertexFormats.POSITION_TEXTURE_COLOR );
         vertexBuffer. vertex(6.0D,  bottom, 0.0D).texture (0.625F, 0.875F).color (r, g, b, a).next ();
         vertexBuffer. vertex(6.0D,  (bottom + (float) this.lineWidth), 0.0D).texture (0.625F, 1.0F).color (r, g, b, a).next ();
         vertexBuffer. vertex( right,  (bottom + (float) this.lineWidth), 0.0D).texture (0.9375F, 1.0F).color (r, g, b, a).next ();
         vertexBuffer. vertex( right,  bottom, 0.0D).texture (0.9375F, 0.875F).color (r, g, b, a).next ();
         var15.draw();
-        vertexBuffer.begin (model, VertexFormats.POSITION_TEXTURE_COLOR );
+        vertexBuffer.begin (7, VertexFormats.POSITION_TEXTURE_COLOR );
         vertexBuffer. vertex( (left - (float) this.lineWidth),  (top - (float) this.lineWidth), 0.0D).texture (0.0F, 0.0F).color (r, g, b, a).next ();
         vertexBuffer. vertex( (left - (float) this.lineWidth),  top, 0.0D).texture (0.0F, 0.125F).color (r, g, b, a).next ();
         vertexBuffer. vertex( left,  top, 0.0D).texture (0.0625F, 0.125F).color (r, g, b, a).next ();
         vertexBuffer. vertex( left,  (top - (float) this.lineWidth), 0.0D).texture (0.0625F, 0.0F).color (r, g, b, a).next ();
         var15.draw();
-        vertexBuffer.begin (model, VertexFormats.POSITION_TEXTURE_COLOR );
+        vertexBuffer.begin (7, VertexFormats.POSITION_TEXTURE_COLOR );
         vertexBuffer. vertex( right,  (top - (float) this.lineWidth), 0.0D).texture (0.9375F, 0.0F).color (r, g, b, a).next ();
         vertexBuffer. vertex( right,  top, 0.0D).texture (0.9375F, 0.125F).color (r, g, b, a).next ();
         vertexBuffer. vertex( (right + (float) this.lineWidth),  top, 0.0D).texture (1.0F, 0.125F).color (r, g, b, a).next ();
         vertexBuffer. vertex( (right + (float) this.lineWidth),  (top - (float) this.lineWidth), 0.0D).texture (1.0F, 0.0F).color (r, g, b, a).next ();
         var15.draw();
-        vertexBuffer.begin (model, VertexFormats.POSITION_TEXTURE_COLOR );
+        vertexBuffer.begin (7, VertexFormats.POSITION_TEXTURE_COLOR );
         vertexBuffer. vertex( (left - (float) this.lineWidth),  bottom, 0.0D).texture (0.0F, 0.875F).color (r, g, b, a).next ();
         vertexBuffer. vertex( (left - (float) this.lineWidth),  (bottom + (float) this.lineWidth), 0.0D).texture (0.0F, 1.0F).color (r, g, b, a).next ();
         vertexBuffer. vertex( left,  (bottom + (float) this.lineWidth), 0.0D).texture (0.0625F, 1.0F).color (r, g, b, a).next ();
         vertexBuffer. vertex( left,  bottom, 0.0D).texture (0.0625F, 0.875F).color (r, g, b, a).next ();
         var15.draw();
-        vertexBuffer.begin (model, VertexFormats.POSITION_TEXTURE_COLOR );
+        vertexBuffer.begin (7, VertexFormats.POSITION_TEXTURE_COLOR );
         vertexBuffer. vertex( right,  bottom, 0.0D).texture (0.9375F, 0.875F).color (r, g, b, a).next ();
         vertexBuffer. vertex( right,  (bottom + (float) this.lineWidth), 0.0D).texture (0.9375F, 1.0F).color (r, g, b, a).next ();
         vertexBuffer. vertex( (right + (float) this.lineWidth),  (bottom + (float) this.lineWidth), 0.0D).texture (1.0F, 1.0F).color (r, g, b, a).next ();
         vertexBuffer. vertex( (right + (float) this.lineWidth),  bottom, 0.0D).texture (1.0F, 0.875F).color (r, g, b, a).next ();
         var15.draw();
-         GLShim.glPolygonOffset(1.0F, offset - 1.0F);
+        GLShim.glPolygonOffset(1.0F, offset - 1.0F);
         this.img("images/chatbubbletail.png");
-        vertexBuffer.begin (model, VertexFormats.POSITION_TEXTURE_COLOR );
+        vertexBuffer.begin (7, VertexFormats.POSITION_TEXTURE_COLOR );
         vertexBuffer. vertex(-2.0D,  (bottom + (float) this.lineWidth), 0.0D).texture (0.0F, 0.0F).color (r, g, b, a).next ();
         vertexBuffer. vertex(-2.0D,  (bottom + (float) this.lineWidth + 8.0F), 0.0D).texture (0.0F, 1.0F).color (r, g, b, a).next ();
         vertexBuffer. vertex(6.0D,  (bottom + (float) this.lineWidth + 8.0F), 0.0D).texture (1.0F, 1.0F).color (r, g, b, a).next ();
