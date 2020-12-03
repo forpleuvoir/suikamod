@@ -1,7 +1,5 @@
 package com.forpleuvoir.suika.client.gui;
 
-import com.forpleuvoir.suika.config.ChatMessageConfig;
-import com.forpleuvoir.suika.config.ConfigManager;
 import com.forpleuvoir.suikalib.config.FieldType;
 import com.forpleuvoir.suikalib.config.annotation.ConfigField;
 import com.forpleuvoir.suikalib.reflection.ReflectionUtil;
@@ -105,25 +103,7 @@ public class SuikaConfigScreen {
                         }).build());
             }
         });
-//        for (SuikaConfig config : SuikaConfig.values()) {
-//            if (config.getValue() instanceof Boolean) {
-//                general.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("boolean.suika." + config.getKey()), ConfigManager.getConfig(config, Boolean.class))
-//                        .setDefaultValue((Boolean) config.getValue())
-//                        .setSaveConsumer(newValue -> ConfigManager.setConfig(config, newValue))
-//                        .build());
-//
-//            }
-//        }
     }
 
-    private static void chatMessage(ConfigBuilder builder) {
-        ConfigEntryBuilder entryBuilder = builder.entryBuilder();
-        ConfigCategory general = builder.getOrCreateCategory(new TranslatableText("category.suika.chat_message"));
-        general.addEntry(entryBuilder.startStrField(new TranslatableText("entry.suika.chat_message.prefix"), ConfigManager.getChatMessage()[0])
-                .setDefaultValue(ChatMessageConfig.defPrefix)
-                .setSaveConsumer(ConfigManager::setChatMessagePrefix).build());
-        general.addEntry(entryBuilder.startStrField(new TranslatableText("entry.suika.chat_message.append"), ConfigManager.getChatMessage()[1])
-                .setDefaultValue(ChatMessageConfig.defAppend)
-                .setSaveConsumer(ConfigManager::setChatMessageAppend).build());
-    }
+
 }
