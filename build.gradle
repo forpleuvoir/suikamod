@@ -4,14 +4,11 @@ plugins {
 }
 def time = new Date().format("yyyyMMdd")
 
-
-def time=new Date().format("yyyyMMdd")
-
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-archivesBaseName = project.archives_base_name+"-fabric"
-version = project.mod_version+"-"+time+"-minecraft."+project.minecraft_version
+archivesBaseName = project.archives_base_name + "-fabric"
+version = project.mod_version + "-" + time + "-minecraft." + project.minecraft_version
 group = project.maven_group
 
 
