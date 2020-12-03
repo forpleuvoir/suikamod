@@ -30,10 +30,11 @@ public class SuikaClient implements ClientModInitializer{
     @Override
     public void onInitializeClient() {
         Suika.LOGGER.info("suika mod initializeClient...");
+        ConfigManager.init();
         ModConfigApp.init();
         HotKeys.register();
         ClientTickEvents.END_CLIENT_TICK.register(this::tick);
-        ConfigManager.init();
+
     }
 
     public void tick(MinecraftClient client) {

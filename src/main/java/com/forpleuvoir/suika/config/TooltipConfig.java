@@ -32,8 +32,8 @@ public class TooltipConfig {
     public void setDefault() {
         datas.put("item.minecraft.melon_slice",new Data("§d这个西瓜片看起来很奇怪的样子...能吃吗...","§6好怪的西瓜"));
         datas.put("block.minecraft.player_head:YuyukoSAMA",new Data("§d超可爱的幽幽子"));
-        datas.put("block.minecraft.player_head:dhwuia",new Data("§6孤独传说"));
-        datas.put("block.minecraft.player_head:forpleuvoir",new Data("§bdhwuia的头,看起来就很憨批,却意外的可爱...","§bdhwuia的头,看起来就很憨批,却意外的可爱..."));
+        datas.put("block.minecraft.player_head:forpleuvoir",new Data("§6孤独传说"));
+        datas.put("block.minecraft.player_head:dhwuia",new Data("§b某电姓人类的头,看起来就很憨批,却意外的可爱...","§b是个很讨人喜欢的家伙呢,但是却消失很久了..."));
         datas.put("item.suika.ibuki_gourd",new Data("§e里面的酒喝不完的样子..."));
     }
 
