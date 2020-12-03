@@ -42,7 +42,10 @@ public class WarpPointArgumentType implements ArgumentType<String> {
 
     @Override
     public String parse(StringReader reader) throws CommandSyntaxException {
-        String str = reader.readString();
+        String str = reader.getRemaining();
+        for (int i = 0; i < str.length(); i++) {
+            reader.read();
+        }
         if (EXAMPLES.contains(str)) {
             return str;
         } else {

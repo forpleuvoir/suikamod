@@ -4,6 +4,8 @@ import com.forpleuvoir.suika.server.data.WarpPoint;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.*;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
@@ -31,6 +33,8 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
     public void onDeath(CallbackInfo ci) {
         DimensionType type = this.world.getDimension();
         WarpPoint.setBack(getUuidAsString(), new WarpPoint.Pos(getPos(),WarpPoint.getDimension(type)));
+        Text text = Texts.bracketed(new TranslatableText("输入 §c/back §r返回死亡地点")).styled((style) -> style.withColor(Formatting.WHITE).withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/back")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText("chat.coordinates.tooltip"))));
+        sendMessage(text,false);
     }
 
 }
