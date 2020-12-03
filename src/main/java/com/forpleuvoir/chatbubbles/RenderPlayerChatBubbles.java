@@ -51,7 +51,8 @@ public class RenderPlayerChatBubbles extends PlayerEntityRenderer {
     @Override
     public void renderLabelIfPresent(AbstractClientPlayerEntity par1EntityLivingBase, Text label, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int color) {
         super.renderLabelIfPresent(par1EntityLivingBase, label, matrixStack, vertexConsumerProvider, color);
-        if (par1EntityLivingBase != this.dispatcher.camera.getFocusedEntity()) {
+        boolean needToRender=par1EntityLivingBase != this.dispatcher.camera.getFocusedEntity();
+        if (needToRender) {
             GLShim.glPushMatrix();
             GLShim.glRotatef(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getPitch(), 1.0F, 0.0F, 0.0F);
             GLShim.glRotatef(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getYaw() - 180.0F, 0.0F, 1.0F, 0.0F);

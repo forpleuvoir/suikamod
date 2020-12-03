@@ -43,6 +43,9 @@ public class ClientPlayerEntityMixin {
             if (modConfig.getChatMessage()) {
                 String msg;
                 msg = modConfig.getChatMessagePrefix() + message + modConfig.getChatMessageAppend();
+                if (msg.contains("dhwuia")) {
+                    msg = msg.replace("dhwuia", "乌鸦姐");
+                }
                 this.networkHandler.sendPacket(new ChatMessageC2SPacket(msg));
                 ci.cancel();
             }
