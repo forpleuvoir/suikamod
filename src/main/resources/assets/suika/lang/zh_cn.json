@@ -1,6 +1,9 @@
 {
   "itemGroup.suika.group": "suika mod",
   "item.suika.ibuki_gourd": "伊吹瓢",
+  "item.suika.ryuujinjakka": "流刃若火",
+  "item.suika.ryuujinjakka_plus": "残火太刀",
+  "item.suika.raikiri": "雷切",
   "suika.ibuki_gourd.tooltip": "§e里面的酒喝不完的样子...",
   "argument.suika.formatting.error": "格式参数错误",
   "command.suika.tooltip.air": "空气不能被添加Tooltip",

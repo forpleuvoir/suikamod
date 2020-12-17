@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "block.SignBlockEntityMixin",
+    "server.LivingEntityMixin",
     "server.MinecraftServerMixin",
     "server.ServerPlayerEntityMixin"
   ],

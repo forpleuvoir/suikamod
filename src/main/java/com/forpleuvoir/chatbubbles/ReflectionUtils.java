@@ -3,6 +3,7 @@ package com.forpleuvoir.chatbubbles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author forpleuvoir
@@ -12,7 +13,17 @@ import java.util.ArrayList;
  * @createTime 2020/10/25 13:19
  */
 public class ReflectionUtils {
-    public ReflectionUtils() {
+
+    public static List<Class<?>> getSuperClass(Class<?> clazz){
+        List<Class<?>> clazzs=new ArrayList<>();
+        Class<?> suCl=clazz.getSuperclass();
+        clazzs.add(clazz.getSuperclass());
+        while(suCl!=null){
+            clazzs.add(suCl);
+            suCl=suCl.getSuperclass();
+        }
+
+        return clazzs;
     }
 
     public static Object getPrivateFieldValueByType(Object o, Class<?> objectClasstype, Class<?> fieldClasstype) {
