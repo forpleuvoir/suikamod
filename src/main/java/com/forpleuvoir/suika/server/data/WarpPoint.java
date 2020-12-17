@@ -271,7 +271,7 @@ public class WarpPoint {
             //player.unsetRemoved();
             ReflectionUtils.setPrivateFieldValueByType(player,Entity.RemovalReason.class,null,0);
             player.refreshPositionAndAngles(x, y, z, yaw, pitch);
-            player.method_32747(targetWorld);
+            player.setWorld(targetWorld);
             targetWorld.onPlayerTeleport(player);
 //            player.worldChanged(serverWorld);
             player.networkHandler.requestTeleport(x, y, z, yaw, pitch);
