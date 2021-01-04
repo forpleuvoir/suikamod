@@ -165,10 +165,10 @@ public class WarpPoint {
     }
 
 
-    public static boolean back(ServerPlayerEntity player) {
+    public static void back(ServerPlayerEntity player) {
         String uuid = player.getUuidAsString();
         if (backPoints.isEmpty())
-            return false;
+            return;
         if (backPoints.containsKey(uuid)) {
             Pos pos = backPoints.get(uuid);
             ServerWorld serverWorld;
@@ -185,9 +185,7 @@ public class WarpPoint {
             }
             Vec3d vec3d = pos.position;
             teleport(player, serverWorld, vec3d.getX(), vec3d.getY(), vec3d.getZ(), player.yaw, player.pitch);
-            return true;
         }
-        return false;
     }
 
     public static boolean home(ServerPlayerEntity player) {
