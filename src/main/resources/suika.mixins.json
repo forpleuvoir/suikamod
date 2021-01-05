@@ -7,7 +7,8 @@
     "block.SignBlockEntityMixin",
     "server.LivingEntityMixin",
     "server.MinecraftServerMixin",
-    "server.ServerPlayerEntityMixin"
+    "server.ServerPlayerEntityMixin",
+    "server.ServerPlayNetworkHandlerMixin"
   ],
   "client": [
     "client.MinecraftClientMixin",
