@@ -7,6 +7,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
+import net.minecraft.item.ItemUsageContext;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
@@ -34,6 +36,11 @@ public class IbukiGourd extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         return ItemUsage.consumeHeldItem(world, user, hand);
+    }
+
+    @Override
+    public ActionResult useOnBlock(ItemUsageContext context) {
+        return super.useOnBlock(context);
     }
 
     @Override

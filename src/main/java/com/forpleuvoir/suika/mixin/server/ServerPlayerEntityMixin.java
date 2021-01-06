@@ -38,7 +38,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
     }
 
 
-    @Inject(method = "onDeath", at = @At("RETURN"))
+    @Inject(method = "onDeath", at = @At("HEAD"))
     public void onDeath(CallbackInfo ci) {
         DimensionType type = this.world.getDimension();
         WarpPoint.setBack(getUuidAsString(), new WarpPoint.Pos(getPos(), WarpPoint.getDimension(type)));
