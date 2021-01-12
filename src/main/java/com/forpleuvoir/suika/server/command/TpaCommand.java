@@ -9,8 +9,11 @@ import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.ClickEvent;
+import net.minecraft.text.HoverEvent;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 
 /**
  * @author forpleuvoir
@@ -43,10 +46,19 @@ public class TpaCommand {
         Tpa.tpas.put(target.getUuidAsString(), new Tpa(target, sender, source.getWorld().getTime()));
         target.sendSystemMessage(new LiteralText("玩家 ")
                         .append(new LiteralText("§b" + sender.getEntityName()))
-                        .append(new LiteralText(" 请将你传送到ta的位置。"))
+                        .append(new LiteralText(" 请求将你传送到ta的位置。"))
                 , sender.getUuid());
-        target.sendSystemMessage(new LiteralText("在120秒内输入§c /tpaccept §f接受请求"), sender.getUuid());
-        source.sendFeedback(new TranslatableText("请求已发送"),false);
+        target.sendSystemMessage(
+                new LiteralText("在120秒内输入§c /tpaccept §f接受请求")
+                        .append(
+                                new LiteralText("[√]")
+                                        .styled(
+                                                style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpaccept"))
+                                                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new LiteralText("点击此处接受传送请求")))
+                                                        .withColor(Formatting.GREEN)
+                                        )),
+                sender.getUuid());
+        source.sendFeedback(new TranslatableText("请求已发送"), false);
         return 1;
     }
 
@@ -63,8 +75,17 @@ public class TpaCommand {
                         .append(new LiteralText("§b" + sender.getEntityName()))
                         .append(new LiteralText(" 请求传送到你的位置。"))
                 , sender.getUuid());
-        target.sendSystemMessage(new LiteralText("在120秒内输入§c /tpaccept §f接受请求"), sender.getUuid());
-        source.sendFeedback(new TranslatableText("请求已发送"),false);
+        target.sendSystemMessage(
+                new LiteralText("在120秒内输入§c /tpaccept §f接受请求")
+                        .append(
+                                new LiteralText("[√]")
+                                        .styled(
+                                                style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpaccept"))
+                                                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new LiteralText("点击此处接受传送请求")))
+                                                        .withColor(Formatting.GREEN)
+                                        )),
+                sender.getUuid());
+        source.sendFeedback(new TranslatableText("请求已发送"), false);
         return 1;
     }
 

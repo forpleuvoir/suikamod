@@ -10,6 +10,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.WorldSavePath;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -181,8 +182,10 @@ public class WarpPoint {
             }
             Vec3d vec3d = pos.position;
             teleport(player, serverWorld, vec3d.getX(), vec3d.getY(), vec3d.getZ(), player.yaw, player.pitch);
+            player.sendMessage(new TranslatableText("返回上一个标记点"),true);
             return true;
         }
+        player.sendMessage(new TranslatableText("记录中没有发现标记点"),true);
         return false;
     }
 

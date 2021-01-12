@@ -5,15 +5,13 @@ import com.forpleuvoir.suika.config.TooltipConfig;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.LiteralText;
 
 import java.util.List;
 import java.util.Map;
 
-import static com.forpleuvoir.suika.client.commands.TooltipCommand.OWNER;
 import static com.forpleuvoir.suika.config.ModConfigApp.modConfig;
-
+import static com.forpleuvoir.suika.util.PlayerHeadUtil.getSkullOwner;
 /**
  * tooltip工具类
  *
@@ -50,27 +48,5 @@ public class TooltipUtil {
         return item.getTranslationKey(stack) + value;
     }
 
-    public static String getSkullOwner(ItemStack stack) {
-        if (stack.getItem() == Items.PLAYER_HEAD && stack.hasTag()) {
-            String string = null;
-            CompoundTag compoundTag = stack.getTag();
-            assert compoundTag != null;
-            if (compoundTag.getString(OWNER).isEmpty()) {
-                if (compoundTag.contains(OWNER, 8)) {
-                    string = compoundTag.getString(OWNER);
-                } else if (compoundTag.contains(OWNER, 10)) {
-                    CompoundTag compoundTag2 = compoundTag.getCompound(OWNER);
-                    if (compoundTag2.contains("Name", 8)) {
-                        string = compoundTag2.getString("Name");
-                    }
-                }
-                if (string != null) {
-                    return string;
-                }
-            } else {
-                return compoundTag.getString(OWNER);
-            }
-        }
-        return "";
-    }
+
 }
