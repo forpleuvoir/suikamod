@@ -8,15 +8,11 @@ import com.google.common.collect.Maps;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import net.minecraft.network.packet.s2c.play.DifficultyS2CPacket;
-import net.minecraft.network.packet.s2c.play.PlayerRespawnS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.WorldSavePath;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldProperties;
-import net.minecraft.world.biome.source.BiomeAccess;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.level.storage.LevelStorage;
 
@@ -25,7 +21,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Objects;
 
@@ -104,11 +99,11 @@ public class WarpPoint {
     public static Dimension getDimension(DimensionType type) {
         WarpPoint.Dimension dimension = WarpPoint.Dimension.OVERWORLD;
         try {
-            Field THE_NETHER = DimensionType.class.getDeclaredField("THE_NETHER");
-            Field THE_END = DimensionType.class.getDeclaredField("THE_END");
-            if (type.equals(THE_NETHER.get(DimensionType.class))) {
+            DimensionType THE_NETHER = (DimensionType) ReflectionUtils.getPrivateFieldValueByType(null, DimensionType.class, DimensionType.class, 1);
+            DimensionType THE_END = (DimensionType) ReflectionUtils.getPrivateFieldValueByType(null, DimensionType.class, DimensionType.class, 2);
+            if (type.equals(THE_NETHER)) {
                 dimension = WarpPoint.Dimension.NETHER;
-            } else if (type.equals(THE_END.get(DimensionType.class))) {
+            } else if (type.equals(THE_END)) {
                 dimension = WarpPoint.Dimension.END;
             }
         } catch (Exception e) {
@@ -150,6 +145,9 @@ public class WarpPoint {
     }
 
     private static void load() throws FileNotFoundException {
+        warpPoints.clear();
+        homePoints.clear();
+        backPoints.clear();
         JsonObject json = new JsonParser().parse(new FileReader(file)).getAsJsonObject();
         Map<String, Pos> homes = JsonUtil.fromJson(json.get("homes"), new TypeToken<Map<String, Pos>>() {
         }.getType());
@@ -160,7 +158,6 @@ public class WarpPoint {
         warpPoints.putAll(warps);
         homePoints.putAll(homes);
         backPoints.putAll(backs);
-
     }
 
 
@@ -255,28 +252,6 @@ public class WarpPoint {
     }
 
     public static void teleport(ServerPlayerEntity player, ServerWorld targetWorld, double x, double y, double z, float yaw, float pitch) {
-        player.setCameraEntity(player);
-        player.stopRiding();
-        setBack(player);
-        if (targetWorld == player.world) {
-            player.networkHandler.requestTeleport(x, y, z, yaw, pitch);
-        } else {
-            ServerWorld serverWorld = player.getServerWorld();
-            WorldProperties worldProperties = targetWorld.getLevelProperties();
-            player.networkHandler.sendPacket(new PlayerRespawnS2CPacket(targetWorld.getDimension(), targetWorld.getRegistryKey(), BiomeAccess.hashSeed(targetWorld.getSeed()), player.interactionManager.getGameMode(), player.interactionManager.getPreviousGameMode(), targetWorld.isDebugWorld(), targetWorld.isFlat(), true));
-            player.networkHandler.sendPacket(new DifficultyS2CPacket(worldProperties.getDifficulty(), worldProperties.isDifficultyLocked()));
-            player.server.getPlayerManager().sendCommandTree(player);
-            serverWorld.removePlayer(player);
-            player.removed = false;
-            player.refreshPositionAndAngles(x, y, z, yaw, pitch);
-            player.setWorld(targetWorld);
-            targetWorld.onPlayerTeleport(player);
-//            player.worldChanged(serverWorld);
-            player.networkHandler.requestTeleport(x, y, z, yaw, pitch);
-            player.interactionManager.setWorld(targetWorld);
-            player.server.getPlayerManager().sendWorldInfo(player, targetWorld);
-            player.server.getPlayerManager().sendPlayerStatus(player);
-        }
-
+        player.teleport(targetWorld,x,y,z,yaw,pitch);
     }
 }

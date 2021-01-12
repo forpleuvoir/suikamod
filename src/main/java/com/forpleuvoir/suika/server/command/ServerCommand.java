@@ -22,7 +22,4 @@ public class ServerCommand {
         TpaCommand.register(dispatcher);
     }
 
-    public static void  ArgumentTypeRegister(){
-        ArgumentTypes.register("warps", WarpPointArgumentType.class,new WarpPointArgumentType.Serializer());
-    }
 }

@@ -22,7 +22,7 @@ import java.util.function.Function;
  * @create_time 2020/11/23 10:18
  */
 @Mixin(MinecraftServer.class)
-public class MinecraftServerMixin {
+public abstract class MinecraftServerMixin {
 
     @Inject(method = "startServer", at = @At("RETURN"))
     private static void startServer(Function<Thread, CallbackI.S> serverFactory, CallbackInfoReturnable<MinecraftServer> returnable) {

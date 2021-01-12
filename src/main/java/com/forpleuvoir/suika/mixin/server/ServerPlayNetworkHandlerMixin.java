@@ -24,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
+ * 服务器玩家聊天信息处理
  * @author forpleuvoir
  * @project_name suikamod
  * @package com.forpleuvoir.suika.mixin.server
@@ -97,6 +98,7 @@ public abstract class ServerPlayNetworkHandlerMixin {
             }
 
         }
+        //覆盖原本的方法
         ci.cancel();
     }
 }

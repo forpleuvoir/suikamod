@@ -23,7 +23,7 @@ import static com.forpleuvoir.suika.util.TooltipUtil.addTooltip;
  * @Description Item注入
  */
 @Mixin(Item.class)
-public class ItemMixin {
+public abstract class ItemMixin {
     @Inject(method = "appendTooltip", at = @At("HEAD"))
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context, CallbackInfo callbackInfo) {
         addTooltip(stack, tooltip);

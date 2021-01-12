@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * @Description 客户端命令注入
  */
 @Mixin(CommandTreeS2CPacket.class)
-public class SCommandListPacketMixin {
+public abstract class SCommandListPacketMixin {
     @Inject(method = "apply", at = @At("RETURN"))
     private void processPacket(ClientPlayPacketListener netHandlerPlayClient, CallbackInfo ci) {
         TypeHelper.doIfType(netHandlerPlayClient, ClientPlayNetworkHandler.class, handler ->

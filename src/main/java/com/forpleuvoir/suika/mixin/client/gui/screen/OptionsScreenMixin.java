@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * @create_time 2020/10/27 15:25
  */
 @Mixin(OptionsScreen.class)
-public class OptionsScreenMixin extends Screen {
+public abstract class OptionsScreenMixin extends Screen {
 
     private OptionsScreenMixin() {
         super(null);

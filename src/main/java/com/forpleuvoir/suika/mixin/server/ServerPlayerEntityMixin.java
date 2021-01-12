@@ -31,7 +31,10 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
     @Shadow
     public abstract void sendSystemMessage(Text message, UUID senderUuid);
 
-    @Shadow public abstract void sendMessage(Text message, boolean actionBar);
+    @Shadow
+    public abstract void sendMessage(Text message, boolean actionBar);
+
+    @Shadow public abstract void addExperience(int experience);
 
     public ServerPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
         super(world, pos, yaw, profile);
@@ -42,8 +45,17 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
     public void onDeath(CallbackInfo ci) {
         DimensionType type = this.world.getDimension();
         WarpPoint.setBack(getUuidAsString(), new WarpPoint.Pos(getPos(), WarpPoint.getDimension(type)));
-        Text text = Texts.bracketed(new TranslatableText("输入 §c/back §r返回死亡地点")).styled((style) -> style.withColor(Formatting.WHITE).withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/back")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText("chat.coordinates.tooltip"))));
-        sendMessage(text,false);
+        Text text = new TranslatableText("输入 §c/back §r返回死亡地点").styled((style) -> style.withColor(Formatting.WHITE).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/back")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText("chat.coordinates.tooltip"))));
+        sendMessage(text, false);
     }
 
+    @Inject(method = "teleport",at=@At("HEAD"))
+    public void teleportHEAD(CallbackInfo ci){
+        WarpPoint.setBack(getUuidAsString(),new WarpPoint.Pos(getPos(),WarpPoint.getDimension(getEntityWorld().getDimension())));
+    }
+
+    @Inject(method = "teleport",at=@At("RETURN"))
+    public void teleportRETURN(CallbackInfo ci){
+        addExperience(0);
+    }
 }
