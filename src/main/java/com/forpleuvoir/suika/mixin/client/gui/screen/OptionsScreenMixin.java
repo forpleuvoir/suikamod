@@ -3,7 +3,7 @@ package com.forpleuvoir.suika.mixin.client.gui.screen;
 import com.forpleuvoir.suika.client.gui.SuikaConfigScreen;
 import com.forpleuvoir.suika.util.CommandUtil;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.options.OptionsScreen;
+import net.minecraft.client.gui.screen.option.OptionsScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.TranslatableText;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * @create_time 2020/10/27 15:25
  */
 @Mixin(OptionsScreen.class)
-public class OptionsScreenMixin extends Screen {
+public abstract class OptionsScreenMixin extends Screen {
 
     private OptionsScreenMixin() {
         super(null);

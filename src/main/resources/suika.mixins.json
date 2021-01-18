@@ -5,8 +5,12 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "block.SignBlockEntityMixin",
+    "command.argument.ArgumentTypesMixin",
+    "item.ItemStackMixin",
+    "server.LivingEntityMixin",
     "server.MinecraftServerMixin",
-    "server.ServerPlayerEntityMixin"
+    "server.ServerPlayerEntityMixin",
+    "server.ServerPlayNetworkHandlerMixin"
   ],
   "client": [
     "client.MinecraftClientMixin",

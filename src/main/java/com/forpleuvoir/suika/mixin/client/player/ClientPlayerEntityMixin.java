@@ -2,10 +2,14 @@ package com.forpleuvoir.suika.mixin.client.player;
 
 
 import com.forpleuvoir.suika.client.interop.ClientInterop;
+import com.mojang.authlib.GameProfile;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -26,13 +30,18 @@ import static com.forpleuvoir.suika.config.ModConfigApp.modConfig;
  * @Description 客户端玩家注入
  */
 @Mixin(ClientPlayerEntity.class)
-public class ClientPlayerEntityMixin {
+public abstract class ClientPlayerEntityMixin extends PlayerEntity {
     @Final
     @Shadow
     public ClientPlayNetworkHandler networkHandler;
     @Shadow
     @Final
     protected MinecraftClient client;
+
+    public ClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
+        super(world, pos, yaw, profile);
+    }
+
 
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     public void sendChatMessage(String message, CallbackInfo ci) {

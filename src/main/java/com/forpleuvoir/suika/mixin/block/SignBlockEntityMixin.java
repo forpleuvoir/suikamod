@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * @create_time 2020/11/20 9:00
  */
 @Mixin(SignBlockEntity.class)
-public class SignBlockEntityMixin {
+public abstract class SignBlockEntityMixin {
 
     @Shadow
     private boolean editable;

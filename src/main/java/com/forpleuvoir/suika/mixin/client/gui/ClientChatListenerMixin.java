@@ -23,7 +23,7 @@ import static com.forpleuvoir.suika.config.ModConfigApp.modConfig;
  * @createTime 2020/10/25 11:04
  */
 @Mixin(ChatHudListener.class)
-public class ClientChatListenerMixin {
+public abstract class ClientChatListenerMixin {
     @Inject(
             method = "onChatMessage",
             at = {@At("HEAD")},

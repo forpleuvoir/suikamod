@@ -35,7 +35,7 @@ import static com.forpleuvoir.suika.util.TooltipUtil.addTooltip;
  */
 
 @Mixin(InGameHud.class)
-public class InGameHudMixin {
+public abstract class InGameHudMixin {
 
     @Shadow
     @Final

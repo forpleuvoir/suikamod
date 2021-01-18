@@ -12,5 +12,5 @@ import org.spongepowered.asm.mixin.Mixin;
  * @Description 聊天界面注入
  */
 @Mixin(ChatScreen.class)
-public class ChatScreenMixin {
+public abstract class ChatScreenMixin {
 }

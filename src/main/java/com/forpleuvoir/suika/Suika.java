@@ -24,7 +24,5 @@ public class Suika implements ModInitializer {
         LOGGER.info("suika mod initialize...");
         ItemRegistry.register();
         CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> ServerCommand.commandRegister(dispatcher));
-        ServerCommand.ArgumentTypeRegister();
-
     }
 }
