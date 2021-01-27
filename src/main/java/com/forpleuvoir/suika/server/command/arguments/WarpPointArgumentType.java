@@ -13,6 +13,7 @@ import net.minecraft.command.argument.serialize.ArgumentSerializer;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.TranslatableText;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -81,7 +82,7 @@ public class WarpPointArgumentType implements ArgumentType<String> {
                     stringBuilder.append(",");
                 }
             }
-            byte[] bs=stringBuilder.toString().getBytes();
+            byte[] bs=stringBuilder.toString().getBytes(StandardCharsets.UTF_8);
             packetByteBuf.writeByteArray(bs);
         }
 

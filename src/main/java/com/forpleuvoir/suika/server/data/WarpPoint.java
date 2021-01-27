@@ -145,10 +145,14 @@ public class WarpPoint {
         }
     }
 
-    private static void load() throws FileNotFoundException {
+    public static void clear(){
         warpPoints.clear();
         homePoints.clear();
         backPoints.clear();
+    }
+
+    private static void load() throws FileNotFoundException {
+        clear();
         JsonObject json = new JsonParser().parse(new FileReader(file)).getAsJsonObject();
         Map<String, Pos> homes = JsonUtil.fromJson(json.get("homes"), new TypeToken<Map<String, Pos>>() {
         }.getType());
