@@ -1,6 +1,5 @@
 package com.forpleuvoir.suika.server.data;
 
-import com.forpleuvoir.chatbubbles.ReflectionUtils;
 import com.forpleuvoir.suika.Suika;
 import com.forpleuvoir.suikalib.util.FileUtil;
 import com.forpleuvoir.suikalib.util.JsonUtil;
@@ -11,8 +10,11 @@ import com.google.gson.reflect.TypeToken;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.WorldSavePath;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.level.storage.LevelStorage;
@@ -65,10 +67,14 @@ public class WarpPoint {
 
     private static void createFile() throws IOException {
         if (!filePath.exists()) {
-            filePath.mkdirs();
+            if (!filePath.mkdirs()) {
+                throw new IOException("目录创建失败");
+            }
         }
         if (!file.exists()) {
-            file.createNewFile();
+            if (!file.createNewFile()) {
+                throw new IOException("文件创建失败");
+            }
         }
     }
 
@@ -77,13 +83,8 @@ public class WarpPoint {
         save();
     }
 
-    public static void setBack(ServerPlayerEntity player) {
-        backPoints.put(player.getUuidAsString(), new Pos(player.getPos(), getDimension(player)));
-        save();
-    }
-
     public static void addWarp(String key, ServerPlayerEntity player) {
-        warpPoints.put(key, new Pos(player.getPos(), getDimension(player)));
+        warpPoints.put(key, new Pos(player.getPos(), player));
         save();
     }
 
@@ -93,42 +94,10 @@ public class WarpPoint {
     }
 
     public static void sethome(ServerPlayerEntity player) {
-        homePoints.put(player.getUuidAsString(), new Pos(player.getPos(), getDimension(player)));
+        homePoints.put(player.getUuidAsString(), new Pos(player.getPos(), player));
         save();
     }
 
-    public static Dimension getDimension(DimensionType type) {
-        WarpPoint.Dimension dimension = WarpPoint.Dimension.OVERWORLD;
-        try {
-            DimensionType THE_NETHER = (DimensionType) ReflectionUtils.getPrivateFieldValueByType(null, DimensionType.class, DimensionType.class, 1);
-            DimensionType THE_END = (DimensionType) ReflectionUtils.getPrivateFieldValueByType(null, DimensionType.class, DimensionType.class, 2);
-            if (type.equals(THE_NETHER)) {
-                dimension = WarpPoint.Dimension.NETHER;
-            } else if (type.equals(THE_END)) {
-                dimension = WarpPoint.Dimension.END;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return dimension;
-    }
-
-    public static Dimension getDimension(ServerPlayerEntity player) {
-        DimensionType type = player.getServerWorld().getDimension();
-        WarpPoint.Dimension dimension = WarpPoint.Dimension.OVERWORLD;
-        try {
-            DimensionType THE_NETHER = (DimensionType) ReflectionUtils.getPrivateFieldValueByType(null, DimensionType.class, DimensionType.class, 1);
-            DimensionType THE_END = (DimensionType) ReflectionUtils.getPrivateFieldValueByType(null, DimensionType.class, DimensionType.class, 2);
-            if (type.equals(THE_NETHER)) {
-                dimension = WarpPoint.Dimension.NETHER;
-            } else if (type.equals(THE_END)) {
-                dimension = WarpPoint.Dimension.END;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return dimension;
-    }
 
     private static void save() {
         JsonObject warps = JsonUtil.gson.toJsonTree(warpPoints).getAsJsonObject();
@@ -145,7 +114,7 @@ public class WarpPoint {
         }
     }
 
-    public static void clear(){
+    public static void clear() {
         warpPoints.clear();
         homePoints.clear();
         backPoints.clear();
@@ -173,24 +142,13 @@ public class WarpPoint {
             return;
         if (backPoints.containsKey(uuid)) {
             Pos pos = backPoints.get(uuid);
-            ServerWorld serverWorld;
-            switch (pos.dimension) {
-                case END:
-                    serverWorld = Objects.requireNonNull(player.getServer()).getWorld(World.END);
-                    break;
-                case NETHER:
-                    serverWorld = Objects.requireNonNull(player.getServer()).getWorld(World.NETHER);
-                    break;
-                case OVERWORLD:
-                default:
-                    serverWorld = Objects.requireNonNull(player.getServer()).getWorld(World.OVERWORLD);
-            }
+            ServerWorld serverWorld = pos.getServerWorld(player);
             Vec3d vec3d = pos.position;
             teleport(player, serverWorld, vec3d.getX(), vec3d.getY(), vec3d.getZ(), player.yaw, player.pitch);
-            player.sendMessage(new TranslatableText("返回上一个标记点"),true);
+            player.sendMessage(new TranslatableText("返回上一个标记点"), true);
             return;
         }
-        player.sendMessage(new TranslatableText("记录中没有发现标记点"),true);
+        player.sendMessage(new TranslatableText("记录中没有发现标记点"), true);
     }
 
     public static boolean home(ServerPlayerEntity player) {
@@ -199,18 +157,7 @@ public class WarpPoint {
             return false;
         if (homePoints.containsKey(uuid)) {
             Pos pos = homePoints.get(uuid);
-            ServerWorld serverWorld;
-            switch (pos.dimension) {
-                case END:
-                    serverWorld = Objects.requireNonNull(player.getServer()).getWorld(World.END);
-                    break;
-                case NETHER:
-                    serverWorld = Objects.requireNonNull(player.getServer()).getWorld(World.NETHER);
-                    break;
-                case OVERWORLD:
-                default:
-                    serverWorld = Objects.requireNonNull(player.getServer()).getWorld(World.OVERWORLD);
-            }
+            ServerWorld serverWorld = pos.getServerWorld(player);
             Vec3d vec3d = pos.position;
             teleport(player, serverWorld, vec3d.getX(), vec3d.getY(), vec3d.getZ(), player.yaw, player.pitch);
             return true;
@@ -226,18 +173,7 @@ public class WarpPoint {
         if (!warpPoints.containsKey(key))
             return false;
         Pos pos = warpPoints.get(key);
-        ServerWorld serverWorld;
-        switch (pos.dimension) {
-            case END:
-                serverWorld = Objects.requireNonNull(player.getServer()).getWorld(World.END);
-                break;
-            case NETHER:
-                serverWorld = Objects.requireNonNull(player.getServer()).getWorld(World.NETHER);
-                break;
-            case OVERWORLD:
-            default:
-                serverWorld = Objects.requireNonNull(player.getServer()).getWorld(World.OVERWORLD);
-        }
+        ServerWorld serverWorld = pos.getServerWorld(player);
         Vec3d vec3d = pos.position;
         teleport(player, serverWorld, vec3d.getX(), vec3d.getY(), vec3d.getZ(), player.yaw, player.pitch);
         return true;
@@ -246,19 +182,29 @@ public class WarpPoint {
 
     public static class Pos {
         public Vec3d position;
-        public Dimension dimension;
+        public String dimensionKey;
 
-        public Pos(Vec3d position, Dimension dimension) {
+        public Pos(Vec3d position, DimensionType dimensionType) {
             this.position = position;
-            this.dimension = dimension;
+            this.dimensionKey = dimensionType.getSkyProperties().getNamespace() + ":" + dimensionType.getSkyProperties().getPath();
+        }
+
+        public Pos(Vec3d position, ServerPlayerEntity playerEntity) {
+            this(position, playerEntity.getServerWorld().getDimension());
+        }
+
+        public RegistryKey<World> getWorldKey() {
+            String[] name = dimensionKey.split(":");
+            return RegistryKey.of(Registry.DIMENSION, new Identifier(name[0], name[1]));
+        }
+
+        public ServerWorld getServerWorld(ServerPlayerEntity player) {
+            ServerWorld serverWorld = Objects.requireNonNull(player.getServer()).getWorld(getWorldKey());
+            return serverWorld != null ? serverWorld : player.getServer().getWorld(World.OVERWORLD);
         }
     }
 
-    public enum Dimension {
-        OVERWORLD, END, NETHER
-    }
-
     public static void teleport(ServerPlayerEntity player, ServerWorld targetWorld, double x, double y, double z, float yaw, float pitch) {
-        player.teleport(targetWorld,x,y,z,yaw,pitch);
+        player.teleport(targetWorld, x, y, z, yaw, pitch);
     }
 }

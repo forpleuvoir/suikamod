@@ -4,10 +4,8 @@ import com.google.common.collect.Maps;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author forpleuvoir
@@ -28,32 +26,20 @@ public class Tpa {
 
     private final ServerPlayerEntity player;
     private final Vec3d target;
-    private final WarpPoint.Dimension targetDimension;
+    private final ServerWorld targetWorld;
     private final Long expireTime;
 
     public Tpa(ServerPlayerEntity player, ServerPlayerEntity target, Long nowTime) {
         this.player = player;
         this.target = target.getPos();
-        this.targetDimension = WarpPoint.getDimension(target);
+        this.targetWorld = target.getServerWorld();
         this.expireTime = nowTime + time;
     }
 
 
     public boolean tpa(long nowTime) {
         if (canTp(nowTime)) {
-            ServerWorld serverWorld;
-            switch (targetDimension) {
-                case END:
-                    serverWorld = Objects.requireNonNull(this.player.getServer()).getWorld(World.END);
-                    break;
-                case NETHER:
-                    serverWorld = Objects.requireNonNull(this.player.getServer()).getWorld(World.NETHER);
-                    break;
-                case OVERWORLD:
-                default:
-                    serverWorld = Objects.requireNonNull(this.player.getServer()).getWorld(World.OVERWORLD);
-            }
-            teleport(this.player, serverWorld, target);
+            teleport(this.player, targetWorld, target);
             return true;
         } else {
             return false;
