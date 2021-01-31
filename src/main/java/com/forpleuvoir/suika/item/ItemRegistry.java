@@ -31,9 +31,11 @@ public class ItemRegistry {
     public static final boolean IS_ENABLED = false;
 
     static {
-        GROUP = FabricItemGroupBuilder.build(new Identifier(MOD_ID, "group"), () ->
-                new ItemStack(ItemRegistry.IBUKI_GOURD));
-        IBUKI_GOURD = new IbukiGourd(settings().maxCount(64));
+        if (IS_ENABLED) {
+            GROUP = FabricItemGroupBuilder.build(new Identifier(MOD_ID, "group"), () ->
+                    new ItemStack(ItemRegistry.IBUKI_GOURD));
+            IBUKI_GOURD = new IbukiGourd(settings().maxCount(64));
+        }
     }
 
     public static void register() {
