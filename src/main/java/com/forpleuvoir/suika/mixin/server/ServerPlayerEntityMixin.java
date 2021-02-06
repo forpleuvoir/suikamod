@@ -50,9 +50,6 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
     @Shadow
     public abstract void addExperience(int experience);
 
-    @Shadow
-    @Final
-    private ServerRecipeBook recipeBook;
 
     public ServerPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
         super(world, pos, yaw, profile);
@@ -62,7 +59,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
     @Inject(method = "onDeath", at = @At("HEAD"))
     public void onDeath(DamageSource source, CallbackInfo ci) {
         DimensionType type = this.world.getDimension();
-        WarpPoint.setBack(getUuidAsString(), new WarpPoint.Pos(getPos(), WarpPoint.getDimension(type)));
+        WarpPoint.setBack(getUuidAsString(), new WarpPoint.Pos(getPos(), type));
         Text text = new TranslatableText("输入 §c/back §r返回死亡地点").styled((style) -> style.withColor(Formatting.WHITE).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/back")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText("chat.coordinates.tooltip"))));
         sendMessage(text, false);
 
@@ -98,7 +95,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 
     @Inject(method = "teleport", at = @At("HEAD"))
     public void teleportHEAD(CallbackInfo ci) {
-        WarpPoint.setBack(getUuidAsString(), new WarpPoint.Pos(getPos(), WarpPoint.getDimension(getEntityWorld().getDimension())));
+        WarpPoint.setBack(getUuidAsString(), new WarpPoint.Pos(getPos(), getEntityWorld().getDimension()));
     }
 
     @Inject(method = "teleport", at = @At("RETURN"))
