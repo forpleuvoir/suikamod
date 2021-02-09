@@ -1,5 +1,6 @@
 package com.forpleuvoir.suika.server.data;
 
+import com.forpleuvoir.chatbubbles.ReflectionUtils;
 import com.forpleuvoir.suika.Suika;
 import com.forpleuvoir.suikalib.util.FileUtil;
 import com.forpleuvoir.suikalib.util.JsonUtil;
@@ -138,7 +139,7 @@ public class WarpPoint {
             return false;
         if (backPoints.containsKey(uuid)) {
             Pos pos = backPoints.get(uuid);
-            ServerWorld serverWorld=pos.getServerWorld(player);
+            ServerWorld serverWorld = pos.getServerWorld(player);
             Vec3d vec3d = pos.position;
             teleport(player, serverWorld, vec3d.getX(), vec3d.getY(), vec3d.getZ(), player.yaw, player.pitch);
             player.sendMessage(new TranslatableText("返回上一个标记点"), true);
@@ -154,7 +155,7 @@ public class WarpPoint {
             return false;
         if (homePoints.containsKey(uuid)) {
             Pos pos = homePoints.get(uuid);
-            ServerWorld serverWorld=pos.getServerWorld(player);
+            ServerWorld serverWorld = pos.getServerWorld(player);
             Vec3d vec3d = pos.position;
             teleport(player, serverWorld, vec3d.getX(), vec3d.getY(), vec3d.getZ(), player.yaw, player.pitch);
             return true;
@@ -170,7 +171,7 @@ public class WarpPoint {
         if (!warpPoints.containsKey(key))
             return false;
         Pos pos = warpPoints.get(key);
-        ServerWorld serverWorld=pos.getServerWorld(player);
+        ServerWorld serverWorld = pos.getServerWorld(player);
         Vec3d vec3d = pos.position;
         teleport(player, serverWorld, vec3d.getX(), vec3d.getY(), vec3d.getZ(), player.yaw, player.pitch);
         return true;
@@ -183,7 +184,9 @@ public class WarpPoint {
 
         public Pos(Vec3d position, DimensionType dimensionType) {
             this.position = position;
-            this.dimensionKey = dimensionType.getSkyProperties().getNamespace() + ":" + dimensionType.getSkyProperties().getPath();
+            Identifier skyProperties = (Identifier) ReflectionUtils.getPrivateFieldValueByType(dimensionType, DimensionType.class, Identifier.class, 4);
+            assert skyProperties != null;
+            this.dimensionKey = skyProperties.toString();
         }
 
         public Pos(Vec3d position, ServerPlayerEntity player) {
@@ -191,8 +194,7 @@ public class WarpPoint {
         }
 
         public RegistryKey<World> getWorldKey() {
-            String[] name = dimensionKey.split(":");
-            return RegistryKey.of(Registry.DIMENSION, new Identifier(name[0], name[1]));
+            return RegistryKey.of(Registry.DIMENSION, Identifier.tryParse(dimensionKey));
         }
 
         public ServerWorld getServerWorld(ServerPlayerEntity playerEntity) {
