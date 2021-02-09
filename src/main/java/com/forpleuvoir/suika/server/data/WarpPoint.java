@@ -1,5 +1,6 @@
 package com.forpleuvoir.suika.server.data;
 
+import com.forpleuvoir.chatbubbles.ReflectionUtils;
 import com.forpleuvoir.suika.Suika;
 import com.forpleuvoir.suikalib.util.FileUtil;
 import com.forpleuvoir.suikalib.util.JsonUtil;
@@ -186,7 +187,9 @@ public class WarpPoint {
 
         public Pos(Vec3d position, DimensionType dimensionType) {
             this.position = position;
-            this.dimensionKey = dimensionType.getSkyProperties().getNamespace() + ":" + dimensionType.getSkyProperties().getPath();
+            Identifier skyProperties = (Identifier) ReflectionUtils.getPrivateFieldValueByType(dimensionType, DimensionType.class, Identifier.class, 4);
+            assert skyProperties != null;
+            this.dimensionKey = skyProperties.toString();
         }
 
         public Pos(Vec3d position, ServerPlayerEntity playerEntity) {
@@ -194,8 +197,7 @@ public class WarpPoint {
         }
 
         public RegistryKey<World> getWorldKey() {
-            String[] name = dimensionKey.split(":");
-            return RegistryKey.of(Registry.DIMENSION, new Identifier(name[0], name[1]));
+            return RegistryKey.of(Registry.DIMENSION, Identifier.tryParse(dimensionKey));
         }
 
         public ServerWorld getServerWorld(ServerPlayerEntity player) {
