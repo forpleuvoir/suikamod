@@ -47,8 +47,8 @@ public class ChatMessageCommand {
     }
 
     private static LiteralArgumentBuilder<ServerCommandSource> set() {
-        return CommandManager.literal(SET).
-                then(CommandManager.argument("prefix", StringArgumentType.string())
+        return CommandManager.literal(SET)
+                .then(CommandManager.argument("prefix", StringArgumentType.string())
                         .then(CommandManager.argument("append", StringArgumentType.string())
                                 .executes(context -> {
                                     String prefix = StringArgumentType.getString(context, "prefix");

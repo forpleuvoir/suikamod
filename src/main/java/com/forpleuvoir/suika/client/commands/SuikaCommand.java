@@ -3,7 +3,9 @@ package com.forpleuvoir.suika.client.commands;
 import com.forpleuvoir.suika.util.CommandUtil;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
+import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.command.CommandSource;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -25,14 +27,39 @@ public class SuikaCommand {
     public static final String SHOW_ENCHANTMENT = BASE_COMMAND + "show_enchantment";
     public static final String AUTO_REBIRTH = BASE_COMMAND + "auto_rebirth";
     public static final String CHAT_BUBBLES = BASE_COMMAND + "chat_bubbles";
+    public static final String GAMMA = BASE_COMMAND + "gamma";
 
     public static void register(CommandDispatcher<CommandSource> dispatcher) {
         LiteralArgumentBuilder showEnchantment = showEnchantment();
         LiteralArgumentBuilder autoRebirth = autoRebirth();
         LiteralArgumentBuilder chatBubbles = chatBubbles();
+        LiteralArgumentBuilder gamma = CommandManager.literal(GAMMA)
+                .then(setGamma())
+                .then(setDefValue());
         dispatcher.register(showEnchantment);
         dispatcher.register(autoRebirth);
         dispatcher.register(chatBubbles);
+        dispatcher.register(gamma);
+    }
+
+    private static LiteralArgumentBuilder<ServerCommandSource> setGamma() {
+        return CommandManager.literal("set")
+                .then(CommandManager.argument("value", DoubleArgumentType.doubleArg())
+                        .executes(context -> {
+                            double value = DoubleArgumentType.getDouble(context, "value");
+                            MinecraftClient.getInstance().options.gamma = value;
+                            result("当前的gamma值:" + value, Formatting.AQUA);
+                            return 1;
+                        }));
+    }
+
+    private static LiteralArgumentBuilder<ServerCommandSource> setDefValue() {
+        return CommandManager.literal("def")
+                .executes(context -> {
+                    MinecraftClient.getInstance().options.gamma = 1;
+                    result("gamma值已重置", Formatting.AQUA);
+                    return 1;
+                });
     }
 
     private static LiteralArgumentBuilder<ServerCommandSource> showEnchantment() {

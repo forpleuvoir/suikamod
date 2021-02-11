@@ -17,7 +17,7 @@ import net.minecraft.server.command.ServerCommandSource;
 public class SuicideCommand {
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-        dispatcher.register(CommandManager.literal("tpa")
+        dispatcher.register(CommandManager.literal("suicide")
                 .executes(SuicideCommand::suicide));
     }
 
