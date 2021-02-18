@@ -5,6 +5,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.text.LiteralText;
 
 /**
  * @author forpleuvoir
@@ -23,6 +24,7 @@ public class SuicideCommand {
 
     public static int suicide(CommandContext<ServerCommandSource> context)throws CommandSyntaxException {
         context.getSource().getPlayer().setHealth(0);
+        context.getSource().sendFeedback(new LiteralText("你结束了自己的生命"),false);
         return 0;
     }
 }
