@@ -19,5 +19,6 @@ public class ServerCommand {
         BackCommand.register(dispatcher);
         TpaCommand.register(dispatcher);
         SuicideCommand.register(dispatcher);
+        PlayerCommand.register(dispatcher);
     }
 }

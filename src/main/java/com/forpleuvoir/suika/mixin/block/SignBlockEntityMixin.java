@@ -1,7 +1,7 @@
 package com.forpleuvoir.suika.mixin.block;
 
 import net.minecraft.block.entity.SignBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,7 +22,7 @@ public abstract class SignBlockEntityMixin {
     private boolean editable;
 
     @Inject(method = "onActivate", at = @At("HEAD"))
-    public void useOnBlock(PlayerEntity player, CallbackInfoReturnable<Boolean> callback) {
+    public void useOnBlock(ServerPlayerEntity player, CallbackInfoReturnable<Boolean> callback) {
         if (player.canModifyBlocks()) {
             editable = true;
             SignBlockEntity sign = (SignBlockEntity) (Object) this;

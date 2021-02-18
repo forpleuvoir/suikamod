@@ -14,6 +14,8 @@ import net.minecraft.text.BaseText;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 
+import static net.minecraft.command.CommandSource.suggestMatching;
+
 /**
  * @author forpleuvoir
  * @project_name suikamod
@@ -28,13 +30,16 @@ public class WarpCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(CommandManager.literal("warp")
                 .then(CommandManager.argument("warp", new WarpPointArgumentType(WarpPoint.warpPoints.keySet()))
+                        .suggests((c, b) ->
+                                suggestMatching(WarpPoint.warpPoints.keySet(), b)
+                        )
                         .executes(WarpCommand::warp))
         );
         dispatcher.register(CommandManager.literal("warps").executes(WarpCommand::warps));
         dispatcher.register(CommandManager.literal("setwarp")
                 .then(CommandManager.argument("warp", StringArgumentType.string())
                         .executes(WarpCommand::setWarp)).requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)));
-        dispatcher.register(CommandManager.literal("removewarp")
+        dispatcher.register(CommandManager.literal("delwarp")
                 .then(CommandManager.argument("warp", new WarpPointArgumentType(WarpPoint.warpPoints.keySet()))
                         .executes(WarpCommand::removeWarp)).requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)));
     }
