@@ -29,7 +29,6 @@ public class ConfigManager {
     private static File DATA_FILE;
     public static Map<String, Object> DATA = new HashMap<>();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final String CHAT_MESSAGE_FILTER_KEY = "chat_message_filter";
 
 
     public static void init() {
@@ -56,7 +55,7 @@ public class ConfigManager {
             Suika.LOGGER.info("suika mod load data...");
             String data = FileUtil.readFile(DATA_FILE);
             ConfigManager.DATA.put(TooltipConfig.KEY, GSON.fromJson(new JsonParser().parse(data).getAsJsonObject().get(TooltipConfig.KEY), TooltipConfig.class));
-            DATA.put(CHAT_MESSAGE_FILTER_KEY, GSON.fromJson(new JsonParser().parse(data).getAsJsonObject().get(CHAT_MESSAGE_FILTER_KEY), Set.class));
+            DATA.put(ChatMessageFilter.KEY, GSON.fromJson(new JsonParser().parse(data).getAsJsonObject().get(ChatMessageFilter.KEY), ChatMessageFilter.class));
         } catch (Exception e) {
             Suika.LOGGER.error("suika mod 数据加载失败");
             Suika.LOGGER.error(e.getMessage());
@@ -69,28 +68,14 @@ public class ConfigManager {
         }
     }
 
-    public static Set<String> getFilter() {
-        Set<String> filter = (Set<String>) DATA.get(CHAT_MESSAGE_FILTER_KEY);
+    public static ChatMessageFilter getFilter() {
+        ChatMessageFilter filter = (ChatMessageFilter) DATA.get(ChatMessageFilter.KEY);
         if (filter == null) {
-            filter = new HashSet<>();
-            DATA.put(CHAT_MESSAGE_FILTER_KEY, filter);
+            filter = new ChatMessageFilter();
+            DATA.put(ChatMessageFilter.KEY, filter);
             saveData();
         }
         return filter;
-    }
-
-    public static void addFilter(String... text) {
-        Collections.addAll(getFilter(), text);
-        saveData();
-    }
-
-    public static boolean removeFilter(String text) {
-        if(getFilter().contains(text)) {
-            getFilter().remove(text);
-            saveData();
-            return true;
-        }
-        return false;
     }
 
     public static void saveData() {

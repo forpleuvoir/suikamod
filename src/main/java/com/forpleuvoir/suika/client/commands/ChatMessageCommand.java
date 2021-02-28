@@ -1,5 +1,6 @@
 package com.forpleuvoir.suika.client.commands;
 
+import com.forpleuvoir.suika.config.ChatMessageFilter;
 import com.forpleuvoir.suika.config.ConfigManager;
 import com.forpleuvoir.suika.util.CommandUtil;
 import com.mojang.brigadier.CommandDispatcher;
@@ -42,16 +43,25 @@ public class ChatMessageCommand {
                         .then(CommandManager.argument("text", StringArgumentType.string())
                                 .executes(context -> {
                                     String text = StringArgumentType.getString(context, "text");
-                                    ConfigManager.addFilter(text);
-                                    result("添加过滤 = " + text, Formatting.AQUA);
+                                    ConfigManager.getFilter().add(text);
+                                    result("添加过滤(type:equals) = " + text, Formatting.AQUA);
                                     return 1;
                                 })
+                        ).then(CommandManager.literal("contain")
+                                .then(CommandManager.argument("text", StringArgumentType.string())
+                                        .executes(context -> {
+                                            String text = StringArgumentType.getString(context, "text");
+                                            ConfigManager.getFilter().add(text, ChatMessageFilter.Type.CONTAIN);
+                                            result("添加过滤(contain) = " + text, Formatting.AQUA);
+                                            return 1;
+                                        })
+                                )
                         )
                 ).then(CommandManager.literal("remove")
                         .then(CommandManager.argument("text", StringArgumentType.string())
                                 .executes(context -> {
                                     String text = StringArgumentType.getString(context, "text");
-                                    boolean removeFilter = ConfigManager.removeFilter(text);
+                                    boolean removeFilter = ConfigManager.getFilter().remove(text);
                                     result("删除过滤 = " + text + "  " + (removeFilter ? "成功" : "失败"), Formatting.AQUA);
                                     return 1;
                                 })
@@ -59,8 +69,8 @@ public class ChatMessageCommand {
                 ).then(CommandManager.literal("list")
                         .executes(context -> {
                             result("已过滤的字符串:", Formatting.AQUA);
-                            ConfigManager.getFilter().forEach(e -> {
-                                CommandUtil.returnFormattingString(e, Formatting.WHITE  );
+                            ConfigManager.getFilter().getDatas().forEach(e -> {
+                                CommandUtil.returnFormattingString("type:" + e.type + "content:" + e.content, Formatting.WHITE);
                             });
                             return 1;
                         })
