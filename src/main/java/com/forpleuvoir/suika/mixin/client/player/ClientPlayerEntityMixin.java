@@ -43,7 +43,7 @@ public class ClientPlayerEntityMixin {
         if (!message.startsWith(COMMAND_PREFIX)) {
             if (modConfig.getChatMessage()) {
                 String msg;
-                if (!ConfigManager.getFilter().contains(message)) {
+                if (!ConfigManager.getFilter().filter(message)) {
                     msg = modConfig.getChatMessagePrefix() + message + modConfig.getChatMessageAppend();
                     if (msg.contains("dhwuia")) {
                         msg = msg.replace("dhwuia", "乌鸦姐");
