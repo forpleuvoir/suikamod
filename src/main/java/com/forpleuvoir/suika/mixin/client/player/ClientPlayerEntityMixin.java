@@ -2,6 +2,7 @@ package com.forpleuvoir.suika.mixin.client.player;
 
 
 import com.forpleuvoir.suika.client.interop.ClientInterop;
+import com.forpleuvoir.suika.config.ConfigManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -42,12 +43,14 @@ public class ClientPlayerEntityMixin {
         if (!message.startsWith(COMMAND_PREFIX)) {
             if (modConfig.getChatMessage()) {
                 String msg;
-                msg = modConfig.getChatMessagePrefix() + message + modConfig.getChatMessageAppend();
-                if (msg.contains("dhwuia")) {
-                    msg = msg.replace("dhwuia", "乌鸦姐");
+                if (!ConfigManager.getFilter().contains(message)) {
+                    msg = modConfig.getChatMessagePrefix() + message + modConfig.getChatMessageAppend();
+                    if (msg.contains("dhwuia")) {
+                        msg = msg.replace("dhwuia", "乌鸦姐");
+                    }
+                    this.networkHandler.sendPacket(new ChatMessageC2SPacket(msg));
+                    ci.cancel();
                 }
-                this.networkHandler.sendPacket(new ChatMessageC2SPacket(msg));
-                ci.cancel();
             }
         }
     }
