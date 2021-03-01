@@ -1,5 +1,7 @@
 package com.forpleuvoir.suika.util;
 
+import com.mojang.authlib.GameProfile;
+import net.minecraft.block.entity.SkullBlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
