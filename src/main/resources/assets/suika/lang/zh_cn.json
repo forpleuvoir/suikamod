@@ -13,6 +13,7 @@
   "boolean.suika.show_enchantment": "切换物品时显示附魔",
   "boolean.suika.chat_bubbles": "聊天泡泡",
   "boolean.suika.custom_chat_message": "快捷聊天信息",
+  "boolean.suika.remark_player": "聊天栏玩家备注",
   "string.suika.custom_chat_message_value": "快捷聊天信息",
   "title.suika.config": "suika mod 设置",
   "category.suika.switch": "开关",

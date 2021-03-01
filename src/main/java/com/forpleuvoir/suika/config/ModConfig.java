@@ -38,6 +38,8 @@ public class ModConfig {
     private String chatMessagePrefix;
     @ConfigField(value = "chat_message_append",defValue = "",type = FieldType.STRING)
     private String chatMessageAppend;
+    @ConfigField(value = "remark_player",defValue = "true",type = FieldType.BOOLEAN)
+    private Boolean remarkPlayer;
 
     public String getChatMessagePrefix() {
         return chatMessagePrefix;
@@ -121,6 +123,15 @@ public class ModConfig {
 
     public void setCustomChatMessage(Boolean customChatMessage) {
         this.customChatMessage = customChatMessage;
+        update();
+    }
+
+    public Boolean getRemarkPlayer() {
+        return remarkPlayer;
+    }
+
+    public void setRemarkPlayer(Boolean remarkPlayer) {
+        this.remarkPlayer = remarkPlayer;
         update();
     }
 }

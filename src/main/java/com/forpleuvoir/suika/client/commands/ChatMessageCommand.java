@@ -71,7 +71,7 @@ public class ChatMessageCommand {
                         .executes(context -> {
                             result("已过滤的字符串:", Formatting.AQUA);
                             ConfigManager.getFilter().getDatas().forEach(e -> {
-                                CommandUtil.returnFormattingString("type:" + e.type + "content:" + e.content, Formatting.WHITE);
+                                CommandUtil.returnFormattingString("type:" + e.type + ",content:" + e.content, Formatting.WHITE);
                             });
                             return 1;
                         })

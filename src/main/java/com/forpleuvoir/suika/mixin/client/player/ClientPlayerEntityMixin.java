@@ -60,4 +60,5 @@ public class ClientPlayerEntityMixin {
         cir.setReturnValue(!modConfig.getAutoRebirth());
     }
 
+
 }

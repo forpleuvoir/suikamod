@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "block.SignBlockEntityMixin",
+    "client.gui.hud.ChatHudMixin",
     "command.argument.ArgumentTypesMixin",
     "server.LivingEntityMixin",
     "server.MinecraftServerMixin",

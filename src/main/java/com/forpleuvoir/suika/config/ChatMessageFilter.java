@@ -56,6 +56,7 @@ public class ChatMessageFilter {
     public boolean remove(String text) {
         if (hasDatas(text)) {
             datas.removeIf(next -> next.content.equals(text));
+            onUpdate();
             return true;
         } else {
             return false;

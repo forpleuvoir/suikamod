@@ -38,7 +38,7 @@ public abstract class ClientChatListenerMixin {
             cancellable = true
     )
     public void postSay(MessageType type, Text text, UUID senderUuid, CallbackInfo ci) {
-        if(modConfig.getChatBubbles()) {
+        if (modConfig.getChatBubbles()) {
             FabricModChatBubbles.say(text);
         }
         if (modConfig.getRemarkPlayer()) {

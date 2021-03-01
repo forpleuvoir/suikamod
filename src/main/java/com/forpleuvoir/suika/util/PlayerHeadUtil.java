@@ -12,17 +12,16 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 
 import static com.forpleuvoir.suika.client.commands.TooltipCommand.OWNER;
-
 /**
+ *
  * @author forpleuvoir
  * @project_name suikamod
  * @package com.forpleuvoir.suika.util
  * @class_name PlayerHeadUtil
- * @create_time 2021/1/12 17:56
+ * @create_time 2021/1/18 12:56
  */
 
 public class PlayerHeadUtil {
-
     public static ItemStack getPlayerHead(String playerName) {
         ItemStack stack = new ItemStack(Items.PLAYER_HEAD);
         CompoundTag tag = new CompoundTag();
@@ -55,7 +54,7 @@ public class PlayerHeadUtil {
         return new ItemEntity(world, player.getX(), player.getY(), player.getZ(), PlayerHeadUtil.getPlayerHead(player.getEntityName()));
     }
 
-    public static ItemEntity getItemEntity(ServerWorld world, Vec3d pos,String name) {
+    public static ItemEntity getItemEntity(ServerWorld world, Vec3d pos, String name) {
         return new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), PlayerHeadUtil.getPlayerHead(name));
     }
 
@@ -83,4 +82,14 @@ public class PlayerHeadUtil {
         return "";
     }
 
+    public static void loadProperties(GameProfile gameProfile, Callback callback) {
+        Thread thread = new Thread(() -> {
+            callback.callback(SkullBlockEntity.loadProperties(gameProfile));
+        });
+        thread.start();
+    }
+
+    public interface Callback {
+        void callback(Object o);
+    }
 }
