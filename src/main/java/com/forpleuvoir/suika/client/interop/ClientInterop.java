@@ -1,6 +1,7 @@
 package com.forpleuvoir.suika.client.interop;
 
 import com.forpleuvoir.suika.client.commands.ChatMessageCommand;
+import com.forpleuvoir.suika.client.commands.RemarkCommand;
 import com.forpleuvoir.suika.client.commands.SuikaCommand;
 import com.forpleuvoir.suika.client.commands.TooltipCommand;
 import com.mojang.brigadier.CommandDispatcher;
@@ -65,6 +66,7 @@ public class ClientInterop {
         ChatMessageCommand.register(commandDispatcher);
         TooltipCommand.register(commandDispatcher);
         SuikaCommand.register(commandDispatcher);
+        RemarkCommand.register(commandDispatcher);
     }
 
 }

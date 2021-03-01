@@ -69,4 +69,5 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
         cir.setReturnValue(!modConfig.getAutoRebirth());
     }
 
+
 }

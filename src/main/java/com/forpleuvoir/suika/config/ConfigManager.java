@@ -4,13 +4,15 @@ import com.forpleuvoir.suika.Suika;
 import com.forpleuvoir.suika.util.FileUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.client.MinecraftClient;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 配置管理
@@ -54,8 +56,10 @@ public class ConfigManager {
         try {
             Suika.LOGGER.info("suika mod load data...");
             String data = FileUtil.readFile(DATA_FILE);
-            ConfigManager.DATA.put(TooltipConfig.KEY, GSON.fromJson(new JsonParser().parse(data).getAsJsonObject().get(TooltipConfig.KEY), TooltipConfig.class));
-            DATA.put(ChatMessageFilter.KEY, GSON.fromJson(new JsonParser().parse(data).getAsJsonObject().get(ChatMessageFilter.KEY), ChatMessageFilter.class));
+            JsonObject jsonObject = new JsonParser().parse(data).getAsJsonObject();
+            DATA.put(TooltipConfig.KEY, GSON.fromJson(jsonObject.get(TooltipConfig.KEY), TooltipConfig.class));
+            DATA.put(ChatMessageFilter.KEY, GSON.fromJson(jsonObject.get(ChatMessageFilter.KEY), ChatMessageFilter.class));
+            DATA.put(RemarkPlayer.KEY, GSON.fromJson(jsonObject.get(RemarkPlayer.KEY), RemarkPlayer.class));
         } catch (Exception e) {
             Suika.LOGGER.error("suika mod 数据加载失败");
             Suika.LOGGER.error(e.getMessage());
@@ -64,6 +68,15 @@ public class ConfigManager {
             tooltipConfig.setDefault();
             ConfigManager.DATA.put(TooltipConfig.KEY, tooltipConfig);
             saveData();
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveData() {
+        String data = GSON.toJson(DATA);
+        try {
+            FileUtil.writeFile(DATA_FILE, data);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -78,15 +91,6 @@ public class ConfigManager {
         return filter;
     }
 
-    public static void saveData() {
-        String data = GSON.toJson(DATA);
-        try {
-            FileUtil.writeFile(DATA_FILE, data);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 
     public static TooltipConfig getTooltip() {
         TooltipConfig tooltipConfig = (TooltipConfig) DATA.get(TooltipConfig.KEY);
@@ -97,6 +101,15 @@ public class ConfigManager {
             saveData();
         }
         return tooltipConfig;
+    }
+
+    public static RemarkPlayer getRemark() {
+        RemarkPlayer remarkPlayer = (RemarkPlayer) DATA.get(RemarkPlayer.KEY);
+        if (remarkPlayer == null) {
+            remarkPlayer=new RemarkPlayer();
+            DATA.put(RemarkPlayer.KEY,remarkPlayer);
+        }
+        return remarkPlayer;
     }
 
 

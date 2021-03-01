@@ -1,5 +1,7 @@
 package com.forpleuvoir.suika.util;
 
+import com.mojang.authlib.GameProfile;
+import net.minecraft.block.entity.SkullBlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -10,8 +12,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 
 import static com.forpleuvoir.suika.client.commands.TooltipCommand.OWNER;
+
 /**
- *
  * @author forpleuvoir
  * @project_name suikamod
  * @package com.forpleuvoir.suika.util
@@ -78,5 +80,16 @@ public class PlayerHeadUtil {
             }
         }
         return "";
+    }
+
+    public static void loadProperties(GameProfile gameProfile, Callback callback) {
+        Thread thread = new Thread(() -> {
+            callback.callback(SkullBlockEntity.loadProperties(gameProfile));
+        });
+        thread.start();
+    }
+
+    public interface Callback {
+        void callback(Object o);
     }
 }

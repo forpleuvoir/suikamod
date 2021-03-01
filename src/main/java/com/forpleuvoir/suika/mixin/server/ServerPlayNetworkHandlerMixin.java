@@ -67,8 +67,8 @@ public abstract class ServerPlayNetworkHandlerMixin {
                 String string2 = arg.method_33803();
                 string2 = string2.replace("&", "§");
                 MutableText mutableText = new LiteralText("");
-                if(string2.contains("[i]")) {
-                    String[] s = string2.split("\\[i]",-1);
+                if (string2.contains("[i]")) {
+                    String[] s = string2.split("\\[i]", -1);
                     for (int i = 0; i < s.length; i++) {
                         mutableText.append(s[i]);
                         if (i != s.length - 1) {
@@ -80,13 +80,15 @@ public abstract class ServerPlayNetworkHandlerMixin {
                             }
                         }
                     }
-                }else{
+                } else {
                     mutableText.append(string2);
                 }
                 Text text = string2.isEmpty() ? null : new TranslatableText("chat.type.text", new Object[]{this.player.getDisplayName()}).append(mutableText);
                 Text text2 = new TranslatableText("chat.type.text", new Object[]{this.player.getDisplayName()}).append(mutableText);
 
-                this.server.getPlayerManager().method_33810(text2, (serverPlayerEntity) -> this.player.method_33795(serverPlayerEntity) ? text : text2, MessageType.CHAT, this.player.getUuid());
+                this.server.getPlayerManager().method_33810(text2, (serverPlayerEntity) ->
+                        this.player.method_33795(serverPlayerEntity) ? text : text2, MessageType.CHAT, this.player.getUuid()
+                );
             }
 
             this.messageCooldown += 20;
