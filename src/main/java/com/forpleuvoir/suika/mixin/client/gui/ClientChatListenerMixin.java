@@ -43,16 +43,13 @@ public abstract class ClientChatListenerMixin {
             FabricModChatBubbles.say(text);
         }
         if(modConfig.getRemarkPlayer()) {
-            System.out.println(text.getString());
-            System.out.println(type);
-            System.out.println(senderUuid.toString());
             if (type != MessageType.CHAT) {
                 this.client.inGameHud.getChatHud().addMessage(text);
             } else {
                 Text text1 = ConfigManager.getRemark().build(text, senderUuid);
                 this.client.inGameHud.getChatHud().queueMessage(text1);
-                ci.cancel();
             }
+            ci.cancel();
         }
     }
 }
