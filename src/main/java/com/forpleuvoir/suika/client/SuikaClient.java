@@ -9,12 +9,13 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 
 import java.util.Objects;
 
-import static com.forpleuvoir.suika.config.ModConfigApp.modConfig;
+import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
 
 /**
  * @author forpleuvoir
@@ -37,9 +38,13 @@ public class SuikaClient implements ClientModInitializer{
     }
 
     public void tick(MinecraftClient client) {
-        if (modConfig.getCustomChatMessage())
+        if (MOD_CONFIG.getCustomChatMessage())
             if (HotKeys.CUSTOM_CHAT_MESSAGE_KEY.wasPressed()) {
-                ((ClientPlayerEntity) Objects.requireNonNull(client.getCameraEntity())).networkHandler.sendPacket(new ChatMessageC2SPacket(modConfig.getCustomChatMessageValue()));
+                ((ClientPlayerEntity) Objects.requireNonNull(client.getCameraEntity())).networkHandler.sendPacket(new ChatMessageC2SPacket(MOD_CONFIG.getCustomChatMessageValue()));
             }
+        if(HotKeys.FAST_COMMAND.wasPressed()){
+            ConfigManager.getFastCommand().show();
+            MinecraftClient.getInstance().openScreen(new ChatScreen(""));
+        }
     }
 }

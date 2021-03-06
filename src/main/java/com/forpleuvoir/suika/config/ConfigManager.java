@@ -60,6 +60,7 @@ public class ConfigManager {
             DATA.put(TooltipConfig.KEY, GSON.fromJson(jsonObject.get(TooltipConfig.KEY), TooltipConfig.class));
             DATA.put(ChatMessageFilter.KEY, GSON.fromJson(jsonObject.get(ChatMessageFilter.KEY), ChatMessageFilter.class));
             DATA.put(RemarkPlayer.KEY, GSON.fromJson(jsonObject.get(RemarkPlayer.KEY), RemarkPlayer.class));
+            DATA.put(FastCommand.KEY, GSON.fromJson(jsonObject.get(FastCommand.KEY), FastCommand.class));
         } catch (Exception e) {
             Suika.LOGGER.error("suika mod 数据加载失败");
             Suika.LOGGER.error(e.getMessage());
@@ -106,10 +107,21 @@ public class ConfigManager {
     public static RemarkPlayer getRemark() {
         RemarkPlayer remarkPlayer = (RemarkPlayer) DATA.get(RemarkPlayer.KEY);
         if (remarkPlayer == null) {
-            remarkPlayer=new RemarkPlayer();
-            DATA.put(RemarkPlayer.KEY,remarkPlayer);
+            remarkPlayer = new RemarkPlayer();
+            DATA.put(RemarkPlayer.KEY, remarkPlayer);
+            saveData();
         }
         return remarkPlayer;
+    }
+
+    public static FastCommand getFastCommand() {
+        FastCommand fastCommand = (FastCommand) DATA.get(FastCommand.KEY);
+        if (fastCommand == null) {
+            fastCommand = new FastCommand();
+            DATA.put(FastCommand.KEY,fastCommand);
+            saveData();
+        }
+        return fastCommand;
     }
 
 

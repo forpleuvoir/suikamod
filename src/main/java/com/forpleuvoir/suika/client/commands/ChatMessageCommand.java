@@ -13,7 +13,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.Formatting;
 
 import static com.forpleuvoir.suika.client.interop.ClientInterop.BASE_COMMAND;
-import static com.forpleuvoir.suika.config.ModConfigApp.modConfig;
+import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
 
 /**
  * @author forpleuvoir
@@ -84,9 +84,9 @@ public class ChatMessageCommand {
                 .then(CommandManager.argument("isEnabled", BoolArgumentType.bool())
                         .executes(context -> {
                             boolean isEnable = BoolArgumentType.getBool(context, "isEnabled");
-                            modConfig.setChatMessage(isEnable);
-                            Formatting formatting = modConfig.getChatMessage() ? Formatting.GREEN : Formatting.RED;
-                            result("启用 = " + modConfig.getChatMessage(), formatting);
+                            MOD_CONFIG.setChatMessage(isEnable);
+                            Formatting formatting = MOD_CONFIG.getChatMessage() ? Formatting.GREEN : Formatting.RED;
+                            result("启用 = " + MOD_CONFIG.getChatMessage(), formatting);
                             return 1;
                         }));
     }
@@ -98,8 +98,8 @@ public class ChatMessageCommand {
                                 .executes(context -> {
                                     String prefix = StringArgumentType.getString(context, "prefix");
                                     String append = StringArgumentType.getString(context, "append");
-                                    modConfig.setChatMessagePrefix(prefix);
-                                    modConfig.setChatMessageAppend(append);
+                                    MOD_CONFIG.setChatMessagePrefix(prefix);
+                                    MOD_CONFIG.setChatMessageAppend(append);
                                     result("注入前缀:\"" + prefix + "\" ,成功", Formatting.GREEN);
                                     result("注入后缀:\"" + append + "\" ,成功", Formatting.GREEN);
                                     return 1;

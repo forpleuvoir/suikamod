@@ -20,10 +20,10 @@ public class ModConfigApp {
     public static final String FILE_DIR = MAIN_DIR + "/config/suika/";
 
     @Config("suika_mod_config")
-    public static ModConfig modConfig;
+    public static ModConfig MOD_CONFIG;
 
     public static void init() {
-        File file =new File(FILE_DIR+"suikamod_config.json");
-        SuikaConfigApp.init(ModConfigApp.class,file);
+        File file = new File(FILE_DIR + "suikamod_config.json");
+        SuikaConfigApp.init(ModConfigApp.class, file);
     }
 }

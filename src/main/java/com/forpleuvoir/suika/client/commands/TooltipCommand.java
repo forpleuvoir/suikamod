@@ -22,7 +22,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
 import static com.forpleuvoir.suika.client.interop.ClientInterop.BASE_COMMAND;
-import static com.forpleuvoir.suika.config.ModConfigApp.modConfig;
+import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
 import static com.forpleuvoir.suika.util.TooltipUtil.getKey;
 
 /**
@@ -111,7 +111,7 @@ public class TooltipCommand {
                 .then(CommandManager.argument(ENABLED, BoolArgumentType.bool())
                         .executes(context -> {
                             boolean isEnabled = BoolArgumentType.getBool(context, ENABLED);
-                            modConfig.setTooltip(isEnabled);
+                            MOD_CONFIG.setTooltip(isEnabled);
                             Formatting formatting = isEnabled ? Formatting.GREEN : Formatting.RED;
                             result("注入:" + isEnabled, formatting);
                             return 0;
