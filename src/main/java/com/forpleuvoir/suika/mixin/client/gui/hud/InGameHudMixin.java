@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.LinkedList;
 
-import static com.forpleuvoir.suika.config.ModConfigApp.modConfig;
+import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
 import static com.forpleuvoir.suika.util.TooltipUtil.addTooltip;
 
 /**
@@ -59,7 +59,7 @@ public abstract class InGameHudMixin {
             }
             LinkedList<MutableText> list = new LinkedList<>();
             list.addFirst(mutableText);
-            if (modConfig.getShowEnchantment()) {
+            if (MOD_CONFIG.getShowEnchantment()) {
                 addTooltip(currentStack, list);
                 if (!currentStack.getEnchantments().isEmpty()) {
                     for (int i = 0; i < currentStack.getEnchantments().size(); i++) {

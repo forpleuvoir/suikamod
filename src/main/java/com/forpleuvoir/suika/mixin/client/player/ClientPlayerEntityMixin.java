@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static com.forpleuvoir.suika.client.interop.ClientInterop.COMMAND_PREFIX;
-import static com.forpleuvoir.suika.config.ModConfigApp.modConfig;
+import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
 
 /**
  * @author forpleuvoir
@@ -50,10 +50,10 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
             ci.cancel();
         }
         if (!message.startsWith(COMMAND_PREFIX)) {
-            if (modConfig.getChatMessage()) {
+            if (MOD_CONFIG.getChatMessage()) {
                 String msg;
                 if (!ConfigManager.getFilter().filter(message)) {
-                    msg = modConfig.getChatMessagePrefix() + message + modConfig.getChatMessageAppend();
+                    msg = MOD_CONFIG.getChatMessagePrefix() + message + MOD_CONFIG.getChatMessageAppend();
                     if (msg.contains("dhwuia")) {
                         msg = msg.replace("dhwuia", "乌鸦姐");
                     }
@@ -66,7 +66,7 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 
     @Inject(method = "showsDeathScreen", at = @At("HEAD"), cancellable = true)
     public void showsDeathScreen(CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue(!modConfig.getAutoRebirth());
+        cir.setReturnValue(!MOD_CONFIG.getAutoRebirth());
     }
 
 

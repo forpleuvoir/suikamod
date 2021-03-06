@@ -12,7 +12,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.Formatting;
 
 import static com.forpleuvoir.suika.client.interop.ClientInterop.BASE_COMMAND;
-import static com.forpleuvoir.suika.config.ModConfigApp.modConfig;
+import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
 
 /**
  * 乱七八糟的指令
@@ -66,9 +66,9 @@ public class SuikaCommand {
         return CommandManager.literal(SHOW_ENCHANTMENT)
                 .then(CommandManager.argument("isEnabled", BoolArgumentType.bool()).executes(context -> {
                     boolean isEnable = BoolArgumentType.getBool(context, "isEnabled");
-                    modConfig.setShowEnchantment(isEnable);
-                    Formatting formatting = modConfig.getShowEnchantment() ? Formatting.GREEN : Formatting.RED;
-                    result("HeldItemTooltip 启用 = " + modConfig.getShowEnchantment(), formatting);
+                    MOD_CONFIG.setShowEnchantment(isEnable);
+                    Formatting formatting = MOD_CONFIG.getShowEnchantment() ? Formatting.GREEN : Formatting.RED;
+                    result("HeldItemTooltip 启用 = " + MOD_CONFIG.getShowEnchantment(), formatting);
                     return 1;
                 }));
     }
@@ -77,9 +77,9 @@ public class SuikaCommand {
         return CommandManager.literal(AUTO_REBIRTH)
                 .then(CommandManager.argument("isEnabled", BoolArgumentType.bool()).executes(context -> {
                     boolean isEnable = BoolArgumentType.getBool(context, "isEnabled");
-                    modConfig.setAutoRebirth(isEnable);
-                    Formatting formatting = modConfig.getAutoRebirth() ? Formatting.GREEN : Formatting.RED;
-                    result("AutoRebirth = " + modConfig.getAutoRebirth(), formatting);
+                    MOD_CONFIG.setAutoRebirth(isEnable);
+                    Formatting formatting = MOD_CONFIG.getAutoRebirth() ? Formatting.GREEN : Formatting.RED;
+                    result("AutoRebirth = " + MOD_CONFIG.getAutoRebirth(), formatting);
                     return 1;
                 }));
     }
@@ -88,9 +88,9 @@ public class SuikaCommand {
         return CommandManager.literal(CHAT_BUBBLES)
                 .then(CommandManager.argument("isEnabled", BoolArgumentType.bool()).executes(context -> {
                     boolean isEnable = BoolArgumentType.getBool(context, "isEnabled");
-                    modConfig.setChatBubbles(isEnable);
-                    Formatting formatting = modConfig.getChatBubbles() ? Formatting.GREEN : Formatting.RED;
-                    result("ChatBubbles = " + modConfig.getChatBubbles(), formatting);
+                    MOD_CONFIG.setChatBubbles(isEnable);
+                    Formatting formatting = MOD_CONFIG.getChatBubbles() ? Formatting.GREEN : Formatting.RED;
+                    result("ChatBubbles = " + MOD_CONFIG.getChatBubbles(), formatting);
                     return 1;
                 }));
     }

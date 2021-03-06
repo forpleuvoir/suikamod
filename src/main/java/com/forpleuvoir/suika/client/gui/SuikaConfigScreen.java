@@ -14,7 +14,7 @@ import net.minecraft.text.TranslatableText;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import static com.forpleuvoir.suika.config.ModConfigApp.modConfig;
+import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
 
 /**
  * 配置gui
@@ -42,14 +42,14 @@ public class SuikaConfigScreen {
     private static void addStringConfig(ConfigBuilder builder) {
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
         ConfigCategory general = builder.getOrCreateCategory(new TranslatableText("category.suika.string"));
-        List<Field> list = ReflectionUtil.getFieldByAnnotation(modConfig.getClass(), ConfigField.class);
+        List<Field> list = ReflectionUtil.getFieldByAnnotation(MOD_CONFIG.getClass(), ConfigField.class);
         list.forEach(e -> {
             if (e.getType().equals(String.class)) {
                 e.setAccessible(true);
                 ConfigField configField = e.getAnnotation(ConfigField.class);
                 String value = "";
                 try {
-                    value = (String) e.get(modConfig);
+                    value = (String) e.get(MOD_CONFIG);
                 } catch (IllegalAccessException illegalAccessException) {
                     illegalAccessException.printStackTrace();
                 }
@@ -58,8 +58,8 @@ public class SuikaConfigScreen {
                         .setDefaultValue(defaultValue)
                         .setSaveConsumer(v -> {
                             try {
-                                e.set(modConfig,v);
-                                modConfig.update();
+                                e.set(MOD_CONFIG,v);
+                                MOD_CONFIG.update();
                             } catch (IllegalAccessException illegalAccessException) {
                                 illegalAccessException.printStackTrace();
                             }
@@ -79,14 +79,14 @@ public class SuikaConfigScreen {
     private static void addBooleanConfig(ConfigBuilder builder) {
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
         ConfigCategory general = builder.getOrCreateCategory(new TranslatableText("category.suika.switch"));
-        List<Field> list = ReflectionUtil.getFieldByAnnotation(modConfig.getClass(), ConfigField.class);
+        List<Field> list = ReflectionUtil.getFieldByAnnotation(MOD_CONFIG.getClass(), ConfigField.class);
         list.forEach(e -> {
             if (e.getType().equals(Boolean.class)) {
                 e.setAccessible(true);
                 ConfigField configField = e.getAnnotation(ConfigField.class);
                 Boolean value = false;
                 try {
-                    value = (Boolean) e.get(modConfig);
+                    value = (Boolean) e.get(MOD_CONFIG);
                 } catch (IllegalAccessException illegalAccessException) {
                     illegalAccessException.printStackTrace();
                 }
@@ -95,8 +95,8 @@ public class SuikaConfigScreen {
                         .setDefaultValue(defaultValue)
                         .setSaveConsumer(v -> {
                             try {
-                                e.set(modConfig,v);
-                                modConfig.update();
+                                e.set(MOD_CONFIG,v);
+                                MOD_CONFIG.update();
                             } catch (IllegalAccessException illegalAccessException) {
                                 illegalAccessException.printStackTrace();
                             }

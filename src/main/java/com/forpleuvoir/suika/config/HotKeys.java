@@ -16,10 +16,11 @@ import org.lwjgl.glfw.GLFW;
 
 public class HotKeys {
     public static KeyBinding CUSTOM_CHAT_MESSAGE_KEY=get("custom_chat_message", GLFW.GLFW_KEY_B);
-
+    public static KeyBinding FAST_COMMAND=get("fast_command", GLFW.GLFW_KEY_X);
 
     public static void register() {
         KeyBindingHelper.registerKeyBinding(CUSTOM_CHAT_MESSAGE_KEY);
+        KeyBindingHelper.registerKeyBinding(FAST_COMMAND);
     }
 
 

@@ -10,7 +10,7 @@ import net.minecraft.text.LiteralText;
 import java.util.List;
 import java.util.Map;
 
-import static com.forpleuvoir.suika.config.ModConfigApp.modConfig;
+import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
 import static com.forpleuvoir.suika.util.PlayerHeadUtil.getSkullOwner;
 /**
  * tooltip工具类
@@ -23,7 +23,7 @@ import static com.forpleuvoir.suika.util.PlayerHeadUtil.getSkullOwner;
  */
 public class TooltipUtil {
     public static void addTooltip(ItemStack stack, List list) {
-        if (modConfig.getTooltip()) {
+        if (MOD_CONFIG.getTooltip()) {
             String key = getKey(stack);
             Map<String, TooltipConfig.Data> map = ConfigManager.getTooltip().getDatas();
             if (map.containsKey(key)) {

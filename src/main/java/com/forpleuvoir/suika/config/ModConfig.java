@@ -40,6 +40,8 @@ public class ModConfig {
     private String chatMessageAppend;
     @ConfigField(value = "remark_player",defValue = "true",type = FieldType.BOOLEAN)
     private Boolean remarkPlayer;
+    @ConfigField(value = "debug",defValue = "false",type = FieldType.BOOLEAN)
+    private Boolean debug;
 
     public String getChatMessagePrefix() {
         return chatMessagePrefix;
@@ -132,6 +134,15 @@ public class ModConfig {
 
     public void setRemarkPlayer(Boolean remarkPlayer) {
         this.remarkPlayer = remarkPlayer;
+        update();
+    }
+
+    public Boolean getDebug() {
+        return debug;
+    }
+
+    public void setDebug(Boolean debug) {
+        this.debug = debug;
         update();
     }
 }
