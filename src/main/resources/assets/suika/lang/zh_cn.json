@@ -12,6 +12,7 @@
   "boolean.suika.custom_chat_message": "快捷聊天信息",
   "boolean.suika.remark_player": "聊天栏玩家备注",
   "boolean.suika.debug": "DEBUG",
+  "boolean.suika.fast_command_gui": "快捷指令gui",
   "string.suika.custom_chat_message_value": "快捷聊天信息",
   "title.suika.config": "suika mod 设置",
   "category.suika.switch": "开关",
