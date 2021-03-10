@@ -42,6 +42,8 @@ public class ModConfig {
     private Boolean remarkPlayer;
     @ConfigField(value = "debug",defValue = "false",type = FieldType.BOOLEAN)
     private Boolean debug;
+    @ConfigField(value = "fast_command_gui",defValue = "false",type = FieldType.BOOLEAN)
+    private Boolean fastCommandGui;
 
     public String getChatMessagePrefix() {
         return chatMessagePrefix;
@@ -143,6 +145,15 @@ public class ModConfig {
 
     public void setDebug(Boolean debug) {
         this.debug = debug;
+        update();
+    }
+
+    public Boolean getFastCommandGui() {
+        return fastCommandGui;
+    }
+
+    public void setFastCommandGui(Boolean fastCommandGui) {
+        this.fastCommandGui = fastCommandGui;
         update();
     }
 }

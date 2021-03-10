@@ -1,6 +1,7 @@
 package com.forpleuvoir.suika.client;
 
 import com.forpleuvoir.suika.Suika;
+import com.forpleuvoir.suika.client.gui.FastCommandScreen;
 import com.forpleuvoir.suika.config.ConfigManager;
 import com.forpleuvoir.suika.config.HotKeys;
 import com.forpleuvoir.suika.config.ModConfigApp;
@@ -26,7 +27,7 @@ import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
  * @Description 客户端初始化类
  */
 @Environment(EnvType.CLIENT)
-public class SuikaClient implements ClientModInitializer{
+public class SuikaClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
@@ -42,9 +43,13 @@ public class SuikaClient implements ClientModInitializer{
             if (HotKeys.CUSTOM_CHAT_MESSAGE_KEY.wasPressed()) {
                 ((ClientPlayerEntity) Objects.requireNonNull(client.getCameraEntity())).networkHandler.sendPacket(new ChatMessageC2SPacket(MOD_CONFIG.getCustomChatMessageValue()));
             }
-        if(HotKeys.FAST_COMMAND.wasPressed()){
-            ConfigManager.getFastCommand().show();
-            MinecraftClient.getInstance().openScreen(new ChatScreen(""));
+        if (HotKeys.FAST_COMMAND.wasPressed()) {
+            if (MOD_CONFIG.getFastCommandGui()) {
+                MinecraftClient.getInstance().openScreen(new FastCommandScreen());
+            } else {
+                ConfigManager.getFastCommand().show();
+                MinecraftClient.getInstance().openScreen(new ChatScreen(""));
+            }
         }
     }
 }

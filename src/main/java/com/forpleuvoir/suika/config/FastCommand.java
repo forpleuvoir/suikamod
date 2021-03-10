@@ -92,4 +92,7 @@ public class FastCommand {
         message(new LiteralText(text));
     }
 
+    public Map<String, String> getDatas() {
+        return datas;
+    }
 }
