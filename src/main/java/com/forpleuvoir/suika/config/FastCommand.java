@@ -5,10 +5,7 @@ import com.forpleuvoir.suika.util.Log;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.*;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * #package com.forpleuvoir.suika.config
@@ -34,7 +31,7 @@ public class FastCommand {
         this.callback.callback();
     }
 
-    public Set<String> getKeys(){
+    public Set<String> getKeys() {
         return datas.keySet();
     }
 
@@ -47,20 +44,41 @@ public class FastCommand {
         update();
     }
 
-    public boolean delete(String key){
+    public boolean delete(String key) {
         String k = key.contains("&") ? key.replace("&", "§") : key;
         if (datas.containsKey(k)) {
             datas.remove(k);
             update();
             return true;
-        }else{
+        } else {
             return false;
         }
+    }
 
+    public void reset(String oldKey, String newKey, String newValue) {
+        oldKey = oldKey.contains("&") ? oldKey.replace("&", "§") : oldKey;
+        if (datas.containsKey(oldKey)) {
+            if (!Objects.equals(oldKey, newKey))
+                rename(oldKey, newKey);
+            newValue = newValue.startsWith("/") ? newValue : "/" + newValue;
+            datas.put(newKey, newValue);
+            update();
+        }
+    }
+
+    public void rename(String oldKey, String newKey) {
+        oldKey = oldKey.contains("&") ? oldKey.replace("&", "§") : oldKey;
+        if (datas.containsKey(oldKey)) {
+            String value = datas.get(oldKey);
+            datas.remove(oldKey);
+            newKey = newKey.contains("&") ? newKey.replace("&", "§") : newKey;
+            datas.put(newKey, value);
+        }
+        update();
     }
 
     public void show() {
-        if(!datas.isEmpty()) {
+        if (!datas.isEmpty()) {
             message("快捷指令列表");
             MutableText text = new LiteralText("");
             Iterator<Map.Entry<String, String>> iterator = datas.entrySet().iterator();
@@ -79,9 +97,28 @@ public class FastCommand {
                     text.append(new LiteralText(",  "));
             }
             message(text);
-        }else {
+        } else {
             message("你没有添加任何指令");
         }
+    }
+
+    public static int getKeyLength(String str) {
+        if (str.contains("§")) {
+            int size = 0;
+            boolean next = false;
+            for (char c : str.toCharArray()) {
+                if (!(c == '§')) {
+                    if (!next) {
+                        size++;
+                    } else {
+                        next = false;
+                    }
+                } else {
+                    next = true;
+                }
+            }
+            return size;
+        } else return str.length();
     }
 
     private void message(Text text) {

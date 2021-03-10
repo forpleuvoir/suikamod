@@ -1,5 +1,7 @@
 package com.forpleuvoir.suika.client.commands;
 
+import com.forpleuvoir.suika.client.SuikaClient;
+import com.forpleuvoir.suika.client.gui.FastCommandScreen;
 import com.forpleuvoir.suika.config.ConfigManager;
 import com.forpleuvoir.suika.util.CommandUtil;
 import com.mojang.brigadier.CommandDispatcher;
@@ -35,7 +37,9 @@ public class FastCMDCommand {
     private static LiteralArgumentBuilder<ServerCommandSource> cmd() {
         return CommandManager.literal(FAST_CMD)
                 .then(set())
-                .then(del());
+                .then(del())
+                .then(rename())
+                .then(editScreen());
     }
 
     private static LiteralArgumentBuilder<ServerCommandSource> set() {
@@ -71,6 +75,33 @@ public class FastCMDCommand {
                         })
                 );
 
+    }
+
+    private static LiteralArgumentBuilder<ServerCommandSource> rename() {
+        return CommandManager.literal("rename")
+                .then(CommandManager.argument("old_remark", StringArgumentType.string())
+                        .suggests((c, b) ->
+                                suggestMatching(ConfigManager.getFastCommand().getKeys(), b)
+                        )
+                        .then(CommandManager.argument("new_remark", StringArgumentType.string())
+                                .executes(context -> {
+                                    String oldRemark = StringArgumentType.getString(context, "old_remark");
+                                    String newRemark = StringArgumentType.getString(context, "new_remark");
+                                    ConfigManager.getFastCommand().rename(oldRemark,newRemark);
+                                    result(Formatting.AQUA, "重命名快捷指令:[" + oldRemark + "]to[" + newRemark + "]");
+                                    return 1;
+                                })
+                        )
+                );
+    }
+
+    private static LiteralArgumentBuilder<ServerCommandSource> editScreen(){
+        return CommandManager.literal("editScreen").executes(context -> {
+            SuikaClient.addTask(client -> {
+                client.openScreen(new FastCommandScreen(FastCommandScreen.Mode.EDIT));
+            });
+            return 1;
+        });
     }
 
     private static void result(Formatting formatting, String text) {

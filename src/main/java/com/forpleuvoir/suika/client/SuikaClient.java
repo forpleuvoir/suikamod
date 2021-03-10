@@ -1,7 +1,6 @@
 package com.forpleuvoir.suika.client;
 
 import com.forpleuvoir.suika.Suika;
-import com.forpleuvoir.suika.client.gui.FastCommandScreen;
 import com.forpleuvoir.suika.config.ConfigManager;
 import com.forpleuvoir.suika.config.HotKeys;
 import com.forpleuvoir.suika.config.ModConfigApp;
@@ -10,13 +9,13 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ChatScreen;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.network.MessageType;
+import net.minecraft.text.Text;
 
-import java.util.Objects;
-
-import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author forpleuvoir
@@ -29,6 +28,9 @@ import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
 @Environment(EnvType.CLIENT)
 public class SuikaClient implements ClientModInitializer {
 
+    private static final List<ClientTask> clientTasks = new ArrayList<>();
+    private static final MinecraftClient client = MinecraftClient.getInstance();
+
     @Override
     public void onInitializeClient() {
         Suika.LOGGER.info("suika mod initializeClient...");
@@ -39,17 +41,38 @@ public class SuikaClient implements ClientModInitializer {
     }
 
     public void tick(MinecraftClient client) {
-        if (MOD_CONFIG.getCustomChatMessage())
-            if (HotKeys.CUSTOM_CHAT_MESSAGE_KEY.wasPressed()) {
-                ((ClientPlayerEntity) Objects.requireNonNull(client.getCameraEntity())).networkHandler.sendPacket(new ChatMessageC2SPacket(MOD_CONFIG.getCustomChatMessageValue()));
-            }
-        if (HotKeys.FAST_COMMAND.wasPressed()) {
-            if (MOD_CONFIG.getFastCommandGui()) {
-                MinecraftClient.getInstance().openScreen(new FastCommandScreen());
-            } else {
-                ConfigManager.getFastCommand().show();
-                MinecraftClient.getInstance().openScreen(new ChatScreen(""));
-            }
+        HotKeys.tick(client);
+        runTask(client);
+    }
+
+    private void runTask(MinecraftClient client) {
+        Iterator<ClientTask> iterator = clientTasks.iterator();
+        while (iterator.hasNext()) {
+            ClientTask next = iterator.next();
+            next.run(client);
+            iterator.remove();
         }
+    }
+
+    public static void addTask(ClientTask clientTask) {
+        clientTasks.add(clientTask);
+    }
+
+    public interface ClientTask {
+        void run(MinecraftClient client);
+    }
+
+    public static void showInfo(Text text) {
+        assert client.cameraEntity != null;
+        client.inGameHud.addChatMessage(MessageType.GAME_INFO, text, client.cameraEntity.getUuid());
+    }
+
+    public static void showChat(Text text) {
+        assert client.cameraEntity != null;
+        client.inGameHud.addChatMessage(MessageType.CHAT, text, client.cameraEntity.getUuid());
+    }
+
+    public static void openScreen(Screen screen){
+        clientTasks.add(client -> client.openScreen(screen));
     }
 }
