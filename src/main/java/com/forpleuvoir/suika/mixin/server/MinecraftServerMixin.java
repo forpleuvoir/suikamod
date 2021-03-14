@@ -1,6 +1,6 @@
 package com.forpleuvoir.suika.mixin.server;
 
-import com.forpleuvoir.chatbubbles.ReflectionUtils;
+import com.forpleuvoir.suika.util.ReflectionUtils;
 import com.forpleuvoir.suika.Suika;
 import com.forpleuvoir.suika.server.data.Tpa;
 import com.forpleuvoir.suika.server.data.WarpPoint;

@@ -1,6 +1,5 @@
 package com.forpleuvoir.suika.mixin.client.gui;
 
-import com.forpleuvoir.chatbubbles.FabricModChatBubbles;
 import com.forpleuvoir.suika.config.ConfigManager;
 import com.forpleuvoir.suika.util.Log;
 import net.minecraft.client.MinecraftClient;
@@ -42,9 +41,6 @@ public abstract class ClientChatListenerMixin {
             cancellable = true
     )
     public void postSay(MessageType type, Text text, UUID senderUuid, CallbackInfo ci) {
-        if (MOD_CONFIG.getChatBubbles()) {
-            FabricModChatBubbles.say(text);
-        }
         if (MOD_CONFIG.getRemarkPlayer()) {
             log.info("text : " + text.asString(), "uuid : " + senderUuid.toString());
             if (type != MessageType.CHAT) {

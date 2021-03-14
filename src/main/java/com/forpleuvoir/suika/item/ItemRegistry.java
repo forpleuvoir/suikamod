@@ -1,6 +1,6 @@
 package com.forpleuvoir.suika.item;
 
-import com.forpleuvoir.chatbubbles.ReflectionUtils;
+import com.forpleuvoir.suika.util.ReflectionUtils;
 import com.forpleuvoir.suika.Suika;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.Item;

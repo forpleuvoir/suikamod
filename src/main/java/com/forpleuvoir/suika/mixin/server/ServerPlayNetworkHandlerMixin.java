@@ -55,16 +55,16 @@ public abstract class ServerPlayNetworkHandlerMixin {
     public abstract void disconnect(Text reason);
 
     @Inject(method = "method_31286", at = @At("HEAD"), cancellable = true)
-    public void method_31286(TextStream.class_5837 arg, CallbackInfo ci) {
+    public void method_31286(TextStream.Message arg, CallbackInfo ci) {
         if (this.player.getClientChatVisibility() == ChatVisibility.HIDDEN) {
             this.sendPacket(new GameMessageS2CPacket((new TranslatableText("chat.disabled.options")).formatted(Formatting.RED), MessageType.SYSTEM, Util.NIL_UUID));
         } else {
             this.player.updateLastActionTime();
-            String string = arg.method_33801();
+            String string = arg.getRaw();
             if (string.startsWith("/")) {
                 this.executeCommand(string);
             } else {
-                String string2 = arg.method_33803();
+                String string2 = arg.getFiltered();
                 string2 = string2.replace("&", "§");
                 MutableText mutableText = new LiteralText("");
                 if (string2.contains("[i]")) {
@@ -86,8 +86,8 @@ public abstract class ServerPlayNetworkHandlerMixin {
                 Text text = string2.isEmpty() ? null : new TranslatableText("chat.type.text", new Object[]{this.player.getDisplayName()}).append(mutableText);
                 Text text2 = new TranslatableText("chat.type.text", new Object[]{this.player.getDisplayName()}).append(mutableText);
 
-                this.server.getPlayerManager().method_33810(text2, (serverPlayerEntity) ->
-                        this.player.method_33795(serverPlayerEntity) ? text : text2, MessageType.CHAT, this.player.getUuid()
+                this.server.getPlayerManager().broadcast(text2, (serverPlayerEntity) ->
+                        this.player.shouldFilterMessagesSentTo(serverPlayerEntity) ? text : text2, MessageType.CHAT, this.player.getUuid()
                 );
             }
 

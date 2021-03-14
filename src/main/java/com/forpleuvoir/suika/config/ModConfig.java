@@ -28,8 +28,6 @@ public class ModConfig {
     private Boolean AutoRebirth;
     @ConfigField(value = "show_enchantment",defValue = "true",type = FieldType.BOOLEAN)
     private Boolean showEnchantment;
-    @ConfigField(value = "chat_bubbles",defValue = "true",type = FieldType.BOOLEAN)
-    private Boolean chatBubbles;
     @ConfigField(value = "custom_chat_message_value",defValue = "/back",type = FieldType.STRING)
     private String customChatMessageValue;
     @ConfigField(value = "custom_chat_message",defValue = "true",type = FieldType.BOOLEAN)
@@ -100,15 +98,6 @@ public class ModConfig {
 
     public void setShowEnchantment(Boolean showEnchantment) {
         this.showEnchantment = showEnchantment;
-        update();
-    }
-
-    public Boolean getChatBubbles() {
-        return chatBubbles;
-    }
-
-    public void setChatBubbles(Boolean chatBubbles) {
-        this.chatBubbles = chatBubbles;
         update();
     }
 

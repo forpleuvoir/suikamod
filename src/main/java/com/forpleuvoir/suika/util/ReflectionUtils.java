@@ -1,4 +1,4 @@
-package com.forpleuvoir.chatbubbles;
+package com.forpleuvoir.suika.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

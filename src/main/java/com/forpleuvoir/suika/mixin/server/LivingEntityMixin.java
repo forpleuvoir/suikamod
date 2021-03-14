@@ -1,6 +1,6 @@
 package com.forpleuvoir.suika.mixin.server;
 
-import com.forpleuvoir.chatbubbles.ReflectionUtils;
+import com.forpleuvoir.suika.util.ReflectionUtils;
 import com.forpleuvoir.suika.util.PlayerHeadUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

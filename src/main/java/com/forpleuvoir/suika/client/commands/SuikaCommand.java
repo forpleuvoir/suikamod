@@ -28,21 +28,18 @@ import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
 public class SuikaCommand {
     public static final String SHOW_ENCHANTMENT = BASE_COMMAND + "show_enchantment";
     public static final String AUTO_REBIRTH = BASE_COMMAND + "auto_rebirth";
-    public static final String CHAT_BUBBLES = BASE_COMMAND + "chat_bubbles";
     public static final String GAMMA = BASE_COMMAND + "gamma";
     public static final String SETTING = BASE_COMMAND + "setting";
 
     public static void register(CommandDispatcher<CommandSource> dispatcher) {
         LiteralArgumentBuilder showEnchantment = showEnchantment();
         LiteralArgumentBuilder autoRebirth = autoRebirth();
-        LiteralArgumentBuilder chatBubbles = chatBubbles();
         LiteralArgumentBuilder setting = setting();
         LiteralArgumentBuilder gamma = CommandManager.literal(GAMMA)
                 .then(setGamma())
                 .then(setDefValue());
         dispatcher.register(showEnchantment);
         dispatcher.register(autoRebirth);
-        dispatcher.register(chatBubbles);
         dispatcher.register(setting);
         dispatcher.register(gamma);
     }
@@ -96,16 +93,6 @@ public class SuikaCommand {
                 }));
     }
 
-    private static LiteralArgumentBuilder<ServerCommandSource> chatBubbles() {
-        return CommandManager.literal(CHAT_BUBBLES)
-                .then(CommandManager.argument("isEnabled", BoolArgumentType.bool()).executes(context -> {
-                    boolean isEnable = BoolArgumentType.getBool(context, "isEnabled");
-                    MOD_CONFIG.setChatBubbles(isEnable);
-                    Formatting formatting = MOD_CONFIG.getChatBubbles() ? Formatting.GREEN : Formatting.RED;
-                    result("ChatBubbles = " + MOD_CONFIG.getChatBubbles(), formatting);
-                    return 1;
-                }));
-    }
 
     private static void result(String result, Formatting formatting) {
         CommandUtil.returnFormattingString("Suika Mod:" + result, formatting);
