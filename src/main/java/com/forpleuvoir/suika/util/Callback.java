@@ -5,7 +5,7 @@ package com.forpleuvoir.suika.util;
  *
  * @author forpleuvoir
  * @project_name suikamod
- * @package com.forpleuvoir.suika.config
+ * @package com.forpleuvoir.suika.client.config
  * @class_name Callback
  * @create_time 2020/11/3 17:13
  */

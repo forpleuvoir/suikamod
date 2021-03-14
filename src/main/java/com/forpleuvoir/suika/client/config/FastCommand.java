@@ -1,4 +1,4 @@
-package com.forpleuvoir.suika.config;
+package com.forpleuvoir.suika.client.config;
 
 import com.forpleuvoir.suika.util.Callback;
 import com.forpleuvoir.suika.util.Log;
@@ -8,7 +8,7 @@ import net.minecraft.text.*;
 import java.util.*;
 
 /**
- * #package com.forpleuvoir.suika.config
+ * #package com.forpleuvoir.suika.client.config
  * #class_name FastCommand
  * #create_time 2021/3/6 14:46
  * #project_name suikamod

@@ -1,7 +1,7 @@
 package com.forpleuvoir.suika.util;
 
-import com.forpleuvoir.suika.config.ConfigManager;
-import com.forpleuvoir.suika.config.TooltipConfig;
+import com.forpleuvoir.suika.client.config.ConfigManager;
+import com.forpleuvoir.suika.client.config.TooltipConfig;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -10,7 +10,7 @@ import net.minecraft.text.LiteralText;
 import java.util.List;
 import java.util.Map;
 
-import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
+import static com.forpleuvoir.suika.client.config.ModConfigApp.MOD_CONFIG;
 import static com.forpleuvoir.suika.util.PlayerHeadUtil.getSkullOwner;
 /**
  * tooltip工具类

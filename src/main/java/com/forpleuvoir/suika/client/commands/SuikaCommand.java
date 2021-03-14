@@ -12,7 +12,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.Formatting;
 
 import static com.forpleuvoir.suika.client.interop.ClientInterop.BASE_COMMAND;
-import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
+import static com.forpleuvoir.suika.client.config.ModConfigApp.MOD_CONFIG;
 
 /**
  * 乱七八糟的指令

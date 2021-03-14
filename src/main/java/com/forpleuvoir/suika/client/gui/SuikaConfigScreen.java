@@ -14,7 +14,7 @@ import net.minecraft.text.TranslatableText;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
+import static com.forpleuvoir.suika.client.config.ModConfigApp.MOD_CONFIG;
 
 /**
  * 配置gui

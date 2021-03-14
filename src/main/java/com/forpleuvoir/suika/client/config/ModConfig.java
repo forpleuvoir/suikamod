@@ -1,4 +1,4 @@
-package com.forpleuvoir.suika.config;
+package com.forpleuvoir.suika.client.config;
 
 
 import com.forpleuvoir.suikalib.config.FieldType;
@@ -10,7 +10,7 @@ import com.forpleuvoir.suikalib.config.configInterface.UpdateCallback;
 /**
  * @author forpleuvoir
  * @project_name suikamod
- * @package com.forpleuvoir.suika.config
+ * @package com.forpleuvoir.suika.client.config
  * @class_name ModConfig
  * @create_time 2020/11/11 18:44
  */

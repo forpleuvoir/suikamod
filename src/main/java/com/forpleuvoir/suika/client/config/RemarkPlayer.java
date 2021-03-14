@@ -1,4 +1,4 @@
-package com.forpleuvoir.suika.config;
+package com.forpleuvoir.suika.client.config;
 
 import com.forpleuvoir.suika.util.Callback;
 import com.mojang.authlib.GameProfile;
@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * #package com.forpleuvoir.suika.config
+ * #package com.forpleuvoir.suika.client.config
  * #class_name RemarkPlayer
  * #create_time 2021/3/1 17:53
  * #project_name suikamod

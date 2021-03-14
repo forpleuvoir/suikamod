@@ -1,4 +1,4 @@
-package com.forpleuvoir.suika.config;
+package com.forpleuvoir.suika.client.config;
 
 import com.forpleuvoir.suika.util.Callback;
 
@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * #package com.forpleuvoir.suika.config
+ * #package com.forpleuvoir.suika.client.config
  * #class_name ChatMessageFilter
  * #create_time 2021/2/28 16:52
  * #project_name suikamod

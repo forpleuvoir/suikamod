@@ -1,8 +1,8 @@
 package com.forpleuvoir.suika.client.gui;
 
 import com.forpleuvoir.suika.client.SuikaClient;
-import com.forpleuvoir.suika.config.ConfigManager;
-import com.forpleuvoir.suika.config.FastCommand;
+import com.forpleuvoir.suika.client.config.ConfigManager;
+import com.forpleuvoir.suika.client.config.FastCommand;
 import com.forpleuvoir.suika.util.Log;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
@@ -82,14 +82,16 @@ public class FastCommandScreen extends Screen {
                             }));
                 });
                 boolean model = mode == Mode.EDIT;
-                this.addButton(new ButtonWidget(this.width / 2 - 40, this.height-50, 80, 20, new LiteralText("编辑模式:" + model), (button -> {
-                    if (this.mode != Mode.RUN)
-                        this.mode = Mode.RUN;
-                    else {
-                        this.mode = Mode.EDIT;
-                    }
-                    button.setMessage(new LiteralText("编辑模式:" + (mode == Mode.EDIT)));
-                })));
+                this.addButton(new ButtonWidget(this.width / 2 - 40, this.height - 50, 80, 20,
+                        new LiteralText("编辑模式:" + model),
+                        (button -> {
+                            if (this.mode != Mode.RUN)
+                                this.mode = Mode.RUN;
+                            else {
+                                this.mode = Mode.EDIT;
+                            }
+                            button.setMessage(new LiteralText("编辑模式:" + (mode == Mode.EDIT)));
+                        })));
             }
 
         }

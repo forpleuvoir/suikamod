@@ -1,4 +1,4 @@
-package com.forpleuvoir.suika.config;
+package com.forpleuvoir.suika.client.config;
 
 import com.forpleuvoir.suika.Suika;
 import com.forpleuvoir.suika.util.FileUtil;
@@ -19,7 +19,7 @@ import java.util.Map;
  *
  * @author forpleuvoir
  * @BelongsProject suikamod
- * @BelongsPackage com.forpleuvoir.suika.config
+ * @BelongsPackage com.forpleuvoir.suika.client.config
  * @ClassName ConfigManager
  * @CreateTime 2020/10/20 11:16
  */

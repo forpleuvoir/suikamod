@@ -1,7 +1,7 @@
 package com.forpleuvoir.suika.client.commands;
 
 import com.forpleuvoir.suika.client.commands.arguments.FormattingArgumentType;
-import com.forpleuvoir.suika.config.ConfigManager;
+import com.forpleuvoir.suika.client.config.ConfigManager;
 import com.forpleuvoir.suika.util.CommandUtil;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
@@ -22,7 +22,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
 import static com.forpleuvoir.suika.client.interop.ClientInterop.BASE_COMMAND;
-import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
+import static com.forpleuvoir.suika.client.config.ModConfigApp.MOD_CONFIG;
 import static com.forpleuvoir.suika.util.TooltipUtil.getKey;
 
 /**
