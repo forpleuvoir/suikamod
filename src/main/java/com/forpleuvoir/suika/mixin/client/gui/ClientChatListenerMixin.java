@@ -1,6 +1,6 @@
 package com.forpleuvoir.suika.mixin.client.gui;
 
-import com.forpleuvoir.suika.config.ConfigManager;
+import com.forpleuvoir.suika.client.config.ConfigManager;
 import com.forpleuvoir.suika.util.Log;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ChatHudListener;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.UUID;
 
-import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
+import static com.forpleuvoir.suika.client.config.ModConfigApp.MOD_CONFIG;
 
 /**
  * 聊天气泡

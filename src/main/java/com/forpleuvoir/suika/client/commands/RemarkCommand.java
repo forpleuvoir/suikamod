@@ -1,13 +1,12 @@
 package com.forpleuvoir.suika.client.commands;
 
-import com.forpleuvoir.suika.config.ConfigManager;
+import com.forpleuvoir.suika.client.config.ConfigManager;
 import com.forpleuvoir.suika.util.CommandUtil;
 import com.forpleuvoir.suika.util.PlayerHeadUtil;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import net.minecraft.block.entity.SkullBlockEntity;
 import net.minecraft.command.CommandSource;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;

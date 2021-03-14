@@ -1,4 +1,4 @@
-package com.forpleuvoir.suika.config;
+package com.forpleuvoir.suika.client.config;
 
 import com.forpleuvoir.suikalib.config.SuikaConfigApp;
 import com.forpleuvoir.suikalib.config.annotation.Config;
@@ -10,7 +10,7 @@ import java.io.File;
 /**
  * @author forpleuvoir
  * @project_name suikamod
- * @package com.forpleuvoir.suika.config
+ * @package com.forpleuvoir.suika.client.config
  * @class_name ModConfigApp
  * @create_time 2020/11/11 18:53
  */

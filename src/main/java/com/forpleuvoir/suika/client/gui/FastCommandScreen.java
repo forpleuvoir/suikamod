@@ -1,8 +1,8 @@
 package com.forpleuvoir.suika.client.gui;
 
 import com.forpleuvoir.suika.client.SuikaClient;
-import com.forpleuvoir.suika.config.ConfigManager;
-import com.forpleuvoir.suika.config.FastCommand;
+import com.forpleuvoir.suika.client.config.ConfigManager;
+import com.forpleuvoir.suika.client.config.FastCommand;
 import com.forpleuvoir.suika.util.Log;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;

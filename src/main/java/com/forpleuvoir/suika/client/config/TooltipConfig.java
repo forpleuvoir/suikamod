@@ -1,4 +1,4 @@
-package com.forpleuvoir.suika.config;
+package com.forpleuvoir.suika.client.config;
 
 import com.forpleuvoir.suika.util.Callback;
 import com.forpleuvoir.suika.Suika;
@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * @author forpleuvoir
  * @BelongsProject suikamod
- * @BelongsPackage com.forpleuvoir.suika.config
+ * @BelongsPackage com.forpleuvoir.suika.client.config
  * @ClassName TooltipConfig
  * @CreateTime 2020/10/20 13:06
  * @Description Tooltip配置

@@ -1,4 +1,4 @@
-package com.forpleuvoir.suika.config;
+package com.forpleuvoir.suika.client.config;
 
 import com.forpleuvoir.suika.Suika;
 import com.forpleuvoir.suika.client.gui.FastCommandScreen;
@@ -13,12 +13,12 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.Objects;
 
-import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
+import static com.forpleuvoir.suika.client.config.ModConfigApp.MOD_CONFIG;
 
 /**
  * @author forpleuvoir
  * @project_name suikamod
- * @package com.forpleuvoir.suika.config
+ * @package com.forpleuvoir.suika.client.config
  * @class_name HotKeys
  * @create_time 2020/11/3 20:44
  */

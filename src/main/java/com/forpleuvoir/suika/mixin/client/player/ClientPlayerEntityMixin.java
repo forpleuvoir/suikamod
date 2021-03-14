@@ -2,7 +2,7 @@ package com.forpleuvoir.suika.mixin.client.player;
 
 
 import com.forpleuvoir.suika.client.interop.ClientInterop;
-import com.forpleuvoir.suika.config.ConfigManager;
+import com.forpleuvoir.suika.client.config.ConfigManager;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static com.forpleuvoir.suika.client.interop.ClientInterop.COMMAND_PREFIX;
-import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
+import static com.forpleuvoir.suika.client.config.ModConfigApp.MOD_CONFIG;
 
 /**
  * @author forpleuvoir

@@ -1,9 +1,9 @@
 package com.forpleuvoir.suika.client;
 
 import com.forpleuvoir.suika.Suika;
-import com.forpleuvoir.suika.config.ConfigManager;
-import com.forpleuvoir.suika.config.HotKeys;
-import com.forpleuvoir.suika.config.ModConfigApp;
+import com.forpleuvoir.suika.client.config.ConfigManager;
+import com.forpleuvoir.suika.client.config.HotKeys;
+import com.forpleuvoir.suika.client.config.ModConfigApp;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

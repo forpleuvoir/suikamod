@@ -1,7 +1,7 @@
 package com.forpleuvoir.suika.util;
 
 import static com.forpleuvoir.suika.Suika.LOGGER;
-import static com.forpleuvoir.suika.config.ModConfigApp.MOD_CONFIG;
+import static com.forpleuvoir.suika.client.config.ModConfigApp.MOD_CONFIG;
 
 /**
  * #package com.forpleuvoir.suika.util
