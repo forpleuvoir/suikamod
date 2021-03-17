@@ -149,9 +149,7 @@ public class FastCommandScreen extends Screen {
                     .build());
             general.addEntry(entryBuilder.startStrField(new LiteralText("指令"), value)
                     .setDefaultValue(value)
-                    .setSaveConsumer(s -> {
-                        ConfigManager.getFastCommand().reset(remark, newRemark, s);
-                    })
+                    .setSaveConsumer(s -> ConfigManager.getFastCommand().reset(remark, newRemark, s))
                     .build());
             return builder.build();
         }

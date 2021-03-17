@@ -4,6 +4,7 @@ import com.forpleuvoir.suika.util.Callback;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * #package com.forpleuvoir.suika.client.config
@@ -68,8 +69,12 @@ public class ChatMessageFilter {
             if (data.type == Type.EQUALS) {
                 if (text.equals(data.content))
                     return true;
-            } else {
+            } else if (data.type == Type.CONTAIN) {
                 if (text.contains(data.content)) {
+                    return true;
+                }
+            } else if (data.type == Type.REGEX) {
+                if(Pattern.matches(data.content, text)){
                     return true;
                 }
             }
@@ -111,7 +116,29 @@ public class ChatMessageFilter {
     }
 
     public enum Type {
-        EQUALS,
-        CONTAIN
+        EQUALS("equals"),
+        CONTAIN("contain"),
+        REGEX("regex");
+
+        private final String name;
+
+        Type(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        public static Type byName(String name) {
+            switch (name) {
+                case "contain":
+                    return CONTAIN;
+                case "regex":
+                    return REGEX;
+                default:
+                    return EQUALS;
+            }
+        }
     }
 }
