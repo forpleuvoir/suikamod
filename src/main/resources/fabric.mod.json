@@ -19,8 +19,7 @@
       "com.forpleuvoir.suika.server.SuikaServer"
     ],
     "client": [
-      "com.forpleuvoir.suika.client.SuikaClient",
-      "com.forpleuvoir.chatbubbles.FabricModChatBubbles"
+      "com.forpleuvoir.suika.client.SuikaClient"
     ],
     "main": [
       "com.forpleuvoir.suika.Suika"
