@@ -1,5 +1,6 @@
 package com.forpleuvoir.suika.client.commands;
 
+import com.forpleuvoir.suika.client.commands.arguments.CMFilterArgumentType;
 import com.forpleuvoir.suika.client.config.ChatMessageFilter;
 import com.forpleuvoir.suika.client.config.ConfigManager;
 import com.forpleuvoir.suika.util.CommandUtil;
@@ -12,8 +13,8 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.Formatting;
 
-import static com.forpleuvoir.suika.client.interop.ClientInterop.BASE_COMMAND;
 import static com.forpleuvoir.suika.client.config.ModConfigApp.MOD_CONFIG;
+import static com.forpleuvoir.suika.client.interop.ClientInterop.BASE_COMMAND;
 
 /**
  * @author forpleuvoir
@@ -40,19 +41,13 @@ public class ChatMessageCommand {
     private static LiteralArgumentBuilder<ServerCommandSource> filter() {
         return CommandManager.literal(FILTER)
                 .then(CommandManager.literal("add")
-                        .then(CommandManager.argument("text", StringArgumentType.string())
-                                .executes(context -> {
-                                    String text = StringArgumentType.getString(context, "text");
-                                    ConfigManager.getFilter().add(text);
-                                    result("添加过滤(type:equals) = " + text, Formatting.AQUA);
-                                    return 1;
-                                })
-                        ).then(CommandManager.literal("contain")
+                        .then(CommandManager.argument("type", CMFilterArgumentType.CMFType())
                                 .then(CommandManager.argument("text", StringArgumentType.string())
                                         .executes(context -> {
+                                            ChatMessageFilter.Type type = CMFilterArgumentType.getType(context, "type");
                                             String text = StringArgumentType.getString(context, "text");
-                                            ConfigManager.getFilter().add(text, ChatMessageFilter.Type.CONTAIN);
-                                            result("添加过滤(contain) = " + text, Formatting.AQUA);
+                                            ConfigManager.getFilter().add(text, type);
+                                            result("添加过滤(type:" + type.getName() + ") = " + text, Formatting.AQUA);
                                             return 1;
                                         })
                                 )
