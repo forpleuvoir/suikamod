@@ -1,6 +1,5 @@
 package com.forpleuvoir.suika.client;
 
-import com.forpleuvoir.suika.Suika;
 import com.forpleuvoir.suika.client.config.ConfigManager;
 import com.forpleuvoir.suika.client.config.HotKeys;
 import com.forpleuvoir.suika.client.config.ModConfigApp;
@@ -12,6 +11,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.network.MessageType;
 import net.minecraft.text.Text;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,12 +29,15 @@ import java.util.List;
 @Environment(EnvType.CLIENT)
 public class SuikaClient implements ClientModInitializer {
 
+    public static final String MOD_ID = "suika";
+    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+
     private static final List<ClientTask> clientTasks = new ArrayList<>();
     private static final MinecraftClient client = MinecraftClient.getInstance();
 
     @Override
     public void onInitializeClient() {
-        Suika.LOGGER.info("suika mod initializeClient...");
+        LOGGER.info("suika mod initializeClient...");
         ConfigManager.init();
         ModConfigApp.init();
         HotKeys.register();

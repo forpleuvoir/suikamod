@@ -1,6 +1,7 @@
 package com.forpleuvoir.suika.client.config;
 
-import com.forpleuvoir.suika.util.Callback;
+import com.forpleuvoir.suika.client.util.Callback;
+import com.forpleuvoir.suika.client.util.Log;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
@@ -22,6 +23,7 @@ import java.util.UUID;
 public class RemarkPlayer {
     public static final transient String KEY = "remark_player";
     private final transient Callback callback;
+    private static final transient Log log = new Log(RemarkPlayer.class);
     private Map<String, String> datas = new HashMap<>();
 
     public RemarkPlayer() {
@@ -33,8 +35,6 @@ public class RemarkPlayer {
     }
 
     public Text build(Text text, UUID uuid) {
-        System.out.println("uuid:"+uuid.toString());
-        datas.keySet().forEach(System.out::println);
         if (datas.containsKey(uuid.toString())) {
             return new LiteralText(datas.get(uuid.toString())).append(text);
         }

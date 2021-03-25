@@ -2,7 +2,7 @@ package com.forpleuvoir.suika.client.commands;
 
 import com.forpleuvoir.suika.client.SuikaClient;
 import com.forpleuvoir.suika.client.gui.SuikaConfigScreen;
-import com.forpleuvoir.suika.util.CommandUtil;
+import com.forpleuvoir.suika.client.util.CommandUtil;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.DoubleArgumentType;

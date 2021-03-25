@@ -1,6 +1,6 @@
 package com.forpleuvoir.suika.client.config;
 
-import com.forpleuvoir.suika.Suika;
+import com.forpleuvoir.suika.client.SuikaClient;
 import com.forpleuvoir.suika.client.gui.FastCommandScreen;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
@@ -33,7 +33,7 @@ public class HotKeys {
     }
 
     private static KeyBinding get(String key, Integer code) {
-        return new KeyBinding("key." + Suika.MOD_ID + "." + key, InputUtil.Type.KEYSYM, code, "suika mod");
+        return new KeyBinding("key." + SuikaClient.MOD_ID + "." + key, InputUtil.Type.KEYSYM, code, "suika mod");
     }
 
     public static void tick(MinecraftClient client) {

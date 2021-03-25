@@ -1,7 +1,7 @@
 package com.forpleuvoir.suika.client.config;
 
-import com.forpleuvoir.suika.Suika;
-import com.forpleuvoir.suika.util.FileUtil;
+import com.forpleuvoir.suika.client.util.FileUtil;
+import com.forpleuvoir.suika.client.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -25,6 +25,7 @@ import java.util.Map;
  */
 public class ConfigManager {
     private static final URL TEST_DIR = ConfigManager.class.getResource("/");
+    private static final Log log = new Log(ConfigManager.class);
     private static final File MAIN_DIR = MinecraftClient.getInstance().runDirectory;
     public static final String FILE_DIR = MAIN_DIR + "/config/suika";
     private static final String DATA_FILE_NAME = "suika_data.json";
@@ -40,7 +41,7 @@ public class ConfigManager {
 
 
     public static void loadFiles() {
-        Suika.LOGGER.info("suika mod load file...");
+        log.info("suika mod load file...");
         DATA_FILE = new File(FILE_DIR, DATA_FILE_NAME);
         if (!DATA_FILE.exists()) {
             try {
@@ -54,7 +55,7 @@ public class ConfigManager {
 
     public static void loadData() {
         try {
-            Suika.LOGGER.info("suika mod load data...");
+            log.info("suika mod load data...");
             String data = FileUtil.readFile(DATA_FILE);
             JsonObject jsonObject = new JsonParser().parse(data).getAsJsonObject();
             DATA.put(TooltipConfig.KEY, GSON.fromJson(jsonObject.get(TooltipConfig.KEY), TooltipConfig.class));
@@ -62,9 +63,9 @@ public class ConfigManager {
             DATA.put(RemarkPlayer.KEY, GSON.fromJson(jsonObject.get(RemarkPlayer.KEY), RemarkPlayer.class));
             DATA.put(FastCommand.KEY, GSON.fromJson(jsonObject.get(FastCommand.KEY), FastCommand.class));
         } catch (Exception e) {
-            Suika.LOGGER.error("suika mod 数据加载失败");
-            Suika.LOGGER.error(e.getMessage());
-            Suika.LOGGER.info("suika mod 加载默认数据");
+            log.info("suika mod 数据加载失败");
+            log.info(e.getMessage());
+            log.info("suika mod 加载默认数据");
             TooltipConfig tooltipConfig = new TooltipConfig();
             tooltipConfig.setDefault();
             ConfigManager.DATA.put(TooltipConfig.KEY, tooltipConfig);

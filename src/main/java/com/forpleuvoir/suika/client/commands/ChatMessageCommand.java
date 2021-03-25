@@ -3,7 +3,7 @@ package com.forpleuvoir.suika.client.commands;
 import com.forpleuvoir.suika.client.commands.arguments.CMFilterArgumentType;
 import com.forpleuvoir.suika.client.config.ChatMessageFilter;
 import com.forpleuvoir.suika.client.config.ConfigManager;
-import com.forpleuvoir.suika.util.CommandUtil;
+import com.forpleuvoir.suika.client.util.CommandUtil;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;

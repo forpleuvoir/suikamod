@@ -1,7 +1,7 @@
 package com.forpleuvoir.suika.client.config;
 
-import com.forpleuvoir.suika.util.Callback;
-import com.forpleuvoir.suika.util.Log;
+import com.forpleuvoir.suika.client.util.Callback;
+import com.forpleuvoir.suika.client.util.Log;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.*;
 

@@ -1,7 +1,7 @@
 package com.forpleuvoir.suika.client.config;
 
-import com.forpleuvoir.suika.util.Callback;
-import com.forpleuvoir.suika.Suika;
+import com.forpleuvoir.suika.client.util.Callback;
+import com.forpleuvoir.suika.client.util.Log;
 
 import java.util.*;
 
@@ -17,6 +17,7 @@ public class TooltipConfig {
     public transient static final String KEY = "tooltip";
     private final Map<String, Data> datas = new HashMap<>();
     private transient final Callback callback;
+    private transient static final Log log = new Log(TooltipConfig.class);
 
     public TooltipConfig() {
         this.callback = ConfigManager::saveData;
@@ -65,7 +66,7 @@ public class TooltipConfig {
                     onChanged();
                 }
             } catch (Exception e) {
-                Suika.LOGGER.error(e.getMessage());
+                log.info(e.getMessage());
             }
         }
     }
