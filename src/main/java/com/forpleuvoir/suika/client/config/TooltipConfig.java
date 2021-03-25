@@ -1,7 +1,7 @@
 package com.forpleuvoir.suika.client.config;
 
-import com.forpleuvoir.suika.util.Callback;
-import com.forpleuvoir.suika.Suika;
+import com.forpleuvoir.suika.client.util.Callback;
+import com.forpleuvoir.suika.client.Suika;
 
 import java.util.*;
 

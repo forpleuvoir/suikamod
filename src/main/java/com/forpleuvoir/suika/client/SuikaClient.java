@@ -1,6 +1,5 @@
 package com.forpleuvoir.suika.client;
 
-import com.forpleuvoir.suika.Suika;
 import com.forpleuvoir.suika.client.config.ConfigManager;
 import com.forpleuvoir.suika.client.config.HotKeys;
 import com.forpleuvoir.suika.client.config.ModConfigApp;

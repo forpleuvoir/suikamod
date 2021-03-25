@@ -13,17 +13,16 @@
   },
   "license": "MIT",
   "icon": "assets/suika/icon.png",
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "server": [
-      "com.forpleuvoir.suika.server.SuikaServer"
     ],
     "client": [
       "com.forpleuvoir.suika.client.SuikaClient",
       "com.forpleuvoir.chatbubbles.FabricModChatBubbles"
     ],
     "main": [
-      "com.forpleuvoir.suika.Suika"
+      "com.forpleuvoir.suika.client.Suika"
     ],
     "modmenu": [
       "com.forpleuvoir.suika.compat.modmenu.ModMenuImpl"

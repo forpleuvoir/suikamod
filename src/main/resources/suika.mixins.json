@@ -1,16 +1,9 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.forpleuvoir.suika.mixin",
+  "package": "com.forpleuvoir.suika.client.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "block.SignBlockEntityMixin",
-    "client.gui.hud.ChatHudMixin",
-    "command.argument.ArgumentTypesMixin",
-    "server.LivingEntityMixin",
-    "server.MinecraftServerMixin",
-    "server.ServerPlayerEntityMixin",
-    "server.ServerPlayNetworkHandlerMixin"
   ],
   "client": [
     "client.MinecraftClientMixin",

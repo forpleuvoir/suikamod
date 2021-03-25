@@ -1,6 +1,6 @@
 package com.forpleuvoir.suika.client.config;
 
-import com.forpleuvoir.suika.Suika;
+import com.forpleuvoir.suika.client.Suika;
 import com.forpleuvoir.suika.client.gui.FastCommandScreen;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;

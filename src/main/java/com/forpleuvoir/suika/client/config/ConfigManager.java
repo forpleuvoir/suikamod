@@ -1,7 +1,7 @@
 package com.forpleuvoir.suika.client.config;
 
-import com.forpleuvoir.suika.Suika;
-import com.forpleuvoir.suika.util.FileUtil;
+import com.forpleuvoir.suika.client.Suika;
+import com.forpleuvoir.suika.client.util.FileUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;

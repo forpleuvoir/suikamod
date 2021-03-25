@@ -1,6 +1,6 @@
 package com.forpleuvoir.suika.client.config;
 
-import com.forpleuvoir.suika.util.Callback;
+import com.forpleuvoir.suika.client.util.Callback;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,6 +1,6 @@
 package com.forpleuvoir.suika.client.config;
 
-import com.forpleuvoir.suika.util.Callback;
+import com.forpleuvoir.suika.client.util.Callback;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
