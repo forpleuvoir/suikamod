@@ -1,6 +1,7 @@
 package com.forpleuvoir.suika.client.commands;
 
 import com.forpleuvoir.suika.client.SuikaClient;
+import com.forpleuvoir.suika.client.config.ConfigManager;
 import com.forpleuvoir.suika.client.gui.SuikaConfigScreen;
 import com.forpleuvoir.suika.util.CommandUtil;
 import com.mojang.brigadier.CommandDispatcher;
@@ -28,21 +29,31 @@ public class SuikaCommand {
     public static final String AUTO_REBIRTH = BASE_COMMAND + "auto_rebirth";
     public static final String CHAT_BUBBLES = BASE_COMMAND + "chat_bubbles";
     public static final String SETTING = BASE_COMMAND + "setting";
+    public static final String RELOAD = BASE_COMMAND + "reload";
 
     public static void register(CommandDispatcher<CommandSource> dispatcher) {
         LiteralArgumentBuilder showEnchantment = showEnchantment();
         LiteralArgumentBuilder autoRebirth = autoRebirth();
         LiteralArgumentBuilder chatBubbles = chatBubbles();
         LiteralArgumentBuilder setting = setting();
+        LiteralArgumentBuilder reload = reload();
         dispatcher.register(showEnchantment);
         dispatcher.register(autoRebirth);
         dispatcher.register(chatBubbles);
         dispatcher.register(setting);
+        dispatcher.register(reload);
     }
 
     private static LiteralArgumentBuilder<ServerCommandSource> setting() {
         return CommandManager.literal(SETTING).executes(context -> {
             SuikaClient.addTask(client -> client.openScreen(SuikaConfigScreen.initScreen(null)));
+            return 1;
+        });
+    }
+
+    private static LiteralArgumentBuilder<ServerCommandSource> reload() {
+        return CommandManager.literal(RELOAD).executes(context -> {
+            SuikaClient.addTask(client -> ConfigManager.init());
             return 1;
         });
     }

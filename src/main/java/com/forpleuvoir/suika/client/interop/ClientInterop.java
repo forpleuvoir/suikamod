@@ -65,6 +65,7 @@ public class ClientInterop {
         SuikaCommand.register(commandDispatcher);
         RemarkCommand.register(commandDispatcher);
         FastCMDCommand.register(commandDispatcher);
+        TaskCommand.register(commandDispatcher);
     }
 
 }

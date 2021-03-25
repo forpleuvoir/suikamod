@@ -4,18 +4,22 @@ import com.forpleuvoir.suika.Suika;
 import com.forpleuvoir.suika.client.config.ConfigManager;
 import com.forpleuvoir.suika.client.config.HotKeys;
 import com.forpleuvoir.suika.client.config.ModConfigApp;
+import com.forpleuvoir.suika.client.data.TimeTask;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.network.MessageType;
+import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author forpleuvoir
@@ -29,7 +33,9 @@ import java.util.List;
 public class SuikaClient implements ClientModInitializer {
 
     private static final List<ClientTask> clientTasks = new ArrayList<>();
-    private static final MinecraftClient client = MinecraftClient.getInstance();
+    private static final List<TimeTask> timeTasks = new ArrayList<>();
+    public static final MinecraftClient client = MinecraftClient.getInstance();
+    private static long nowTime;
 
     @Override
     public void onInitializeClient() {
@@ -52,10 +58,22 @@ public class SuikaClient implements ClientModInitializer {
             next.run(client);
             iterator.remove();
         }
+        Iterator<TimeTask> iterator1=timeTasks.iterator();
+        while (iterator1.hasNext()){
+            TimeTask timeTask= iterator1.next();
+            timeTask.run();
+            if (timeTask.isRemoved()) {
+                iterator1.remove();
+            }
+        }
     }
 
     public static void addTask(ClientTask clientTask) {
         clientTasks.add(clientTask);
+    }
+
+    public static void addTimeTask(TimeTask timeTask) {
+        timeTasks.add(timeTask);
     }
 
     public interface ClientTask {
@@ -72,7 +90,12 @@ public class SuikaClient implements ClientModInitializer {
         client.inGameHud.addChatMessage(MessageType.CHAT, text, client.cameraEntity.getUuid());
     }
 
-    public static void openScreen(Screen screen){
+    public static void sendChatMessage(String message){
+        ((ClientPlayerEntity) Objects.requireNonNull(client.getCameraEntity()))
+                .networkHandler.sendPacket(new ChatMessageC2SPacket(message));
+    }
+
+    public static void openScreen(Screen screen) {
         clientTasks.add(client -> client.openScreen(screen));
     }
 }
