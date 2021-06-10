@@ -20,7 +20,6 @@ import static com.forpleuvoir.suika.client.commands.TooltipCommand.OWNER;
  * @class_name PlayerHeadUtil
  * @create_time 2021/1/18 12:56
  */
-
 public class PlayerHeadUtil {
     public static ItemStack getPlayerHead(String playerName) {
         ItemStack stack = new ItemStack(Items.PLAYER_HEAD);

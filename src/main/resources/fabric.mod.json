@@ -25,7 +25,7 @@
       "com.forpleuvoir.suika.client.Suika"
     ],
     "modmenu": [
-      "com.forpleuvoir.suika.compat.modmenu.ModMenuImpl"
+      "com.forpleuvoir.suika.client.compat.modmenu.ModMenuImpl"
     ]
   },
   "mixins": [
